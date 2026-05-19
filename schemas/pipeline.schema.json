@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-harness-hub.dev/schemas/pipeline.schema.json",
+  "title": "Pipeline manifest",
+  "description": "A DAG of harness/rule-pack/tool calls that completes one specific task.",
+  "allOf": [
+    { "$ref": "_common.schema.json#/$defs/envelope" },
+    {
+      "type": "object",
+      "required": ["task", "pipeline_kind", "steps"],
+      "properties": {
+        "type":          { "const": "pipeline" },
+        "task":          { "type": "string", "minLength": 1 },
+        "pipeline_kind": {
+          "type": "string",
+          "description": "Open vocabulary — see SPEC §11.",
+          "examples": [
+            "research_entity", "verify_data", "format_response",
+            "classify", "extract", "summarize", "translate",
+            "generate_text", "generate_image", "generate_audio", "generate_video",
+            "redact", "route", "evaluate", "agent_loop",
+            "system_prompt", "rag_pack", "grep_pack", "tool_pack"
+          ]
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name":   { "type": "string" },
+              "type":   { "type": "string" },
+              "schema": { "type": "string" }
+            }
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name":   { "type": "string" },
+              "type":   { "type": "string" },
+              "schema": { "type": "string" }
+            }
+          }
+        },
+        "defaults": {
+          "type": "object",
+          "properties": {
+            "persona":         { "$ref": "_common.schema.json#/$defs/artifactId" },
+            "model_adapter":   { "$ref": "_common.schema.json#/$defs/artifactId" },
+            "knowledge_packs": { "type": "array", "items": { "$ref": "_common.schema.json#/$defs/artifactId" } },
+            "rule_packs":      { "type": "array", "items": { "$ref": "_common.schema.json#/$defs/artifactId" } }
+          }
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "kind", "ref"],
+            "properties": {
+              "id":       { "type": "string" },
+              "kind":     { "type": "string", "enum": ["harness", "rule_pack", "tool", "adapter", "branch", "loop", "knowledge_pack", "processor", "embedder", "chunker", "format_convert", "format_coerce", "cache", "memory", "judge", "escalate", "dispatch", "parallel", "report", "deliver"] },
+              "ref":      { "type": "string" },
+              "inputs":   { "type": "object" },
+              "when":     { "type": "string" },
+              "on_error": { "type": "string" }
+            }
+          }
+        },
+        "success_criteria": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["rubric", "threshold"],
+            "properties": {
+              "rubric":    { "$ref": "_common.schema.json#/$defs/artifactId" },
+              "threshold": { "type": "number" }
+            }
+          }
+        },
+        "output_safety_packs": {
+          "type": "array",
+          "items": { "$ref": "_common.schema.json#/$defs/artifactId" },
+          "description": "Required when modality includes image/audio/video. Rule packs that screen the generated artifact."
+        },
+        "style_packs": {
+          "type": "array",
+          "items": { "$ref": "_common.schema.json#/$defs/artifactId" }
+        },
+        "physics_packs": {
+          "type": "array",
+          "items": { "$ref": "_common.schema.json#/$defs/artifactId" }
+        }
+      }
+    }
+  ]
+}

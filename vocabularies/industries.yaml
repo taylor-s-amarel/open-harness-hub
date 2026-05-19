@@ -1,0 +1,169 @@
+# Controlled vocabulary: industries.
+#
+# Open list. New industries are added by PR. Sub-industries are dot-separated
+# (e.g., `healthcare.radiology`, `finance.aml`, `legal.immigration`).
+#
+# An artifact may declare one or many industries.
+
+industries:
+  - id: healthcare
+    label: Healthcare & life sciences
+    sub:
+      - id: healthcare.clinical
+        label: Clinical decision support
+      - id: healthcare.radiology
+        label: Radiology
+      - id: healthcare.pharmacy
+        label: Pharmacy & medication safety
+      - id: healthcare.payer
+        label: Payer / claims
+      - id: healthcare.public_health
+        label: Public health
+  - id: finance
+    label: Finance & banking
+    sub:
+      - id: finance.aml
+        label: Anti-money-laundering & sanctions
+      - id: finance.fraud
+        label: Fraud detection
+      - id: finance.kyc
+        label: KYC / onboarding
+      - id: finance.trading
+        label: Trading & markets
+      - id: finance.lending
+        label: Lending & underwriting
+  - id: legal
+    label: Legal
+    sub:
+      - id: legal.contract
+        label: Contract review
+      - id: legal.litigation
+        label: Litigation support
+      - id: legal.immigration
+        label: Immigration & labor mobility
+      - id: legal.ip
+        label: IP & trademark
+      - id: legal.compliance
+        label: Regulatory compliance
+  - id: education
+    label: Education
+    sub:
+      - id: education.k12
+        label: K-12
+      - id: education.higher
+        label: Higher education
+      - id: education.workforce
+        label: Workforce training
+      - id: education.tutoring
+        label: Tutoring & study aids
+  - id: government
+    label: Government & public sector
+    sub:
+      - id: government.benefits
+        label: Benefits administration
+      - id: government.permitting
+        label: Permitting & licensing
+      - id: government.regulatory
+        label: Regulatory review
+      - id: government.foia
+        label: FOIA / records
+  - id: retail
+    label: Retail & e-commerce
+    sub:
+      - id: retail.merchandising
+        label: Merchandising
+      - id: retail.support
+        label: Customer support
+      - id: retail.search
+        label: Product search & recommendation
+  - id: manufacturing
+    label: Manufacturing & industrial
+    sub:
+      - id: manufacturing.qa
+        label: Quality assurance
+      - id: manufacturing.supplychain
+        label: Supply chain
+      - id: manufacturing.maintenance
+        label: Predictive maintenance
+  - id: media
+    label: Media & publishing
+    sub:
+      - id: media.editorial
+        label: Editorial
+      - id: media.factcheck
+        label: Fact-checking & verification
+      - id: media.distribution
+        label: Distribution & moderation
+  - id: security
+    label: Security
+    sub:
+      - id: security.offensive
+        label: Red team / offensive
+      - id: security.defensive
+        label: Defensive / SOC
+      - id: security.appsec
+        label: AppSec / code review
+      - id: security.fraud
+        label: Identity & fraud
+  - id: climate
+    label: Climate, energy & sustainability
+  - id: agriculture
+    label: Agriculture & food systems
+  - id: energy
+    label: Energy
+  - id: transportation
+    label: Transportation & logistics
+  - id: real_estate
+    label: Real estate & construction
+  - id: hospitality
+    label: Hospitality & travel
+  - id: nonprofit
+    label: Nonprofit & civic
+  - id: humanitarian
+    label: Humanitarian & migrant protection
+    sub:
+      - id: humanitarian.trafficking
+        label: Anti-trafficking & forced-labor
+      - id: humanitarian.refugee
+        label: Refugee & displacement
+      - id: humanitarian.disaster
+        label: Disaster response
+  - id: defense
+    label: Defense & intelligence
+  - id: scientific_research
+    label: Scientific research
+    sub:
+      - id: scientific_research.bio
+        label: Life sciences research
+      - id: scientific_research.physical
+        label: Physical sciences research
+      - id: scientific_research.social
+        label: Social sciences research
+  - id: software
+    label: Software & developer tools
+    sub:
+      - id: software.codegen
+        label: Code generation
+      - id: software.codereview
+        label: Code review
+      - id: software.devops
+        label: DevOps / SRE
+      - id: software.docs
+        label: Developer docs
+  - id: creative
+    label: Creative & entertainment
+    sub:
+      - id: creative.image
+        label: Image generation
+      - id: creative.video
+        label: Video generation
+      - id: creative.audio
+        label: Audio / music generation
+      - id: creative.writing
+        label: Creative writing
+      - id: creative.game
+        label: Game design
+  - id: personal_productivity
+    label: Personal productivity & assistants
+  - id: cross_industry
+    label: Cross-industry (not tied to one domain)

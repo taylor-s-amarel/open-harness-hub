@@ -1,0 +1,44 @@
+# Reference repos — large, mirrored from upstream, not republished here.
+_reference/
+
+# Per-user Claude Code state.
+.claude/settings.local.json
+
+# Build artifacts
+site/
+public/
+dist/
+build/
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.env
+.env.*
+!.env.example
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Node
+node_modules/
+.npm/
+package-lock.json
+yarn.lock
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Logs and temp data
+logs/
+*.log
+.tmp/
+tmp/

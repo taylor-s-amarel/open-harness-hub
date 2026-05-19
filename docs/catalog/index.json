@@ -1,0 +1,2209 @@
+{
+  "_version": "0.1.0",
+  "_meta": {
+    "by_stage": {
+      "api": 10,
+      "cross_cutting": 8,
+      "post_api": 12,
+      "pre_api": 25
+    },
+    "by_position": {
+      "api.model_call": 5,
+      "api.tool_call": 5,
+      "cross_cutting.composition": 8,
+      "post_api.audit": 2,
+      "post_api.evaluation": 7,
+      "post_api.format_coercion": 1,
+      "post_api.output_safety": 2,
+      "pre_api.classification": 3,
+      "pre_api.context_assembly": 11,
+      "pre_api.input_gating": 10,
+      "pre_api.query_sanitization": 1
+    },
+    "by_type": {
+      "adapter": 2,
+      "harness": 4,
+      "knowledge-pack": 6,
+      "persona": 5,
+      "pipeline": 5,
+      "processor": 14,
+      "rubric": 5,
+      "rule-pack": 9,
+      "tool": 5
+    },
+    "by_industry": {
+      "creative": 10,
+      "cross_industry": 25,
+      "finance": 11,
+      "finance.aml": 10,
+      "finance.kyc": 3,
+      "healthcare": 9,
+      "healthcare.clinical": 8,
+      "media": 6,
+      "retail": 3,
+      "security": 1
+    },
+    "by_capability": {
+      "anonymization": 4,
+      "classification": 6,
+      "dialogue": 2,
+      "embedding": 1,
+      "evaluation": 8,
+      "extraction": 2,
+      "format_conversion": 4,
+      "generation": 3,
+      "image_synthesis": 3,
+      "memory": 1,
+      "reasoning": 9,
+      "research": 2,
+      "retrieval": 16,
+      "routing": 2,
+      "safety_gating": 21,
+      "summarization": 1,
+      "tool_use": 5,
+      "translation": 1,
+      "verification": 11
+    },
+    "by_modality": {
+      "audio": 1,
+      "image": 7,
+      "structured": 16,
+      "text": 48
+    },
+    "by_lifecycle": {
+      "beta": 19,
+      "experimental": 26,
+      "stable": 10
+    },
+    "total": 55
+  },
+  "_tree": {
+    "api": {
+      "api.model_call": {
+        "adapter": {
+          "cross_industry": [
+            "adapter/ollama-default"
+          ],
+          "creative": [
+            "adapter/sdxl-local"
+          ]
+        },
+        "harness": {
+          "finance": [
+            "harness/aml-investigation"
+          ],
+          "finance.aml": [
+            "harness/aml-investigation"
+          ],
+          "healthcare": [
+            "harness/clinical-decision-support"
+          ],
+          "healthcare.clinical": [
+            "harness/clinical-decision-support"
+          ],
+          "cross_industry": [
+            "harness/text-safety-review"
+          ]
+        }
+      },
+      "api.tool_call": {
+        "tool": {
+          "healthcare": [
+            "tool/lookup-icd10"
+          ],
+          "healthcare.clinical": [
+            "tool/lookup-icd10"
+          ],
+          "finance": [
+            "tool/sanctions-check",
+            "tool/transaction-graph-query"
+          ],
+          "finance.aml": [
+            "tool/sanctions-check",
+            "tool/transaction-graph-query"
+          ],
+          "finance.kyc": [
+            "tool/sanctions-check"
+          ],
+          "creative": [
+            "tool/txt2img-sdxl"
+          ],
+          "cross_industry": [
+            "tool/web-search"
+          ]
+        }
+      }
+    },
+    "cross_cutting": {
+      "cross_cutting.composition": {
+        "pipeline": {
+          "creative": [
+            "pipeline/brand-safe-product-photo"
+          ],
+          "retail": [
+            "pipeline/brand-safe-product-photo"
+          ],
+          "healthcare": [
+            "pipeline/differential-diagnosis"
+          ],
+          "healthcare.clinical": [
+            "pipeline/differential-diagnosis"
+          ],
+          "cross_industry": [
+            "pipeline/research-entity",
+            "pipeline/verify-claim-against-corpus"
+          ],
+          "finance": [
+            "pipeline/suspicious-transaction-review"
+          ],
+          "finance.aml": [
+            "pipeline/suspicious-transaction-review"
+          ],
+          "media": [
+            "pipeline/verify-claim-against-corpus"
+          ]
+        },
+        "processor": {
+          "cross_industry": [
+            "processor/embedder-minilm",
+            "processor/memory-conversational-store",
+            "processor/recursive-character-chunker"
+          ]
+        }
+      }
+    },
+    "post_api": {
+      "post_api.audit": {
+        "processor": {
+          "cross_industry": [
+            "processor/audit-trace-emitter",
+            "processor/escalate-human-review"
+          ]
+        }
+      },
+      "post_api.evaluation": {
+        "processor": {
+          "cross_industry": [
+            "processor/citation-coverage",
+            "processor/llm-judge"
+          ]
+        },
+        "rubric": {
+          "finance": [
+            "rubric/aml-investigation-v1"
+          ],
+          "finance.aml": [
+            "rubric/aml-investigation-v1"
+          ],
+          "creative": [
+            "rubric/brand-safe-image-v1"
+          ],
+          "retail": [
+            "rubric/brand-safe-image-v1"
+          ],
+          "healthcare": [
+            "rubric/clinical-grounded-response-v1"
+          ],
+          "healthcare.clinical": [
+            "rubric/clinical-grounded-response-v1"
+          ],
+          "cross_industry": [
+            "rubric/research-entity-v1",
+            "rubric/verification-v1"
+          ],
+          "media": [
+            "rubric/verification-v1"
+          ]
+        }
+      },
+      "post_api.format_coercion": {
+        "processor": {
+          "cross_industry": [
+            "processor/json-schema-repair"
+          ]
+        }
+      },
+      "post_api.output_safety": {
+        "processor": {
+          "creative": [
+            "processor/nsfw-image-classifier"
+          ],
+          "media": [
+            "processor/nsfw-image-classifier"
+          ]
+        },
+        "rule-pack": {
+          "creative": [
+            "rule-pack/grep-output-safety-image"
+          ],
+          "media": [
+            "rule-pack/grep-output-safety-image"
+          ]
+        }
+      }
+    },
+    "pre_api": {
+      "pre_api.input_gating": {
+        "harness": {
+          "cross_industry": [
+            "harness/redact-pii-text"
+          ]
+        },
+        "processor": {
+          "cross_industry": [
+            "processor/audio-to-text-whisper",
+            "processor/cost-ceiling-gate",
+            "processor/pdf-to-text",
+            "processor/prompt-injection-detector"
+          ],
+          "security": [
+            "processor/prompt-injection-detector"
+          ]
+        },
+        "rule-pack": {
+          "finance": [
+            "rule-pack/financial-pii-en",
+            "rule-pack/sanctions-screening"
+          ],
+          "creative": [
+            "rule-pack/grep-prohibited-terms"
+          ],
+          "media": [
+            "rule-pack/grep-prohibited-terms"
+          ],
+          "healthcare": [
+            "rule-pack/phi-hipaa-en"
+          ],
+          "cross_industry": [
+            "rule-pack/privacy-pii-text-en"
+          ],
+          "finance.aml": [
+            "rule-pack/sanctions-screening"
+          ],
+          "finance.kyc": [
+            "rule-pack/sanctions-screening"
+          ]
+        }
+      },
+      "pre_api.context_assembly": {
+        "knowledge-pack": {
+          "healthcare": [
+            "knowledge-pack/clinical-guidelines-sample",
+            "knowledge-pack/icd10-sample"
+          ],
+          "healthcare.clinical": [
+            "knowledge-pack/clinical-guidelines-sample",
+            "knowledge-pack/icd10-sample"
+          ],
+          "finance": [
+            "knowledge-pack/fatf-typologies-sample",
+            "knowledge-pack/sanctions-list-shape"
+          ],
+          "finance.aml": [
+            "knowledge-pack/fatf-typologies-sample",
+            "knowledge-pack/sanctions-list-shape"
+          ],
+          "creative": [
+            "knowledge-pack/lens-physics-primers",
+            "knowledge-pack/style-references-cinematic"
+          ],
+          "finance.kyc": [
+            "knowledge-pack/sanctions-list-shape"
+          ]
+        },
+        "persona": {
+          "finance": [
+            "persona/aml-analyst"
+          ],
+          "finance.aml": [
+            "persona/aml-analyst"
+          ],
+          "creative": [
+            "persona/cinematic-product-photographer"
+          ],
+          "retail": [
+            "persona/cinematic-product-photographer"
+          ],
+          "healthcare": [
+            "persona/clinical-reasoner"
+          ],
+          "healthcare.clinical": [
+            "persona/clinical-reasoner"
+          ],
+          "cross_industry": [
+            "persona/fact-checker",
+            "persona/research-analyst"
+          ],
+          "media": [
+            "persona/fact-checker"
+          ]
+        }
+      },
+      "pre_api.classification": {
+        "processor": {
+          "cross_industry": [
+            "processor/intent-dispatcher"
+          ]
+        },
+        "rule-pack": {
+          "finance": [
+            "rule-pack/aml-typologies-fatf"
+          ],
+          "finance.aml": [
+            "rule-pack/aml-typologies-fatf"
+          ],
+          "healthcare": [
+            "rule-pack/clinical-red-flags"
+          ],
+          "healthcare.clinical": [
+            "rule-pack/clinical-red-flags"
+          ]
+        }
+      },
+      "pre_api.query_sanitization": {
+        "rule-pack": {
+          "cross_industry": [
+            "rule-pack/web-search-allowlist-default"
+          ]
+        }
+      }
+    }
+  },
+  "rows": [
+    {
+      "id": "adapter/ollama-default",
+      "type": "adapter",
+      "name": "Ollama (local default)",
+      "description": "Default local-Ollama transport. Configured for `llama3.1:8b` at\n`http://localhost:11434`. Override by setting `OLLAMA_HOST` and\n`OLLAMA_MODEL` env vars at runtime.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "generation",
+        "dialogue",
+        "tool_use"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "api.model_call",
+      "lifecycle_stage": "api",
+      "trust_boundary": "local",
+      "tags": [
+        "ollama",
+        "local"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/adapters/ollama-default.yaml"
+    },
+    {
+      "id": "adapter/sdxl-local",
+      "type": "adapter",
+      "name": "SDXL (local Diffusers)",
+      "description": "Local SDXL via Hugging Face Diffusers. CUDA preferred; CPU falls\nback to long inference times. Used by `tool/txt2img-sdxl`.",
+      "version": "0.1.0",
+      "industry": [
+        "creative"
+      ],
+      "capability": [
+        "image_synthesis"
+      ],
+      "modality": [
+        "image"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "api.model_call",
+      "lifecycle_stage": "api",
+      "trust_boundary": "local",
+      "tags": [
+        "sdxl",
+        "diffusers"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/adapters/sdxl-local.yaml"
+    },
+    {
+      "id": "harness/aml-investigation",
+      "type": "harness",
+      "name": "AML Investigation",
+      "description": "Harness for AML suspicious-transaction review. Composes the\nAML-analyst persona, sanctions-screening heuristic, FATF-typology\nclassifier, financial-PII privacy gate, FATF-typology RAG,\nsanctions-check tool, transaction-graph-query tool, and a\ncitation-first response policy. Output is a SAR-style narrative\ndraft and a structured risk score; never a SAR filing.",
+      "version": "0.1.0",
+      "industry": [
+        "finance",
+        "finance.aml"
+      ],
+      "capability": [
+        "reasoning",
+        "classification",
+        "verification",
+        "tool_use",
+        "safety_gating"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "api.model_call",
+      "lifecycle_stage": "api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [
+        "persona",
+        "grep",
+        "classifier",
+        "heuristic",
+        "rag",
+        "tools",
+        "privacy"
+      ],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [
+        "persona_block",
+        "grep_rule",
+        "classifier_rule",
+        "heuristic_rule",
+        "rag_doc",
+        "tool_definition",
+        "entity_signal"
+      ],
+      "emits": [
+        "reasoning_step",
+        "extracted_fact",
+        "modus_operandi",
+        "audit_template"
+      ],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/harnesses/aml-investigation.yaml"
+    },
+    {
+      "id": "harness/clinical-decision-support",
+      "type": "harness",
+      "name": "Clinical Decision Support",
+      "description": "Healthcare-specific harness for differential-diagnosis reasoning.\nComposes the clinical-reasoner persona, red-flag classifier rules,\nHIPAA PHI privacy gate, clinical-guideline RAG, ICD-10 lookup tool,\nand a citation-first response policy. Educational / decision-\nsupport framing; never a substitute for a licensed clinician.",
+      "version": "0.1.0",
+      "industry": [
+        "healthcare",
+        "healthcare.clinical"
+      ],
+      "capability": [
+        "reasoning",
+        "retrieval",
+        "safety_gating",
+        "tool_use"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "api.model_call",
+      "lifecycle_stage": "api",
+      "trust_boundary": "local",
+      "tags": [
+        "healthcare",
+        "differential-diagnosis",
+        "phi-safe"
+      ],
+      "applied_layers": [
+        "persona",
+        "grep",
+        "classifier",
+        "rag",
+        "tools",
+        "privacy"
+      ],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [
+        "persona_block",
+        "grep_rule",
+        "classifier_rule",
+        "rag_doc",
+        "citation_edge",
+        "tool_definition"
+      ],
+      "emits": [
+        "reasoning_step",
+        "context_snippet",
+        "audit_template"
+      ],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/harnesses/clinical-decision-support.yaml"
+    },
+    {
+      "id": "harness/text-safety-review",
+      "type": "harness",
+      "name": "Text Safety Review",
+      "description": "A general-purpose text harness that composes persona + GREP +\nRAG + tools + (optional) online grounding around a model call.\nDesigned to produce cited, bounded, citation-first responses.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "safety_gating",
+        "retrieval",
+        "reasoning",
+        "dialogue"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "api.model_call",
+      "lifecycle_stage": "api",
+      "trust_boundary": "local",
+      "tags": [
+        "safety",
+        "rag",
+        "grep",
+        "citations"
+      ],
+      "applied_layers": [
+        "persona",
+        "grep",
+        "rag",
+        "tools"
+      ],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [
+        "grep_rule",
+        "rag_doc",
+        "citation_edge",
+        "tool_definition",
+        "persona_block",
+        "context_snippet"
+      ],
+      "emits": [
+        "reasoning_step",
+        "context_snippet"
+      ],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/harnesses/text-safety-review.yaml"
+    },
+    {
+      "id": "tool/lookup-icd10",
+      "type": "tool",
+      "name": "ICD-10 lookup",
+      "description": "Lookup an ICD-10 diagnosis code by code or label substring. Returns\ncode + label + category. Backend-agnostic; intended to bind to a\nlocal copy of the WHO ICD-10 release or to an institutional\nterminology server.",
+      "version": "0.1.0",
+      "industry": [
+        "healthcare",
+        "healthcare.clinical"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "api.tool_call",
+      "lifecycle_stage": "api",
+      "trust_boundary": "local",
+      "tags": [
+        "icd10",
+        "terminology"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/tools/lookup-icd10.yaml"
+    },
+    {
+      "id": "tool/sanctions-check",
+      "type": "tool",
+      "name": "Sanctions list check",
+      "description": "Check a normalized entity name against one or more sanctions lists\n(OFAC SDN, UN Consolidated, EU Consolidated, HMT, or institutional\nPEP). Returns matches above the configured fuzz threshold.",
+      "version": "0.1.0",
+      "industry": [
+        "finance",
+        "finance.aml",
+        "finance.kyc"
+      ],
+      "capability": [
+        "verification",
+        "safety_gating"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "api.tool_call",
+      "lifecycle_stage": "api",
+      "trust_boundary": "local",
+      "tags": [
+        "sanctions",
+        "kyc",
+        "aml"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/tools/sanctions-check.yaml"
+    },
+    {
+      "id": "tool/transaction-graph-query",
+      "type": "tool",
+      "name": "Transaction graph query",
+      "description": "Query a transaction-graph store for one-hop or multi-hop paths\nbetween accounts / entities. Used by AML harnesses to find shell\nlayering, circular flows, and rapid-in-rapid-out patterns.",
+      "version": "0.1.0",
+      "industry": [
+        "finance",
+        "finance.aml"
+      ],
+      "capability": [
+        "retrieval",
+        "reasoning"
+      ],
+      "modality": [
+        "structured"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "api.tool_call",
+      "lifecycle_stage": "api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/tools/transaction-graph-query.yaml"
+    },
+    {
+      "id": "tool/txt2img-sdxl",
+      "type": "tool",
+      "name": "Text-to-Image (SDXL)",
+      "description": "Generic SDXL text-to-image tool. Backend-agnostic \u2014 implementations\ninclude local Diffusers, Replicate, Hugging Face Inference, fal.ai,\nTogether, or a custom OpenAPI endpoint.",
+      "version": "0.1.0",
+      "industry": [
+        "creative"
+      ],
+      "capability": [
+        "image_synthesis"
+      ],
+      "modality": [
+        "text",
+        "image"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "api.tool_call",
+      "lifecycle_stage": "api",
+      "trust_boundary": "external",
+      "tags": [
+        "image-gen",
+        "sdxl"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/tools/txt2img-sdxl.yaml"
+    },
+    {
+      "id": "tool/web-search",
+      "type": "tool",
+      "name": "Web Search",
+      "description": "Generic web search tool. Backend-agnostic \u2014 implementations include\nBrave, Serper, DuckDuckGo, or a self-hosted SearXNG.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "api.tool_call",
+      "lifecycle_stage": "api",
+      "trust_boundary": "external",
+      "tags": [
+        "search",
+        "retrieval",
+        "tool"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/tools/web-search.yaml"
+    },
+    {
+      "id": "pipeline/brand-safe-product-photo",
+      "type": "pipeline",
+      "name": "Brand-Safe Product Photo",
+      "description": "Image-generation pipeline that composes a cinematic-photography\npersona, style-reference RAG, lens-physics RAG, GREP guard rules,\na tool call to a text-to-image model, and an output-safety review.\nDemonstrates that image-gen is a normal citizen of the catalog: it\nuses the same primitives as a text pipeline.",
+      "version": "0.1.0",
+      "industry": [
+        "creative",
+        "retail"
+      ],
+      "capability": [
+        "generation",
+        "image_synthesis",
+        "safety_gating"
+      ],
+      "modality": [
+        "image",
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "mixed",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "generate_image",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "rule-pack/grep-prohibited-terms",
+        "knowledge-pack/style-references-cinematic",
+        "knowledge-pack/lens-physics-primers",
+        "harness/text-safety-review",
+        "tool/txt2img-sdxl",
+        "rule-pack/grep-output-safety-image"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/generate-image/brand-safe-product-photo.yaml"
+    },
+    {
+      "id": "pipeline/differential-diagnosis",
+      "type": "pipeline",
+      "name": "Differential Diagnosis",
+      "description": "Educational decision-support pipeline. Given (presentation, history,\nexam) text, returns a ranked differential diagnosis with cited\nguideline sections, ICD-10 code candidates, and red-flag\nescalation. PHI is redacted before any model call.\n\nNot a substitute for a licensed clinician. Intended as a\nreproducible reference instance for the catalog.",
+      "version": "0.1.0",
+      "industry": [
+        "healthcare",
+        "healthcare.clinical"
+      ],
+      "capability": [
+        "reasoning",
+        "retrieval",
+        "tool_use",
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "classify",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "harness/redact-pii-text",
+        "rule-pack/clinical-red-flags",
+        "knowledge-pack/clinical-guidelines-sample",
+        "tool/lookup-icd10",
+        "harness/clinical-decision-support"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/healthcare-clinical/differential-diagnosis.yaml"
+    },
+    {
+      "id": "pipeline/research-entity",
+      "type": "pipeline",
+      "name": "Research Entity",
+      "description": "Given an entity name + entity kind (company / person / place / product),\nproduce a sourced one-page profile. Verifiable, cited, redacted.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "research",
+        "retrieval",
+        "extraction",
+        "summarization",
+        "verification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "mixed",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "research_entity",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "harness/redact-pii-text",
+        "harness/text-safety-review",
+        "tool/web-search",
+        "harness/text-safety-review",
+        "harness/text-safety-review",
+        "harness/text-safety-review"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/research-entity/research-entity.yaml"
+    },
+    {
+      "id": "pipeline/suspicious-transaction-review",
+      "type": "pipeline",
+      "name": "Suspicious Transaction Review",
+      "description": "Given a transaction bundle (account, recent transactions, related\nentities), produce a sanctions-first risk review, FATF typology\nscoring, and a SAR-style narrative DRAFT (never a SAR filing). PHI\n/ financial PII is redacted before any model call; sanctions hits\nhalt the routine review and route to escalation.",
+      "version": "0.1.0",
+      "industry": [
+        "finance",
+        "finance.aml"
+      ],
+      "capability": [
+        "classification",
+        "verification",
+        "tool_use",
+        "safety_gating"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "classify",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "harness/redact-pii-text",
+        "tool/sanctions-check",
+        "tool/transaction-graph-query",
+        "rule-pack/aml-typologies-fatf",
+        "knowledge-pack/fatf-typologies-sample",
+        "harness/aml-investigation"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/finance-aml/suspicious-transaction-review.yaml"
+    },
+    {
+      "id": "pipeline/verify-claim-against-corpus",
+      "type": "pipeline",
+      "name": "Verify Claim Against Corpus",
+      "description": "Given a claim and a corpus, return supports / contradicts /\nno-evidence with cited passages and a confidence score.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "media"
+      ],
+      "capability": [
+        "verification",
+        "retrieval",
+        "reasoning"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "verify_data",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "harness/text-safety-review"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/verify-data/verify-claim-against-corpus.yaml"
+    },
+    {
+      "id": "processor/embedder-minilm",
+      "type": "processor",
+      "name": "Text embedder (MiniLM-L6-v2)",
+      "description": "Generate 384-dimensional text embeddings using\n`sentence-transformers/all-MiniLM-L6-v2`. Suitable for catalog\nsemantic search, RAG retrieval, and de-duplication. Replace with a\nhigher-dim embedder for production semantic retrieval.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "embedding"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/embed/text-minilm.yaml"
+    },
+    {
+      "id": "processor/memory-conversational-store",
+      "type": "processor",
+      "name": "Conversational memory store",
+      "description": "Read / write conversational memory keyed by (user_id, session_id).\nStores the last N turns plus a compressed summary for older turns.\nPluggable backend: SQLite (default), Redis, Postgres, or DynamoDB.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "memory"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/memory/conversational-store.yaml"
+    },
+    {
+      "id": "processor/recursive-character-chunker",
+      "type": "processor",
+      "name": "Recursive character chunker",
+      "description": "Split text into chunks using a recursive character splitter\n(LangChain-style) that prefers paragraph \u2192 sentence \u2192 word\nboundaries. Returns chunks with overlap + per-chunk byte offsets so\ncitations can point back to the source.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "format_conversion"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/chunk/recursive-character.yaml"
+    },
+    {
+      "id": "processor/audit-trace-emitter",
+      "type": "processor",
+      "name": "Audit trace emitter",
+      "description": "Emit a per-step audit trace including hashed input/output, model\nversion, adapter, applied layers, latency, and cost. Writes to a\nconfigured sink (local JSONL, Loki, OpenTelemetry, SIEM).",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "evaluation"
+      ],
+      "modality": [
+        "structured"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "post_api.audit",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/audit/trace-emitter.yaml"
+    },
+    {
+      "id": "processor/citation-coverage",
+      "type": "processor",
+      "name": "Citation coverage verifier",
+      "description": "Verify that every factual sentence in a response carries at least\none citation marker (e.g. `[1]`, `[smith-2026]`). Returns coverage\nratio and a list of uncited sentences for re-prompt.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "verification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "post_api.evaluation",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/verify/citation-coverage.yaml"
+    },
+    {
+      "id": "processor/escalate-human-review",
+      "type": "processor",
+      "name": "Escalate to human reviewer",
+      "description": "Route an output (and its full trace + context) to a human reviewer\nqueue. Used when a safety gate fires, a confidence threshold is not\nmet, or a red-flag classifier triggers. Pluggable backend:\ngeneric task queue, Linear, Jira, Slack, or a custom webhook.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "routing",
+        "safety_gating"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "post_api.audit",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "external",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/escalate/human-review.yaml"
+    },
+    {
+      "id": "processor/json-schema-repair",
+      "type": "processor",
+      "name": "JSON Schema repair + validate",
+      "description": "Parse and repair JSON inside a model response, then validate against\na JSON Schema. On failure, returns `valid: false` plus the schema\nerrors so the upstream harness can re-prompt with the diff.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "format_conversion",
+        "verification"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "post_api.format_coercion",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/coerce/json-schema-repair.yaml"
+    },
+    {
+      "id": "processor/llm-judge",
+      "type": "processor",
+      "name": "LLM-as-judge",
+      "description": "Generic LLM-as-judge wrapper. Given (candidate response, rubric,\ncontext), returns a per-dimension score with rationale and a\nweighted-sum overall score. Independent of the model under review \u2014\nthe judge sits outside that model's reasoning trace.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "evaluation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "post_api.evaluation",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "mixed",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/eval/llm-judge.yaml"
+    },
+    {
+      "id": "processor/nsfw-image-classifier",
+      "type": "processor",
+      "name": "NSFW image classifier",
+      "description": "Lightweight NSFW image classifier (CLIP-based zero-shot or a\nfine-tuned head). Returns probability of NSFW content; pipelines\nbind to a threshold via the calling rule pack.",
+      "version": "0.1.0",
+      "industry": [
+        "creative",
+        "media"
+      ],
+      "capability": [
+        "safety_gating"
+      ],
+      "modality": [
+        "image"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "post_api.output_safety",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/safety/nsfw-image-classifier.yaml"
+    },
+    {
+      "id": "rubric/aml-investigation-v1",
+      "type": "rubric",
+      "name": "AML investigation v1",
+      "description": "Six-dimension rubric for AML-investigation outputs. Used by\n`pipeline/suspicious-transaction-review`.",
+      "version": "0.1.0",
+      "industry": [
+        "finance",
+        "finance.aml"
+      ],
+      "capability": [
+        "evaluation"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "post_api.evaluation",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rubrics/aml-investigation-v1.yaml"
+    },
+    {
+      "id": "rubric/brand-safe-image-v1",
+      "type": "rubric",
+      "name": "Brand-safe image v1",
+      "description": "Five-dimension rubric for brand-safe image generation. Used by\n`pipeline/brand-safe-product-photo`.",
+      "version": "0.1.0",
+      "industry": [
+        "creative",
+        "retail"
+      ],
+      "capability": [
+        "evaluation"
+      ],
+      "modality": [
+        "image",
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "post_api.evaluation",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rubrics/brand-safe-image-v1.yaml"
+    },
+    {
+      "id": "rubric/clinical-grounded-response-v1",
+      "type": "rubric",
+      "name": "Clinical grounded response v1",
+      "description": "Six-dimension rubric for clinical-decision-support outputs. Used by\n`pipeline/differential-diagnosis`.",
+      "version": "0.1.0",
+      "industry": [
+        "healthcare",
+        "healthcare.clinical"
+      ],
+      "capability": [
+        "evaluation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "post_api.evaluation",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rubrics/clinical-grounded-response-v1.yaml"
+    },
+    {
+      "id": "rubric/research-entity-v1",
+      "type": "rubric",
+      "name": "Research Entity v1",
+      "description": "Six-dimension rubric for entity research outputs. Used by\n`pipeline/research-entity` as its success criterion.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "evaluation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "post_api.evaluation",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rubrics/research-entity-v1.yaml"
+    },
+    {
+      "id": "rubric/verification-v1",
+      "type": "rubric",
+      "name": "Verification v1",
+      "description": "Four-dimension rubric for fact-verification outputs. Used by\n`pipeline/verify-claim-against-corpus`.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "media"
+      ],
+      "capability": [
+        "evaluation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "post_api.evaluation",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rubrics/verification-v1.yaml"
+    },
+    {
+      "id": "rule-pack/grep-output-safety-image",
+      "type": "rule-pack",
+      "name": "Image-output safety checks",
+      "description": "Post-generation safety check pack for image outputs. Pairs of\n(detector-call, threshold) plus a watermark presence check. Designed\nto be called by an image-gen pipeline AFTER the txt2img tool returns.",
+      "version": "0.1.0",
+      "industry": [
+        "creative",
+        "media"
+      ],
+      "capability": [
+        "safety_gating"
+      ],
+      "modality": [
+        "image"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "post_api.output_safety",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": "heuristic",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/grep/grep-output-safety-image.yaml"
+    },
+    {
+      "id": "harness/redact-pii-text",
+      "type": "harness",
+      "name": "Redact PII (text)",
+      "description": "Deterministic text PII redactor. Regex + NER patterns + a per-pattern\nreplacement contract; emits an audit log of (sha256(original), action).\nNo model call by default.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "anonymization",
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "pii",
+        "redaction",
+        "safety_gate"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [
+        "grep_rule"
+      ],
+      "emits": [
+        "audit_template"
+      ],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/harnesses/redact-pii-text.yaml"
+    },
+    {
+      "id": "knowledge-pack/clinical-guidelines-sample",
+      "type": "knowledge-pack",
+      "name": "Clinical guidelines (sample chunks)",
+      "description": "Sample chunks of clinical-guideline language for catalog-demo\npurposes. Each chunk has a stable section reference so a\ncitation-first persona can cite by section. Use authoritative\nfull-text guidelines (ACC/AHA, NICE, RCP, WHO) for production.",
+      "version": "0.1.0",
+      "industry": [
+        "healthcare",
+        "healthcare.clinical"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/clinical-guidelines-sample.yaml"
+    },
+    {
+      "id": "knowledge-pack/fatf-typologies-sample",
+      "type": "knowledge-pack",
+      "name": "FATF typologies (sample chunks)",
+      "description": "Sample paraphrased typology chunks for catalog-demo purposes. Real\ndeployments should ingest the latest FATF and FinCEN typology\nreports; this pack anchors the data shape and citation pattern.",
+      "version": "0.1.0",
+      "industry": [
+        "finance",
+        "finance.aml"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/fatf-typologies-sample.yaml"
+    },
+    {
+      "id": "knowledge-pack/icd10-sample",
+      "type": "knowledge-pack",
+      "name": "ICD-10 sample",
+      "description": "Sampled subset of ICD-10 diagnosis codes for catalog-demo purposes.\nUse the public, full ICD-10 release for any production deployment;\nthis pack exists to anchor the data shape, not to be authoritative.",
+      "version": "0.1.0",
+      "industry": [
+        "healthcare",
+        "healthcare.clinical"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "icd10",
+        "codes"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/icd10-sample.yaml"
+    },
+    {
+      "id": "knowledge-pack/lens-physics-primers",
+      "type": "knowledge-pack",
+      "name": "Lens physics primers",
+      "description": "Short physical-prior descriptors for camera lens behavior. Used by\nimage-gen prompt-shapers so prompts request physically plausible\ncombinations of focal length, aperture, distance, and field of view.",
+      "version": "0.1.0",
+      "industry": [
+        "creative"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/lens-physics-primers.yaml"
+    },
+    {
+      "id": "knowledge-pack/sanctions-list-shape",
+      "type": "knowledge-pack",
+      "name": "Sanctions list (shape, with placeholder entries)",
+      "description": "Reference SHAPE for sanctions list integration. Real data must be\npulled from OFAC, UN, EU, HMT, or the institution's licensed\nprovider; this pack illustrates the row schema, not the entries.\nEach row is an entity (individual or organization) with\nnormalized name, source list, listing date, and aliases.",
+      "version": "0.1.0",
+      "industry": [
+        "finance",
+        "finance.aml",
+        "finance.kyc"
+      ],
+      "capability": [
+        "retrieval",
+        "verification"
+      ],
+      "modality": [
+        "structured"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/sanctions-list-shape.yaml"
+    },
+    {
+      "id": "knowledge-pack/style-references-cinematic",
+      "type": "knowledge-pack",
+      "name": "Cinematic style references",
+      "description": "Curated style descriptors for cinematic product / scene photography.\nEach entry is a textual descriptor of a style \u2014 lighting, color\npalette, composition, atmosphere \u2014 with attribution to the public\nreference it generalizes.",
+      "version": "0.1.0",
+      "industry": [
+        "creative"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "style-reference",
+        "image-gen",
+        "cinematic"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/style-references-cinematic.yaml"
+    },
+    {
+      "id": "persona/aml-analyst",
+      "type": "persona",
+      "name": "AML Analyst",
+      "description": "Anti-money-laundering analyst persona. Reasons about transaction\npatterns, FATF typologies, sanctions hits, and behavioral signals.\nProduces SAR-style narratives with cited typology references and\nrefuses to assert intent without supporting evidence.\n\nEducational reference; real SAR filing requires institutional\npolicy, BSA officer review, and applicable jurisdiction\ncertification.",
+      "version": "0.1.0",
+      "industry": [
+        "finance",
+        "finance.aml"
+      ],
+      "capability": [
+        "reasoning",
+        "extraction",
+        "evaluation"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/personas/aml-analyst.yaml"
+    },
+    {
+      "id": "persona/cinematic-product-photographer",
+      "type": "persona",
+      "name": "Cinematic Product Photographer",
+      "description": "A persona for image-gen prompt-shaping. Writes prompts in the voice\nof a working commercial photographer: specific lens, lighting,\naperture, color palette, composition. Refuses celebrity-likeness\nrequests.",
+      "version": "0.1.0",
+      "industry": [
+        "creative",
+        "retail"
+      ],
+      "capability": [
+        "generation"
+      ],
+      "modality": [
+        "text",
+        "image"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/personas/cinematic-product-photographer.yaml"
+    },
+    {
+      "id": "persona/clinical-reasoner",
+      "type": "persona",
+      "name": "Clinical Reasoner",
+      "description": "A clinical-reasoning persona for decision-support assistants. Cites\nguideline sections, flags red-flag symptoms, distinguishes\ndifferential diagnoses, and refuses to give definitive diagnoses.\nEducational / decision-support framing only \u2014 never a replacement\nfor a licensed clinician.",
+      "version": "0.1.0",
+      "industry": [
+        "healthcare",
+        "healthcare.clinical"
+      ],
+      "capability": [
+        "reasoning",
+        "retrieval",
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/personas/clinical-reasoner.yaml"
+    },
+    {
+      "id": "persona/fact-checker",
+      "type": "persona",
+      "name": "Fact Checker",
+      "description": "A careful fact-checker persona. Reasons about claims, evidence, and\nthe gap between them. Prefers primary sources and refuses to confirm\ncontroversial claims without independent corroboration.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "media"
+      ],
+      "capability": [
+        "verification",
+        "reasoning"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/personas/fact-checker.yaml"
+    },
+    {
+      "id": "persona/research-analyst",
+      "type": "persona",
+      "name": "Research Analyst",
+      "description": "A careful research analyst persona. Cites every claim, prefers\nprimary sources, and refuses to fabricate when evidence is thin.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "research",
+        "verification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/personas/research-analyst.yaml"
+    },
+    {
+      "id": "processor/audio-to-text-whisper",
+      "type": "processor",
+      "name": "Audio to text (Whisper)",
+      "description": "Speech-to-text via a Whisper-family model. Returns transcript +\nper-segment timestamps + detected language. Wraps `openai-whisper`,\n`faster-whisper`, or `distil-whisper` based on the implementation\nchosen at runtime.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "format_conversion",
+        "translation"
+      ],
+      "modality": [
+        "audio",
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/format-convert/audio-to-text-whisper.yaml"
+    },
+    {
+      "id": "processor/cost-ceiling-gate",
+      "type": "processor",
+      "name": "Cost ceiling gate",
+      "description": "Reject a pipeline run if the predicted USD cost exceeds the budget\nconfigured for the calling pipeline / user. Uses token-count\nestimates + adapter pricing to predict cost.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "safety_gating"
+      ],
+      "modality": [
+        "structured"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/policy/cost-ceiling-gate.yaml"
+    },
+    {
+      "id": "processor/intent-dispatcher",
+      "type": "processor",
+      "name": "Intent dispatcher",
+      "description": "Classify an incoming message into one of N intents and route to the\nappropriate downstream pipeline. Backend can be a classifier rule\npack, a small local model, or a keyword router.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "routing",
+        "classification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.classification",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/route/intent-dispatcher.yaml"
+    },
+    {
+      "id": "processor/pdf-to-text",
+      "type": "processor",
+      "name": "PDF to text",
+      "description": "Convert a PDF (extractable layer + optional OCR fallback) into plain\ntext with page breaks preserved. Returns text plus per-page byte\noffsets so downstream chunkers can attribute chunks back to pages.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "format_conversion"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/format-convert/pdf-to-text.yaml"
+    },
+    {
+      "id": "processor/prompt-injection-detector",
+      "type": "processor",
+      "name": "Prompt-injection detector",
+      "description": "Detect prompt-injection / jailbreak attempts in user input,\nretrieved documents, or tool results. Two-tier: a fast regex /\nclassifier first pass plus an optional small-model classifier\nsecond pass.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "security"
+      ],
+      "capability": [
+        "safety_gating",
+        "classification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/safety/prompt-injection-detector.yaml"
+    },
+    {
+      "id": "rule-pack/aml-typologies-fatf",
+      "type": "rule-pack",
+      "name": "FATF AML typologies (sampled)",
+      "description": "Classifier rules for common FATF-aligned AML typologies. Each rule\nis a labeled-example bundle the AML harness uses to score a\ntransaction sequence against known patterns (structuring / smurfing,\nlayering through shell entities, trade-based laundering, etc.).\nReference for educational use; institutions should layer\njurisdiction-specific red flags on top.",
+      "version": "0.1.0",
+      "industry": [
+        "finance",
+        "finance.aml"
+      ],
+      "capability": [
+        "classification"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.classification",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": "classifier",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/classifier/aml-typologies-fatf.yaml"
+    },
+    {
+      "id": "rule-pack/clinical-red-flags",
+      "type": "rule-pack",
+      "name": "Clinical red flags",
+      "description": "A classifier rule pack of presenting-symptom patterns that require\nimmediate clinical evaluation. Fires inside the clinical-decision-\nsupport harness BEFORE differential reasoning, so the assistant's\nfirst sentence can flag the red flag.\n\nEducational baseline; covered entities should layer\ninstitution-specific rules and update against the latest guidelines.",
+      "version": "0.1.0",
+      "industry": [
+        "healthcare",
+        "healthcare.clinical"
+      ],
+      "capability": [
+        "classification",
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.classification",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": "classifier",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/classifier/clinical-red-flags.yaml"
+    },
+    {
+      "id": "rule-pack/financial-pii-en",
+      "type": "rule-pack",
+      "name": "Financial PII (English)",
+      "description": "Detection patterns for common financial PII in English transaction\nnarratives and KYC documents \u2014 account numbers, IBANs, SWIFT/BIC,\ncard PANs (Luhn-likely), SSN/TIN. Designed to gate any pipeline\nthat exports beyond the institution's own systems.",
+      "version": "0.1.0",
+      "industry": [
+        "finance"
+      ],
+      "capability": [
+        "anonymization",
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "financial-pii",
+        "privacy"
+      ],
+      "applied_layers": [],
+      "family": "privacy",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/privacy/financial-pii-en.yaml"
+    },
+    {
+      "id": "rule-pack/grep-prohibited-terms",
+      "type": "rule-pack",
+      "name": "Prohibited Terms (image-gen guard rails)",
+      "description": "GREP guard rail for image-generation pipelines. Blocks prompts that\nreference real celebrities by name, real trademarks, hate slurs, or\nexplicit sexual content. Severity drives the pipeline's refusal vs\nrewrite branch.",
+      "version": "0.1.0",
+      "industry": [
+        "creative",
+        "media"
+      ],
+      "capability": [
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "image-gen",
+        "guard-rails"
+      ],
+      "applied_layers": [],
+      "family": "grep",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/grep/grep-prohibited-terms.yaml"
+    },
+    {
+      "id": "rule-pack/phi-hipaa-en",
+      "type": "rule-pack",
+      "name": "PHI (HIPAA 18-identifier) \u2014 English text",
+      "description": "Detection patterns for the 18 HIPAA \"Safe Harbor\" PHI identifiers in\nEnglish text. Designed to feed `harness/redact-pii-text` and any\ndownstream healthcare pipeline that needs a hard PHI gate before\nmodel or external calls.\n\nThis is a baseline; covered entities should layer institution-specific\nrules on top.",
+      "version": "0.1.0",
+      "industry": [
+        "healthcare"
+      ],
+      "capability": [
+        "anonymization",
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "phi",
+        "hipaa",
+        "privacy"
+      ],
+      "applied_layers": [],
+      "family": "privacy",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/privacy/phi-hipaa-en.yaml"
+    },
+    {
+      "id": "rule-pack/privacy-pii-text-en",
+      "type": "rule-pack",
+      "name": "Privacy PII (English text)",
+      "description": "Baseline GREP rule pack for detecting common PII in English text.\nEmails, phone numbers, US SSN, passport numbers, IBANs, IPv4. Designed\nto feed `harness/redact-pii-text` and any downstream pipeline that\nneeds a hard PII gate before model or external calls.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "anonymization",
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "pii",
+        "privacy",
+        "grep"
+      ],
+      "applied_layers": [],
+      "family": "grep",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/grep/privacy-pii-text-en.yaml"
+    },
+    {
+      "id": "rule-pack/sanctions-screening",
+      "type": "rule-pack",
+      "name": "Sanctions screening (deterministic)",
+      "description": "Heuristic rule pack for sanctions screening. Each rule is a\ncondition that pairs a normalized entity name (or fuzzy match) with\na sanctions list and a fuzz threshold. The harness pre-normalizes\nthe entity (transliterate, fold case, strip honorifics) before\nevaluating. Backed by a sanctions-list knowledge pack.",
+      "version": "0.1.0",
+      "industry": [
+        "finance",
+        "finance.aml",
+        "finance.kyc"
+      ],
+      "capability": [
+        "safety_gating",
+        "verification"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": "heuristic",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/heuristic/sanctions-screening.yaml"
+    },
+    {
+      "id": "rule-pack/web-search-allowlist-default",
+      "type": "rule-pack",
+      "name": "Web search allowlist (default)",
+      "description": "Default online-search rule pack. Allowlist of trusted public-source\ndomains, per-source freshness windows, query sanitization rules,\nand a small blocklist of dangerous source patterns. Designed to be\ncomposed into any pipeline that does outbound web search.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval",
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.query_sanitization",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "external",
+      "tags": [
+        "online-search",
+        "allowlist",
+        "policy"
+      ],
+      "applied_layers": [],
+      "family": "online_search",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/online-search/web-search-allowlist-default.yaml"
+    }
+  ]
+}

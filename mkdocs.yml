@@ -1,0 +1,97 @@
+site_name: Open Harness Hub
+site_description: Host-agnostic catalog of harnesses, knowledge objects, logic & rule packs, tools, pipelines, and benchmarks for any industry.
+site_url: https://open-harness-hub.dev/
+repo_url: https://github.com/TaylorAmarelTech/open-harness-hub
+repo_name: TaylorAmarelTech/open-harness-hub
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.tabs.link
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue grey
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue grey
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+plugins:
+  - search
+  - tags
+
+nav:
+  - Home: index.md
+  - Concepts:
+    - Overview: concepts/overview.md
+    - Taxonomy: concepts/taxonomy.md
+    - Layers & primitives: concepts/layers.md
+    - Pre/post-API processes: concepts/pre-post-api.md
+    - Multimodal pipelines: concepts/multimodal.md
+    - Database representations: concepts/databases.md
+    - Playground & sample runs: concepts/playground.md
+  - Browse catalog: catalog/browser.html
+  - Catalog:
+    - Index: catalog/index.md
+  - How to:
+    - Add an artifact: howto/add-artifact.md
+    - Run a pipeline locally: howto/run-pipeline.md
+    - Mine Kaggle for harnesses: howto/mine-kaggle-harnesses.md
+    - Deploy the hub: howto/deploy.md
+  - Reference:
+    - SPEC: reference/spec.md
+    - Vocabularies: reference/vocabularies.md
+    - Schemas: reference/schemas.md
+  - Research:
+    - Standards landscape: research/standards-landscape.md
+    - Claude Code skills overlap: research/claude-code-skills.md
+    - GitHub hosting plan: research/github-hosting.md
+  - About:
+    - Project: about/project.md
+    - License: about/license.md
