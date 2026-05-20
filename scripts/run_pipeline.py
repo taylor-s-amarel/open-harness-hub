@@ -133,16 +133,180 @@ def _run_processor(ref_id: str, inputs: dict, artifact: dict | None) -> dict:
         }
 
     if ref_id == "processor/llm-judge":
-        # Deterministic stub: emit a fixed score so the pipeline returns
-        # a complete trace. Real implementation routes to an adapter.
-        return {
-            "_simulated": True,
-            "score":       0.0,
-            "rationale":   "Replace with real adapter call; this is a stub.",
-            "rubric_ref":  inputs.get("rubric_ref"),
-        }
+        return _llm_judge(inputs)
 
     return {"_simulated": True, "echo": inputs, "processor": ref_id}
+
+
+# ------------------------------------------------------------------
+# LLM judge — three execution paths, picked in order:
+#   1. Real adapter call (Ollama if reachable; Anthropic / OpenAI if
+#      env keys present and OH_JUDGE_ARM names one)
+#   2. Deterministic rubric-based score from prior-step GREP hits +
+#      severity weighting (always works, no network)
+#   3. The bare stub (only if catalog has no rubric)
+# ------------------------------------------------------------------
+_SEVERITY_WEIGHT = {"critical": 1.0, "high": 0.6, "medium": 0.3, "low": 0.1}
+
+
+def _deterministic_grade(rubric: dict | None, ctx_steps: dict) -> dict:
+    """Reduce rubric pass/fail to a number using prior GREP findings."""
+    if not rubric:
+        return {"score": None, "method": "no_rubric"}
+
+    severity_counts = {k: 0 for k in _SEVERITY_WEIGHT}
+    for step in ctx_steps.values():
+        if step.get("kind") == "rule_pack":
+            for h in (step.get("output") or {}).get("fired", []) or []:
+                sev = (h.get("severity") or "low").lower()
+                if sev in severity_counts:
+                    severity_counts[sev] += 1
+
+    # Severity-weighted penalty: each finding reduces score by its
+    # weight × 0.05, capped at 1.0 penalty.
+    penalty = sum(severity_counts[s] * _SEVERITY_WEIGHT[s] * 0.05 for s in severity_counts)
+    score = max(0.0, 1.0 - min(penalty, 1.0))
+
+    return {
+        "score":          round(score, 3),
+        "rubric":         rubric.get("id"),
+        "rubric_version": rubric.get("version"),
+        "method":         "deterministic_severity_weighted",
+        "severity_counts": severity_counts,
+        "penalty":         round(penalty, 3),
+    }
+
+
+def _llm_judge(inputs: dict) -> dict:
+    """LLM judge — try adapter, fall back to deterministic."""
+    rubric_id = inputs.get("rubric_ref")
+    candidate = inputs.get("candidate", "")
+    rubric_artifact = _load_artifact(rubric_id) if rubric_id else None
+    ctx_steps = _CURRENT_CTX.get("steps", {}) if _CURRENT_CTX else {}
+
+    arm = os.environ.get("OH_JUDGE_ARM", "deterministic")
+    adapter_result: dict | None = None
+
+    if arm == "ollama" and _ollama_available():
+        adapter_result = _judge_via_ollama(candidate, rubric_artifact)
+    elif arm == "anthropic" and os.environ.get("ANTHROPIC_API_KEY"):
+        adapter_result = _judge_via_anthropic(candidate, rubric_artifact)
+    elif arm == "openai" and os.environ.get("OPENAI_API_KEY"):
+        adapter_result = _judge_via_openai(candidate, rubric_artifact)
+
+    deterministic = _deterministic_grade(rubric_artifact, ctx_steps)
+
+    if adapter_result is not None:
+        return {
+            "score":         adapter_result.get("score", deterministic.get("score")),
+            "rationale":     adapter_result.get("rationale", ""),
+            "rubric":        rubric_id,
+            "method":        f"llm_judge:{arm}",
+            "deterministic_baseline": deterministic,
+        }
+    return {**deterministic, "method_label": "deterministic (no model arm configured / available)"}
+
+
+def _load_artifact(art_id: str | None) -> dict | None:
+    if not art_id:
+        return None
+    catalog = _CURRENT_CATALOG
+    if catalog is None:
+        return None
+    return catalog.get(art_id)
+
+
+def _ollama_available() -> bool:
+    try:
+        import urllib.request
+        host = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
+        with urllib.request.urlopen(f"{host}/api/tags", timeout=1) as r:
+            return r.status == 200
+    except Exception:
+        return False
+
+
+def _judge_via_ollama(candidate: str, rubric: dict | None) -> dict | None:
+    try:
+        import urllib.request
+        host  = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
+        model = os.environ.get("OLLAMA_MODEL", "llama3.1:8b")
+        prompt = _build_judge_prompt(candidate, rubric)
+        payload = json.dumps({"model": model, "prompt": prompt, "stream": False, "options": {"temperature": 0.0, "num_predict": int(os.environ.get("OH_OLLAMA_MAX_TOKENS", "512"))}}).encode()
+        req = urllib.request.Request(f"{host}/api/generate", data=payload, headers={"Content-Type": "application/json"})
+        timeout = int(os.environ.get("OH_OLLAMA_TIMEOUT", "300"))
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            data = json.loads(r.read())
+        return _parse_judge_response(data.get("response", ""))
+    except Exception as e:
+        return {"score": None, "rationale": f"ollama_error: {e}"}
+
+
+def _judge_via_anthropic(candidate: str, rubric: dict | None) -> dict | None:
+    try:
+        import urllib.request
+        api_key = os.environ["ANTHROPIC_API_KEY"]
+        model   = os.environ.get("OH_ANTHROPIC_MODEL", "claude-sonnet-4-6")
+        prompt = _build_judge_prompt(candidate, rubric)
+        payload = json.dumps({"model": model, "max_tokens": 1024, "messages": [{"role": "user", "content": prompt}]}).encode()
+        req = urllib.request.Request(
+            "https://api.anthropic.com/v1/messages",
+            data=payload,
+            headers={"x-api-key": api_key, "anthropic-version": "2023-06-01", "Content-Type": "application/json"},
+        )
+        with urllib.request.urlopen(req, timeout=120) as r:
+            data = json.loads(r.read())
+        text = "".join(b.get("text", "") for b in data.get("content", []))
+        return _parse_judge_response(text)
+    except Exception as e:
+        return {"score": None, "rationale": f"anthropic_error: {e}"}
+
+
+def _judge_via_openai(candidate: str, rubric: dict | None) -> dict | None:
+    try:
+        import urllib.request
+        api_key = os.environ["OPENAI_API_KEY"]
+        model   = os.environ.get("OH_OPENAI_MODEL", "gpt-5")
+        endpoint = os.environ.get("OH_OPENAI_ENDPOINT", "https://api.openai.com/v1/chat/completions")
+        prompt = _build_judge_prompt(candidate, rubric)
+        payload = json.dumps({"model": model, "messages": [{"role": "user", "content": prompt}], "temperature": 0.0}).encode()
+        req = urllib.request.Request(endpoint, data=payload, headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=120) as r:
+            data = json.loads(r.read())
+        text = data["choices"][0]["message"]["content"]
+        return _parse_judge_response(text)
+    except Exception as e:
+        return {"score": None, "rationale": f"openai_error: {e}"}
+
+
+def _build_judge_prompt(candidate: str, rubric: dict | None) -> str:
+    rubric_block = ""
+    if rubric and "dimensions" in rubric:
+        lines = []
+        for d in rubric["dimensions"]:
+            lines.append(f"  - {d['id']} ({d.get('weight', 0):.2f}): {d.get('label', '')}\n    evidence required: {d.get('evidence_required', '')}")
+        rubric_block = "\n".join(lines)
+    return (
+        f"You are a grading judge. Grade the following candidate text against the rubric.\n"
+        f"Return ONLY this JSON: {{\"score\": 0.0-1.0, \"per_dimension\": {{...}}, \"rationale\": \"...\"}}\n"
+        f"\nRUBRIC ({rubric.get('id') if rubric else 'unknown'}):\n{rubric_block}\n"
+        f"\nCANDIDATE:\n{candidate[:8000]}\n"
+        f"\nJSON:"
+    )
+
+
+def _parse_judge_response(text: str) -> dict:
+    try:
+        start = text.index("{")
+        end   = text.rindex("}") + 1
+        return json.loads(text[start:end])
+    except (ValueError, json.JSONDecodeError):
+        return {"score": None, "rationale": text[:1000]}
+
+
+# Tiny module-level state so processors can see catalog + context.
+_CURRENT_CATALOG: dict[str, dict] | None = None
+_CURRENT_CTX:     dict | None = None
 
 
 def run_step(step: dict, catalog: dict[str, dict], ctx: dict, *, simulate: bool) -> dict:
@@ -208,8 +372,11 @@ def run_step(step: dict, catalog: dict[str, dict], ctx: dict, *, simulate: bool)
 
 
 def run_pipeline(pipeline: dict, inputs: dict, *, simulate: bool) -> dict:
+    global _CURRENT_CATALOG, _CURRENT_CTX
     catalog = load_catalog()
     ctx: dict[str, Any] = {"inputs": inputs, "steps": {}}
+    _CURRENT_CATALOG = catalog
+    _CURRENT_CTX     = ctx
     trace: list[dict] = []
     for step in pipeline.get("steps", []) or []:
         if "when" in step:
