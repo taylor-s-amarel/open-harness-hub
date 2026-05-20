@@ -138,6 +138,31 @@ Three ingest paths feed the catalog (see `taxonomy/SPEC.md §12`):
   `build_catalog_pages.py` (turn manifests into doc pages), `new.py`
   (scaffold a new artifact).
 
+## CLI — `oh-hub`
+
+The ergonomic catalog interface. Works for humans + for AI agents
+(Claude Code / Cursor / Aider — invoke as a sub-process and the
+output is structured).
+
+```bash
+python scripts/oh_hub.py stats                         # catalog summary
+python scripts/oh_hub.py list pipeline                 # list by type
+python scripts/oh_hub.py describe persona/esg-auditor  # full describe + deps
+python scripts/oh_hub.py search forced-labor           # fuzzy search
+python scripts/oh_hub.py depends pipeline/supplier-policy-grading
+python scripts/oh_hub.py industries esg                # filter by industry
+python scripts/oh_hub.py validate                      # run validator
+python scripts/oh_hub.py run pipeline/X --inputs input.json
+python scripts/oh_hub.py emit persona/esg-auditor mcp  # emit to MCP / Croissant / etc.
+```
+
+The 2 demo scripts are pre-baked end-to-end runs:
+
+```bash
+python3 scripts/demo_esg_pipeline.py        # ESG grading on 3 supplier samples
+python3 scripts/demo_radiology_pipeline.py  # radiology grading on 3 reports
+```
+
 ## Run the site locally
 
 ```bash
