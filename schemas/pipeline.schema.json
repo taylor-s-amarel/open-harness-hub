@@ -63,7 +63,7 @@
             "required": ["id", "kind", "ref"],
             "properties": {
               "id":       { "type": "string" },
-              "kind":     { "type": "string", "enum": ["harness", "rule_pack", "tool", "adapter", "branch", "loop", "knowledge_pack", "processor", "embedder", "chunker", "format_convert", "format_coerce", "cache", "memory", "judge", "escalate", "dispatch", "parallel", "report", "deliver"] },
+              "kind":     { "type": "string", "enum": ["harness", "rule_pack", "tool", "adapter", "branch", "loop", "knowledge_pack", "processor", "embedder", "chunker", "format_convert", "format_coerce", "cache", "memory", "judge", "escalate", "dispatch", "parallel", "report", "deliver", "pipeline"] },
               "ref":      { "type": "string" },
               "inputs":   { "type": "object" },
               "when":     { "type": "string" },

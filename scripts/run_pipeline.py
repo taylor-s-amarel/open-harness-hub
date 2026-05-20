@@ -73,10 +73,14 @@ def resolve(value: Any, ctx: dict) -> Any:
 
 _PII_PATTERNS = [
     (re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b"), "EMAIL"),
-    (re.compile(r"\b(\+?\d{1,3}[ -]?)?\(?\d{2,4}\)?[ -]?\d{2,4}[ -]?\d{2,4}\b"), "PHONE"),
-    (re.compile(r"\b\d{3}-\d{2}-\d{4}\b"), "US_SSN"),
-    (re.compile(r"\b[A-Z]{2}\d{2}[A-Z0-9]{1,30}\b"), "IBAN"),
-    (re.compile(r"\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13})\b"), "CREDIT_CARD"),
+    # Phone: avoid eating digit-runs embedded in hyphenated tokens
+    # (Slack/Datadog/AWS API IDs etc.). Require either intl prefix,
+    # parenthesised area code, OR an actual phone formatting that
+    # wouldn't appear inside an alphanumeric-hyphen identifier.
+    (re.compile(r"(?<![\w-])(?:\+\d{1,3}[ -]?)?(?:\(\d{2,4}\)\s?\d{3,4}[ -]?\d{4}|\d{3}[ -]\d{3}[ -]\d{4})(?![\w-])"), "PHONE"),
+    (re.compile(r"(?<!\d)\d{3}-\d{2}-\d{4}(?!\d)"), "US_SSN"),
+    (re.compile(r"(?<![\w-])[A-Z]{2}\d{2}[A-Z0-9]{12,30}(?![\w-])"), "IBAN"),
+    (re.compile(r"(?<!\d)(?:4\d{12}(?:\d{3})?|5[1-5]\d{14}|3[47]\d{13})(?!\d)"), "CREDIT_CARD"),
 ]
 
 def _redact_pii(text: str) -> tuple[str, list[dict]]:
@@ -513,6 +517,24 @@ def run_step(step: dict, catalog: dict[str, dict], ctx: dict, *, simulate: bool)
         output = {"fired": fired, "pack": ref_id, "hit_count": len(fired)}
     elif step["kind"] == "processor":
         output = _run_processor(ref_id, inputs, artifact)
+    elif step["kind"] == "pipeline":
+        # Nested pipeline: run it with the resolved inputs and return its
+        # output + a per-step trace summary.
+        if artifact is None or artifact.get("type") != "pipeline":
+            output = {"_error": f"step references {ref_id} which is not a pipeline"}
+        else:
+            sub_result = run_pipeline(artifact, inputs, simulate=False)
+            output = {
+                "sub_pipeline":      ref_id,
+                "sub_output":        sub_result.get("output"),
+                "sub_aggregate":     sub_result.get("success_aggregate"),
+                "sub_criteria":      sub_result.get("success_criteria"),
+                "sub_step_count":    len(sub_result.get("trace") or []),
+                "sub_findings_total":sum(
+                    len((s.get("output") or {}).get("fired") or [])
+                    for s in (sub_result.get("trace") or [])
+                ),
+            }
     elif step["kind"] == "harness":
         # Deferred to the playground app; here we stub.
         output = {"_simulated": True, "echo": inputs, "harness": ref_id}
