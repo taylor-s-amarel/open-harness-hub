@@ -3,38 +3,40 @@
   "_meta": {
     "by_stage": {
       "api": 12,
-      "cross_cutting": 8,
+      "cross_cutting": 14,
       "post_api": 16,
-      "pre_api": 39
+      "pre_api": 49
     },
     "by_position": {
       "api.model_call": 7,
       "api.tool_call": 5,
-      "cross_cutting.composition": 8,
+      "cross_cutting.composition": 14,
       "post_api.audit": 3,
       "post_api.evaluation": 10,
       "post_api.format_coercion": 1,
       "post_api.output_safety": 2,
       "pre_api.classification": 3,
-      "pre_api.context_assembly": 24,
-      "pre_api.input_gating": 10,
+      "pre_api.context_assembly": 29,
+      "pre_api.input_gating": 15,
       "pre_api.query_sanitization": 2
     },
     "by_type": {
       "adapter": 4,
       "harness": 4,
       "knowledge-pack": 15,
-      "persona": 5,
-      "pipeline": 5,
+      "persona": 10,
+      "pipeline": 11,
       "processor": 22,
       "rubric": 5,
-      "rule-pack": 10,
+      "rule-pack": 15,
       "tool": 5
     },
     "by_industry": {
-      "ai": 4,
-      "creative": 10,
-      "cross_industry": 41,
+      "ai": 7,
+      "creative": 11,
+      "cross_industry": 52,
+      "education": 1,
+      "education.tutoring": 1,
       "finance": 14,
       "finance.aml": 11,
       "finance.kyc": 4,
@@ -43,44 +45,50 @@
       "healthcare.pharmacy": 1,
       "humanitarian": 1,
       "legal": 1,
-      "media": 6,
-      "retail": 3,
-      "security": 3,
-      "software": 1
+      "media": 7,
+      "retail": 5,
+      "retail.support": 2,
+      "security": 9,
+      "software": 5,
+      "software.codereview": 2
     },
     "by_capability": {
-      "anonymization": 4,
-      "classification": 8,
-      "dialogue": 2,
+      "agent_loop": 1,
+      "anonymization": 8,
+      "classification": 10,
+      "code_synthesis": 3,
+      "dialogue": 5,
       "embedding": 3,
       "evaluation": 12,
       "extraction": 2,
       "format_conversion": 6,
-      "generation": 4,
+      "generation": 5,
       "image_synthesis": 3,
       "memory": 1,
-      "reasoning": 11,
-      "research": 2,
-      "retrieval": 28,
-      "routing": 2,
-      "safety_gating": 22,
+      "planning": 1,
+      "reasoning": 19,
+      "research": 3,
+      "retrieval": 31,
+      "routing": 4,
+      "safety_gating": 29,
       "summarization": 1,
       "tool_use": 5,
-      "translation": 1,
-      "verification": 16
+      "translation": 2,
+      "verification": 21
     },
     "by_modality": {
       "audio": 1,
+      "code": 2,
       "image": 7,
-      "structured": 19,
-      "text": 67
+      "structured": 20,
+      "text": 83
     },
     "by_lifecycle": {
-      "beta": 28,
-      "experimental": 30,
-      "stable": 17
+      "beta": 33,
+      "experimental": 36,
+      "stable": 22
     },
-    "total": 75
+    "total": 91
   },
   "_tree": {
     "api": {
@@ -152,7 +160,30 @@
             "pipeline/brand-safe-product-photo"
           ],
           "retail": [
-            "pipeline/brand-safe-product-photo"
+            "pipeline/brand-safe-product-photo",
+            "pipeline/email-triage-and-draft"
+          ],
+          "cross_industry": [
+            "pipeline/chat-with-pdf-citations",
+            "pipeline/deep-research-with-citations",
+            "pipeline/email-triage-and-draft",
+            "pipeline/multi-doc-qa-subquestion",
+            "pipeline/plan-execute-critic-loop",
+            "pipeline/research-entity",
+            "pipeline/verify-claim-against-corpus"
+          ],
+          "software": [
+            "pipeline/code-review-with-risk-score"
+          ],
+          "software.codereview": [
+            "pipeline/code-review-with-risk-score"
+          ],
+          "security": [
+            "pipeline/code-review-with-risk-score"
+          ],
+          "media": [
+            "pipeline/deep-research-with-citations",
+            "pipeline/verify-claim-against-corpus"
           ],
           "healthcare": [
             "pipeline/differential-diagnosis"
@@ -160,18 +191,14 @@
           "healthcare.clinical": [
             "pipeline/differential-diagnosis"
           ],
-          "cross_industry": [
-            "pipeline/research-entity",
-            "pipeline/verify-claim-against-corpus"
+          "retail.support": [
+            "pipeline/email-triage-and-draft"
           ],
           "finance": [
             "pipeline/suspicious-transaction-review"
           ],
           "finance.aml": [
             "pipeline/suspicious-transaction-review"
-          ],
-          "media": [
-            "pipeline/verify-claim-against-corpus"
           ]
         },
         "processor": {
@@ -280,17 +307,35 @@
             "rule-pack/financial-pii-en",
             "rule-pack/sanctions-screening"
           ],
+          "security": [
+            "rule-pack/grep-ai-vendor-keys",
+            "rule-pack/grep-cloud-secrets",
+            "rule-pack/grep-private-key-blocks",
+            "rule-pack/grep-prompt-injection-heuristics",
+            "rule-pack/grep-vcs-platform-pats"
+          ],
+          "ai": [
+            "rule-pack/grep-ai-vendor-keys",
+            "rule-pack/grep-cloud-secrets",
+            "rule-pack/grep-prompt-injection-heuristics"
+          ],
+          "cross_industry": [
+            "rule-pack/grep-cloud-secrets",
+            "rule-pack/grep-private-key-blocks",
+            "rule-pack/grep-prompt-injection-heuristics",
+            "rule-pack/privacy-pii-text-en"
+          ],
           "creative": [
             "rule-pack/grep-prohibited-terms"
           ],
           "media": [
             "rule-pack/grep-prohibited-terms"
           ],
+          "software": [
+            "rule-pack/grep-vcs-platform-pats"
+          ],
           "healthcare": [
             "rule-pack/phi-hipaa-en"
-          ],
-          "cross_industry": [
-            "rule-pack/privacy-pii-text-en"
           ],
           "finance.aml": [
             "rule-pack/sanctions-screening"
@@ -367,10 +412,12 @@
             "persona/aml-analyst"
           ],
           "creative": [
-            "persona/cinematic-product-photographer"
+            "persona/cinematic-product-photographer",
+            "persona/translator-improver"
           ],
           "retail": [
-            "persona/cinematic-product-photographer"
+            "persona/cinematic-product-photographer",
+            "persona/support-agent"
           ],
           "healthcare": [
             "persona/clinical-reasoner"
@@ -378,12 +425,31 @@
           "healthcare.clinical": [
             "persona/clinical-reasoner"
           ],
+          "software": [
+            "persona/code-consultant",
+            "persona/linux-terminal"
+          ],
+          "software.codereview": [
+            "persona/code-consultant"
+          ],
           "cross_industry": [
             "persona/fact-checker",
-            "persona/research-analyst"
+            "persona/linux-terminal",
+            "persona/research-analyst",
+            "persona/support-agent",
+            "persona/translator-improver"
           ],
           "media": [
             "persona/fact-checker"
+          ],
+          "education": [
+            "persona/math-tutor"
+          ],
+          "education.tutoring": [
+            "persona/math-tutor"
+          ],
+          "retail.support": [
+            "persona/support-agent"
           ]
         },
         "processor": {
@@ -943,6 +1009,136 @@
       "path": "catalog/pipelines/generate-image/brand-safe-product-photo.yaml"
     },
     {
+      "id": "pipeline/chat-with-pdf-citations",
+      "type": "pipeline",
+      "name": "Chat with PDF (with citations)",
+      "description": "The canonical \"upload a PDF, ask questions, get cited answers\" pipeline\nused by vercel/ai-chatbot, lobe-chat, codertom/chat-with-pdf, etc. Full\nlayered chain:\n  pdf-to-text \u2192\n  recursive chunker \u2192\n  embedder (local or OpenAI) \u2192\n  hybrid retrieval policy (BM25 + dense + RRF) \u2192\n  cross-encoder reranker \u2192\n  persona (research analyst) \u2192\n  grep (PII guard on retrieved chunks before model sees them) \u2192\n  harness (text-safety-review) \u2192\n  citation-coverage verifier.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval",
+        "reasoning",
+        "verification"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "qa_attachment",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "processor/pdf-to-text",
+        "processor/recursive-character-chunker",
+        "processor/embedder-minilm",
+        "processor/embedder-minilm",
+        "rule-pack/hybrid-retrieval-policy",
+        "processor/cross-encoder-reranker",
+        "rule-pack/grep-prompt-injection-heuristics",
+        "rule-pack/privacy-pii-text-en",
+        "harness/text-safety-review",
+        "processor/citation-coverage"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/qa-attachment/chat-with-pdf-citations.yaml"
+    },
+    {
+      "id": "pipeline/code-review-with-risk-score",
+      "type": "pipeline",
+      "name": "Code review with risk score",
+      "description": "Full layered code-review pipeline. Composes:\n  persona (senior engineer) \u2192\n  grep (secret-leak guards on the diff) \u2192\n  classifier (clinical-style red-flag screen for OWASP categories) \u2192\n  knowledge-pack (OWASP Top 10 for LLM Apps + MITRE ATT&CK as RAG) \u2192\n  tool (lint runner) \u2192\n  harness (text-safety-review with citation requirements) \u2192\n  rubric (per-claim severity scoring).",
+      "version": "0.1.0",
+      "industry": [
+        "software",
+        "software.codereview",
+        "security"
+      ],
+      "capability": [
+        "reasoning",
+        "code_synthesis",
+        "verification",
+        "safety_gating"
+      ],
+      "modality": [
+        "text",
+        "code"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "review_code",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "rule-pack/grep-cloud-secrets",
+        "rule-pack/grep-ai-vendor-keys",
+        "rule-pack/grep-vcs-platform-pats",
+        "rule-pack/grep-private-key-blocks",
+        "knowledge-pack/owasp-top-10-llm",
+        "knowledge-pack/mitre-attack-sample",
+        "harness/text-safety-review",
+        "processor/citation-coverage"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/review-code/code-review-with-risk-score.yaml"
+    },
+    {
+      "id": "pipeline/deep-research-with-citations",
+      "type": "pipeline",
+      "name": "Deep research with citations",
+      "description": "The \"deep research\" pattern popularized by Perplexity and the\nAnthropic orchestrator-workers cookbook. Fully layered:\n  redact (PII out before external search) \u2192\n  persona (research analyst) \u2192\n  plan (LLM decomposes into sub-queries) \u2192\n  online-search rule pack (allowlist + sanitize) \u2192\n  tool (web-search) \u2192\n  rule pack (post-search verification \u2014 relevance + credibility) \u2192\n  harness (text-safety-review composes cited synthesis) \u2192\n  processor (citation-coverage verifier on output).",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "media"
+      ],
+      "capability": [
+        "research",
+        "retrieval",
+        "reasoning",
+        "verification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "external",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "research_web",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "harness/redact-pii-text",
+        "knowledge-pack/common-abbreviations",
+        "harness/text-safety-review",
+        "rule-pack/web-search-allowlist-default",
+        "tool/web-search",
+        "rule-pack/grep-prompt-injection-heuristics",
+        "harness/text-safety-review",
+        "harness/text-safety-review",
+        "processor/citation-coverage"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/research-web/deep-research-with-citations.yaml"
+    },
+    {
       "id": "pipeline/differential-diagnosis",
       "type": "pipeline",
       "name": "Differential Diagnosis",
@@ -980,6 +1176,124 @@
       ],
       "links": {},
       "path": "catalog/pipelines/healthcare-clinical/differential-diagnosis.yaml"
+    },
+    {
+      "id": "pipeline/email-triage-and-draft",
+      "type": "pipeline",
+      "name": "Email triage + reply draft",
+      "description": "Customer-support email workflow. Layered chain:\n  redact PII \u2192\n  grep (prompt-injection guard on email body \u2014 emails often carry attack\n    content from untrusted senders) \u2192\n  classify intent (top-K from a controlled intent vocabulary) \u2192\n  route to the right specialist persona \u2192\n  retrieve account / policy context \u2192\n  draft response \u2192\n  human-review gate for sensitive intents (refund, legal, escalation).\n\nMirrors anthropic-cookbook `patterns/agents/routing`, langgraph\n`examples/customer-support`, openai/swarm handoff.",
+      "version": "0.1.0",
+      "industry": [
+        "retail",
+        "retail.support",
+        "cross_industry"
+      ],
+      "capability": [
+        "classification",
+        "routing",
+        "reasoning",
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "triage_email",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "harness/redact-pii-text",
+        "rule-pack/grep-prompt-injection-heuristics",
+        "processor/intent-dispatcher",
+        "harness/text-safety-review",
+        "processor/audit-trace-emitter",
+        "processor/escalate-human-review"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/triage-email/email-triage-and-draft.yaml"
+    },
+    {
+      "id": "pipeline/multi-doc-qa-subquestion",
+      "type": "pipeline",
+      "name": "Multi-document QA with sub-question decomposition",
+      "description": "LlamaIndex's SubQuestionQueryEngine pattern in pipeline form. The user\nasks a compound question; an LLM decomposes it into sub-questions;\neach sub-question runs its own retrieval; per-sub-question answers\nare aggregated with citations. Strong for \"compare X across N docs\"\nquestions where naive RAG fails.\n\nChain: persona \u2192 grep (input guard) \u2192 decompose \u2192 per-sub-Q retrieve\n\u2192 per-sub-Q answer \u2192 aggregate-cite \u2192 output verify.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval",
+        "reasoning",
+        "verification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "qa_documents",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "rule-pack/grep-prompt-injection-heuristics",
+        "harness/text-safety-review",
+        "rule-pack/hybrid-retrieval-policy",
+        "processor/cross-encoder-reranker",
+        "harness/text-safety-review",
+        "harness/text-safety-review",
+        "processor/citation-coverage"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/qa-documents/multi-doc-qa-subquestion.yaml"
+    },
+    {
+      "id": "pipeline/plan-execute-critic-loop",
+      "type": "pipeline",
+      "name": "Plan / execute / critic loop",
+      "description": "The classic agentic pattern: planner LLM drafts a step list, executor\nruns the steps (with tool calls), critic LLM reviews the trace + re-plans\non failure. Iterates until either the goal is achieved or a max-iteration\ncap is hit. Mirrors langchain-ai/langgraph `examples/plan-and-execute`,\nAnthropic cookbook `patterns/agents/evaluator-optimizer`, and OpenAI\nswarm handoff routing.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "planning",
+        "agent_loop",
+        "reasoning"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "plan_and_execute",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "harness/redact-pii-text",
+        "rule-pack/grep-prompt-injection-heuristics",
+        "harness/text-safety-review",
+        "processor/cost-ceiling-gate",
+        "processor/self-refine-critique",
+        "processor/audit-trace-emitter"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/plan-and-execute/plan-execute-critic-loop.yaml"
     },
     {
       "id": "pipeline/research-entity",
@@ -2300,6 +2614,42 @@
       "path": "catalog/personas/clinical-reasoner.yaml"
     },
     {
+      "id": "persona/code-consultant",
+      "type": "persona",
+      "name": "Code consultant",
+      "description": "Senior-engineer persona for code review and architecture discussion.\nConverged from the Anthropic prompt library \"Code Consultant\",\nawesome-chatgpt-prompts \"Cyber Security Specialist\" + \"UX/UI\nDeveloper\", and most awesome-claude-code review skills.",
+      "version": "0.1.0",
+      "industry": [
+        "software",
+        "software.codereview"
+      ],
+      "capability": [
+        "reasoning",
+        "code_synthesis",
+        "verification"
+      ],
+      "modality": [
+        "text",
+        "code"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "code-review",
+        "senior-engineer"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/personas/code-consultant.yaml"
+    },
+    {
       "id": "persona/fact-checker",
       "type": "persona",
       "name": "Fact Checker",
@@ -2331,6 +2681,74 @@
       "path": "catalog/personas/fact-checker.yaml"
     },
     {
+      "id": "persona/linux-terminal",
+      "type": "persona",
+      "name": "Linux terminal",
+      "description": "The single most-cloned community persona \u2014 model behaves like a Linux\nterminal, returning only the would-be terminal output. Doubles as a\ndeterministic-IO eval (the same command should return the same shape\nof output). Originally from f/awesome-chatgpt-prompts.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "software"
+      ],
+      "capability": [
+        "dialogue",
+        "code_synthesis"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "terminal",
+        "community-classic"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/personas/linux-terminal.yaml"
+    },
+    {
+      "id": "persona/math-tutor",
+      "type": "persona",
+      "name": "Math tutor",
+      "description": "Patient math-tutor persona that uses Socratic prompts and step-by-step\nreasoning. Diagnoses what the student understands before introducing\nnew material. Useful baseline for `pipeline/cot-self-consistency` and\nany reasoning-eval workflow.",
+      "version": "0.1.0",
+      "industry": [
+        "education",
+        "education.tutoring"
+      ],
+      "capability": [
+        "reasoning",
+        "dialogue"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "tutoring",
+        "reasoning"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/personas/math-tutor.yaml"
+    },
+    {
       "id": "persona/research-analyst",
       "type": "persona",
       "name": "Research Analyst",
@@ -2359,6 +2777,72 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/personas/research-analyst.yaml"
+    },
+    {
+      "id": "persona/support-agent",
+      "type": "persona",
+      "name": "Customer support agent",
+      "description": "Customer-support agent persona. Acknowledges the user's situation,\nconfirms the goal, proposes the next concrete step. Escalates to a\nhuman if the issue cannot be solved in two messages or if it falls\ninto a sensitive category (refunds, legal, threats, policy\nexceptions).",
+      "version": "0.1.0",
+      "industry": [
+        "retail",
+        "retail.support",
+        "cross_industry"
+      ],
+      "capability": [
+        "dialogue",
+        "routing"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/personas/support-agent.yaml"
+    },
+    {
+      "id": "persona/translator-improver",
+      "type": "persona",
+      "name": "Translator + improver",
+      "description": "The second-most-cloned community persona. Translates input into\nfluent English (or any target language) AND improves the original\nfor clarity, idiom, and register. Pairs naturally with\n`rubric/bleu` / `rubric/meteor` evals.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "creative"
+      ],
+      "capability": [
+        "translation",
+        "generation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "translation",
+        "community-classic"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/personas/translator-improver.yaml"
     },
     {
       "id": "processor/audio-to-text-whisper",
@@ -2724,6 +3208,112 @@
       "path": "catalog/rule-packs/privacy/financial-pii-en.yaml"
     },
     {
+      "id": "rule-pack/grep-ai-vendor-keys",
+      "type": "rule-pack",
+      "name": "AI vendor API key detectors",
+      "description": "Detection patterns for API keys issued by major LLM / AI vendors \u2014\nAnthropic, OpenAI, Hugging Face, Cohere, Replicate, Mistral, Groq,\nTogether, fal, Perplexity, Voyage, NVIDIA NIM. The highest-current-risk\ncategory given how many AI projects accidentally commit these keys.\n\nTreat every hit as critical and run a key-revocation step\nimmediately. Most vendors also have programmatic revocation endpoints\n(Anthropic `/v1/admin/api-keys/{id}`, OpenAI `/v1/api-keys/{id}`).",
+      "version": "0.1.0",
+      "industry": [
+        "security",
+        "ai"
+      ],
+      "capability": [
+        "anonymization",
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "secrets",
+        "ai-vendor-keys",
+        "leak-prevention"
+      ],
+      "applied_layers": [],
+      "family": "grep",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/grep/ai-vendor-keys.yaml"
+    },
+    {
+      "id": "rule-pack/grep-cloud-secrets",
+      "type": "rule-pack",
+      "name": "Cloud provider secret detectors",
+      "description": "Detection patterns for cloud-provider access keys and service-account\ncredentials \u2014 AWS, GCP, Azure, DigitalOcean, OCI. Converged from\ngitleaks (`config/gitleaks.toml`), trufflehog (`pkg/detectors/`), and\nGitHub's native secret-scanning partner program.\n\nCritical-severity by default \u2014 any match is a hard block on input or\noutput. Verify against a Luhn / mod-N / live-call validator before\nalerting to reduce false positives in production.",
+      "version": "0.1.0",
+      "industry": [
+        "security",
+        "cross_industry",
+        "ai"
+      ],
+      "capability": [
+        "anonymization",
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "secrets",
+        "cloud",
+        "gitleaks-aligned"
+      ],
+      "applied_layers": [],
+      "family": "grep",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/grep/cloud-secrets.yaml"
+    },
+    {
+      "id": "rule-pack/grep-private-key-blocks",
+      "type": "rule-pack",
+      "name": "Private key block detectors",
+      "description": "Detection patterns for PEM-encoded private keys (RSA, EC, DSA,\nOpenSSH, PGP) and modern formats (Age, Sigstore). Any match is a\ncritical-severity hit \u2014 full revocation + key rotation required.",
+      "version": "0.1.0",
+      "industry": [
+        "security",
+        "cross_industry"
+      ],
+      "capability": [
+        "anonymization",
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "secrets",
+        "private-keys",
+        "pem"
+      ],
+      "applied_layers": [],
+      "family": "grep",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/grep/private-key-blocks.yaml"
+    },
+    {
       "id": "rule-pack/grep-prohibited-terms",
       "type": "rule-pack",
       "name": "Prohibited Terms (image-gen guard rails)",
@@ -2755,6 +3345,77 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/rule-packs/grep/grep-prohibited-terms.yaml"
+    },
+    {
+      "id": "rule-pack/grep-prompt-injection-heuristics",
+      "type": "rule-pack",
+      "name": "Prompt-injection heuristic detectors",
+      "description": "Heuristic regex patterns that flag likely prompt-injection attempts\nin input, retrieved documents, or tool results. Inspired by garak\nprobe families (`promptinject`, `latentinjection`, `ansiescape`,\n`encoding`, `dan`) and LLM Guard's `PromptInjection` scanner.\n\nThese are FAST FIRST-PASS heuristics; pair with a small-model\nclassifier (`processor/prompt-injection-detector`) for robust\ndefense. False positives are common; use to TRIGGER a review or\nparaphrase, not to block outright.",
+      "version": "0.1.0",
+      "industry": [
+        "security",
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "safety_gating",
+        "classification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "prompt-injection",
+        "jailbreak",
+        "garak-aligned"
+      ],
+      "applied_layers": [],
+      "family": "grep",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/grep/prompt-injection-heuristics.yaml"
+    },
+    {
+      "id": "rule-pack/grep-vcs-platform-pats",
+      "type": "rule-pack",
+      "name": "VCS platform PATs (GitHub, GitLab, Bitbucket, Atlassian)",
+      "description": "Detection patterns for Personal Access Tokens issued by code-hosting\nplatforms. Each vendor uses a stable prefix (`ghp_`, `gho_`, `ghu_`,\n`ghs_`, `ghr_` for GitHub; `glpat-` for GitLab; `ATATT3` for\nAtlassian/Jira; `BBDC-` for Bitbucket Cloud).",
+      "version": "0.1.0",
+      "industry": [
+        "security",
+        "software"
+      ],
+      "capability": [
+        "anonymization",
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.input_gating",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "secrets",
+        "vcs",
+        "pat"
+      ],
+      "applied_layers": [],
+      "family": "grep",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/grep/vcs-platform-pats.yaml"
     },
     {
       "id": "rule-pack/hybrid-retrieval-policy",
