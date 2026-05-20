@@ -11,7 +11,7 @@
     },
     "artifactId": {
       "type": "string",
-      "pattern": "^(harness|pipeline|benchmark|rule-pack|knowledge-pack|logic-pack|tool|persona|adapter|rubric|dataset|schema|processor)/[a-z0-9]+(-[a-z0-9]+)*$"
+      "pattern": "^(harness|pipeline|benchmark|rule-pack|knowledge-pack|logic-pack|tool|persona|adapter|rubric|dataset|schema|processor|pattern)/[a-z0-9]+(-[a-z0-9]+)*$"
     },
     "semver": {
       "type": "string",
@@ -36,7 +36,7 @@
       "required": ["id", "type", "version", "name", "description", "license", "lifecycle"],
       "properties": {
         "id":          { "$ref": "#/$defs/artifactId" },
-        "type":        { "type": "string", "enum": ["harness", "pipeline", "benchmark", "rule-pack", "knowledge-pack", "logic-pack", "tool", "persona", "adapter", "rubric", "dataset", "schema", "processor"] },
+        "type":        { "type": "string", "enum": ["harness", "pipeline", "benchmark", "rule-pack", "knowledge-pack", "logic-pack", "tool", "persona", "adapter", "rubric", "dataset", "schema", "processor", "pattern"] },
         "version":     { "$ref": "#/$defs/semver" },
         "name":        { "type": "string", "minLength": 1, "maxLength": 128 },
         "description": { "type": "string", "minLength": 1 },

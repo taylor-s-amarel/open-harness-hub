@@ -49,6 +49,7 @@ TYPE_TO_SCHEMA = {
     "rubric":         "rubric.schema.json",
     "dataset":        "dataset.schema.json",
     "processor":      "processor.schema.json",
+    "pattern":        "pattern.schema.json",
 }
 
 
@@ -113,7 +114,7 @@ def check_refs(manifest: dict, known_ids: set[str], errors: list[str]) -> None:
             for i, v in enumerate(node):
                 walk(v, f"{key_path}[{i}]")
         elif isinstance(node, str):
-            if re.fullmatch(r"(harness|pipeline|benchmark|rule-pack|knowledge-pack|logic-pack|tool|persona|adapter|rubric|dataset|schema|processor)/[a-z0-9]+(-[a-z0-9]+)*", node):
+            if re.fullmatch(r"(harness|pipeline|benchmark|rule-pack|knowledge-pack|logic-pack|tool|persona|adapter|rubric|dataset|schema|processor|pattern)/[a-z0-9]+(-[a-z0-9]+)*", node):
                 if node not in known_ids and not key_path.endswith(".id"):
                     errors.append(f"  unresolved ref {node!r} at {key_path}")
     walk(manifest)

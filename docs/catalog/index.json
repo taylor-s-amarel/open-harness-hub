@@ -3,13 +3,14 @@
   "_meta": {
     "by_stage": {
       "api": 12,
-      "cross_cutting": 16,
+      "cross_cutting": 33,
       "post_api": 17,
       "pre_api": 53
     },
     "by_position": {
       "api.model_call": 7,
       "api.tool_call": 5,
+      "cross_cutting": 17,
       "cross_cutting.composition": 16,
       "post_api.audit": 3,
       "post_api.evaluation": 11,
@@ -24,6 +25,7 @@
       "adapter": 4,
       "harness": 4,
       "knowledge-pack": 15,
+      "pattern": 17,
       "persona": 10,
       "pipeline": 12,
       "processor": 28,
@@ -32,9 +34,9 @@
       "tool": 5
     },
     "by_industry": {
-      "ai": 9,
+      "ai": 26,
       "creative": 11,
-      "cross_industry": 59,
+      "cross_industry": 71,
       "education": 1,
       "education.tutoring": 1,
       "finance": 15,
@@ -54,42 +56,42 @@
       "software.codereview": 2
     },
     "by_capability": {
-      "agent_loop": 2,
+      "agent_loop": 6,
       "anonymization": 8,
-      "classification": 11,
+      "classification": 12,
       "code_synthesis": 3,
       "dialogue": 5,
       "embedding": 3,
-      "evaluation": 13,
+      "evaluation": 15,
       "extraction": 2,
       "format_conversion": 7,
-      "generation": 5,
+      "generation": 8,
       "image_synthesis": 3,
       "memory": 1,
-      "planning": 1,
-      "reasoning": 22,
+      "planning": 4,
+      "reasoning": 31,
       "research": 4,
-      "retrieval": 33,
-      "routing": 5,
+      "retrieval": 39,
+      "routing": 6,
       "safety_gating": 29,
-      "summarization": 1,
-      "tool_use": 5,
+      "summarization": 2,
+      "tool_use": 6,
       "translation": 2,
-      "verification": 24
+      "verification": 27
     },
     "by_modality": {
       "audio": 1,
       "code": 2,
       "image": 7,
       "structured": 21,
-      "text": 90
+      "text": 107
     },
     "by_lifecycle": {
-      "beta": 36,
-      "experimental": 40,
-      "stable": 22
+      "beta": 39,
+      "experimental": 41,
+      "stable": 35
     },
-    "total": 98
+    "total": 115
   },
   "_tree": {
     "api": {
@@ -155,6 +157,43 @@
       }
     },
     "cross_cutting": {
+      "cross_cutting": {
+        "pattern": {
+          "ai": [
+            "pattern/corrective-rag",
+            "pattern/evaluator-optimizer",
+            "pattern/hyde",
+            "pattern/multi-agent-debate",
+            "pattern/naive-rag",
+            "pattern/orchestrator-workers",
+            "pattern/plan-and-execute",
+            "pattern/prompt-chaining",
+            "pattern/rag-fusion",
+            "pattern/react",
+            "pattern/reflexion",
+            "pattern/routing",
+            "pattern/self-rag",
+            "pattern/self-refine",
+            "pattern/skeleton-of-thought",
+            "pattern/step-back-prompting",
+            "pattern/tree-of-thoughts"
+          ],
+          "cross_industry": [
+            "pattern/corrective-rag",
+            "pattern/evaluator-optimizer",
+            "pattern/hyde",
+            "pattern/naive-rag",
+            "pattern/orchestrator-workers",
+            "pattern/plan-and-execute",
+            "pattern/prompt-chaining",
+            "pattern/rag-fusion",
+            "pattern/react",
+            "pattern/routing",
+            "pattern/self-rag",
+            "pattern/self-refine"
+          ]
+        }
+      },
       "cross_cutting.composition": {
         "pipeline": {
           "creative": [
@@ -989,6 +1028,591 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/tools/web-search.yaml"
+    },
+    {
+      "id": "pattern/corrective-rag",
+      "type": "pattern",
+      "name": "Corrective RAG (CRAG)",
+      "description": "RAG with a three-state retrieval evaluator. After initial retrieval,\nan evaluator classifies the retrieval as {correct, incorrect,\nambiguous}. Correct \u2192 strip-and-recompose; incorrect \u2192 fall back to\nweb search; ambiguous \u2192 both. The evaluator's three-state output\nprevents the \"no relevant doc found\" failure mode that breaks naive RAG.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval",
+        "verification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "external",
+      "tags": [
+        "rag",
+        "crag",
+        "corrective-rag"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/corrective-rag.yaml"
+    },
+    {
+      "id": "pattern/evaluator-optimizer",
+      "type": "pattern",
+      "name": "Evaluator-Optimizer",
+      "description": "One LLM call generates a candidate output; a second LLM (or processor)\nevaluates against a rubric and provides specific feedback; the\ngenerator revises. Loops until the evaluator passes. Distinguishes\nitself from Self-Refine by using a SEPARATE evaluator (often a\nstronger model) and a SPECIFIC rubric.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "reasoning",
+        "evaluation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "agent",
+        "evaluator-optimizer",
+        "judge"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/evaluator-optimizer.yaml"
+    },
+    {
+      "id": "pattern/hyde",
+      "type": "pattern",
+      "name": "HyDE (Hypothetical Document Embeddings)",
+      "description": "Generate a hypothetical answer to the query (allowing hallucination),\nthen embed THAT answer instead of (or alongside) the query, and retrieve\nagainst the embedding. Reduces query-document vocabulary gap because\nthe model's hallucinated answer is in the same \"register\" as real\nsource documents.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "rag",
+        "hyde"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/hyde.yaml"
+    },
+    {
+      "id": "pattern/multi-agent-debate",
+      "type": "pattern",
+      "name": "Multi-Agent Debate",
+      "description": "Two or more LLM instances argue different sides of a question, with\na judge LLM scoring the arguments. Used for hard reasoning problems\nwhere stress-testing a position improves accuracy. Inspired by\nDu et al. (2023) and Anthropic's debate work.",
+      "version": "0.1.0",
+      "industry": [
+        "ai"
+      ],
+      "capability": [
+        "reasoning",
+        "evaluation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "agent",
+        "debate",
+        "multi-agent"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/multi-agent-debate.yaml"
+    },
+    {
+      "id": "pattern/naive-rag",
+      "type": "pattern",
+      "name": "Naive RAG",
+      "description": "Single-shot retrieval-augmented generation: embed query, retrieve\ntop-k chunks, concatenate into the prompt, generate. The baseline\nevery other RAG variant compares against.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval",
+        "generation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "rag",
+        "baseline"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/naive-rag.yaml"
+    },
+    {
+      "id": "pattern/orchestrator-workers",
+      "type": "pattern",
+      "name": "Orchestrator-Workers",
+      "description": "A central orchestrator decomposes the task and delegates parallel\nsubtasks to worker agents (sometimes with different personas / tools\nper worker). Workers return structured results; orchestrator\naggregates. Differs from ReAct because workers operate in parallel\nwith isolated contexts.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "planning",
+        "agent_loop"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "agent",
+        "orchestrator",
+        "multi-agent"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/orchestrator-workers.yaml"
+    },
+    {
+      "id": "pattern/plan-and-execute",
+      "type": "pattern",
+      "name": "Plan-and-Execute",
+      "description": "Separate planning from execution. A planner LLM produces an explicit\nstep list; an executor (often a different / cheaper model) runs each\nstep. After execution, a re-planner can update the plan based on\nresults. Distinct from ReAct because ReAct interleaves reasoning\nwith each action; here planning happens up-front.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "planning",
+        "agent_loop"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "agent",
+        "plan-execute"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/plan-and-execute.yaml"
+    },
+    {
+      "id": "pattern/prompt-chaining",
+      "type": "pattern",
+      "name": "Prompt Chaining",
+      "description": "Break a task into a SEQUENCE of LLM calls where each call's output is\nthe next call's input. The simplest agent pattern \u2014 no tools, no\nloops, no routing \u2014 just a linear chain. Useful when a task is too\ncomplex for one prompt but doesn't need agency.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "generation",
+        "reasoning"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "chain",
+        "prompt-chaining"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/prompt-chaining.yaml"
+    },
+    {
+      "id": "pattern/rag-fusion",
+      "type": "pattern",
+      "name": "RAG-Fusion",
+      "description": "Generate N rewrites of the user query, run retrieval for each, and\nfuse the ranked lists via Reciprocal Rank Fusion. Outperforms single-\nquery retrieval when the user's wording differs from the corpus's.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "rag",
+        "fusion",
+        "rrf"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/rag-fusion.yaml"
+    },
+    {
+      "id": "pattern/react",
+      "type": "pattern",
+      "name": "ReAct (Reason + Act)",
+      "description": "Interleave reasoning steps with tool calls. At each step the model\nemits one of: Thought (free-form reasoning), Action (tool call),\nObservation (tool result fed back). Loop until the model emits a\nFinish action. The canonical agentic loop.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "reasoning",
+        "tool_use",
+        "agent_loop"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "mixed",
+      "tags": [
+        "agent",
+        "react",
+        "tool-use"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/react.yaml"
+    },
+    {
+      "id": "pattern/reflexion",
+      "type": "pattern",
+      "name": "Reflexion",
+      "description": "Add a verbal self-reflection step after each failed attempt. The\nreflection is appended to memory and shown to the model on the next\nattempt. Bounded by `max_iters`. Captures the \"I should have tried\nX next time\" insight that improves performance on subsequent\nattempts without weight updates.",
+      "version": "0.1.0",
+      "industry": [
+        "ai"
+      ],
+      "capability": [
+        "reasoning",
+        "agent_loop"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "agent",
+        "reflexion",
+        "memory"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/reflexion.yaml"
+    },
+    {
+      "id": "pattern/routing",
+      "type": "pattern",
+      "name": "Routing",
+      "description": "Classify the input and dispatch to the appropriate specialized\nsub-pipeline. A classifier (LLM, embedder + threshold, or rule pack)\npicks a route; the chosen sub-pipeline handles the task. Decouples\none front door from N specialized backends.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "routing",
+        "classification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "agent",
+        "routing",
+        "dispatch"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/routing.yaml"
+    },
+    {
+      "id": "pattern/self-rag",
+      "type": "pattern",
+      "name": "Self-RAG",
+      "description": "Reflection-token retrieval-augmented generation. The model first\ndecides whether to retrieve at all, then grades each retrieved\ndocument for relevance, generates an answer grounded in accepted\ndocuments, then grades the answer for factual support. Iterates if\nsupport is low. Distinct from naive RAG because every retrieval is\ngraded; distinct from CRAG because CRAG uses a three-state grader.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval",
+        "reasoning",
+        "verification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "rag",
+        "self-rag",
+        "reflection-tokens"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/self-rag.yaml"
+    },
+    {
+      "id": "pattern/self-refine",
+      "type": "pattern",
+      "name": "Self-Refine",
+      "description": "Single critique-and-revise pair. The model drafts an answer, then\ncritiques its own draft against a rubric, then revises. One iteration\nby default; can be looped. Simpler than Reflexion (no memory store\nacross attempts) and Constitutional-AI (no fixed critique principles).",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "reasoning",
+        "verification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "reasoning",
+        "self-refine",
+        "critique"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/self-refine.yaml"
+    },
+    {
+      "id": "pattern/skeleton-of-thought",
+      "type": "pattern",
+      "name": "Skeleton of Thought (SoT)",
+      "description": "First generate a SKELETON (bullet outline) of the answer, then expand\neach bullet IN PARALLEL via separate LLM calls. Stitch the expansions\ninto the final answer. Often used for tasks with a list-shaped output\nwhere the bullets are independently expandable.",
+      "version": "0.1.0",
+      "industry": [
+        "ai"
+      ],
+      "capability": [
+        "generation",
+        "summarization"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "reasoning",
+        "sot",
+        "parallel"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/skeleton-of-thought.yaml"
+    },
+    {
+      "id": "pattern/step-back-prompting",
+      "type": "pattern",
+      "name": "Step-Back Prompting",
+      "description": "Before answering, the model is prompted to derive a MORE ABSTRACT\nquestion that captures the essence of the user's question. Retrieval\nand reasoning then happen against the abstract question; the model\napplies the resulting principle to the specific case. Strong for\nreasoning tasks where the surface form of the question obscures the\nunderlying concept.",
+      "version": "0.1.0",
+      "industry": [
+        "ai"
+      ],
+      "capability": [
+        "reasoning",
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "reasoning",
+        "step-back"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/step-back-prompting.yaml"
+    },
+    {
+      "id": "pattern/tree-of-thoughts",
+      "type": "pattern",
+      "name": "Tree of Thoughts (ToT)",
+      "description": "At each reasoning step, propose N candidate \"thoughts\", value/vote\neach, and expand the best ones via BFS or DFS. Backtrack on dead-ends.\nGeneralizes chain-of-thought from a single chain to a tree, allowing\nexploration of multiple reasoning paths.",
+      "version": "0.1.0",
+      "industry": [
+        "ai"
+      ],
+      "capability": [
+        "reasoning",
+        "planning"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [
+        "reasoning",
+        "tree-of-thoughts",
+        "search"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/patterns/tree-of-thoughts.yaml"
     },
     {
       "id": "pipeline/brand-safe-product-photo",
