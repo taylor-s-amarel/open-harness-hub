@@ -165,5 +165,7 @@ industries:
         label: Game design
   - id: personal_productivity
     label: Personal productivity & assistants
+  - id: ai
+    label: AI / ML systems & tooling (a "vertical" only in the sense that AI itself is a domain — eg LLM red teaming, model evals, RAG infrastructure).
   - id: cross_industry
     label: Cross-industry (not tied to one domain)

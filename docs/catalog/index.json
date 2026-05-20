@@ -2,87 +2,98 @@
   "_version": "0.1.0",
   "_meta": {
     "by_stage": {
-      "api": 10,
+      "api": 12,
       "cross_cutting": 8,
-      "post_api": 12,
-      "pre_api": 25
+      "post_api": 16,
+      "pre_api": 39
     },
     "by_position": {
-      "api.model_call": 5,
+      "api.model_call": 7,
       "api.tool_call": 5,
       "cross_cutting.composition": 8,
-      "post_api.audit": 2,
-      "post_api.evaluation": 7,
+      "post_api.audit": 3,
+      "post_api.evaluation": 10,
       "post_api.format_coercion": 1,
       "post_api.output_safety": 2,
       "pre_api.classification": 3,
-      "pre_api.context_assembly": 11,
+      "pre_api.context_assembly": 24,
       "pre_api.input_gating": 10,
-      "pre_api.query_sanitization": 1
+      "pre_api.query_sanitization": 2
     },
     "by_type": {
-      "adapter": 2,
+      "adapter": 4,
       "harness": 4,
-      "knowledge-pack": 6,
+      "knowledge-pack": 15,
       "persona": 5,
       "pipeline": 5,
-      "processor": 14,
+      "processor": 22,
       "rubric": 5,
-      "rule-pack": 9,
+      "rule-pack": 10,
       "tool": 5
     },
     "by_industry": {
+      "ai": 4,
       "creative": 10,
-      "cross_industry": 25,
-      "finance": 11,
-      "finance.aml": 10,
-      "finance.kyc": 3,
-      "healthcare": 9,
-      "healthcare.clinical": 8,
+      "cross_industry": 41,
+      "finance": 14,
+      "finance.aml": 11,
+      "finance.kyc": 4,
+      "healthcare": 10,
+      "healthcare.clinical": 9,
+      "healthcare.pharmacy": 1,
+      "humanitarian": 1,
+      "legal": 1,
       "media": 6,
       "retail": 3,
-      "security": 1
+      "security": 3,
+      "software": 1
     },
     "by_capability": {
       "anonymization": 4,
-      "classification": 6,
+      "classification": 8,
       "dialogue": 2,
-      "embedding": 1,
-      "evaluation": 8,
+      "embedding": 3,
+      "evaluation": 12,
       "extraction": 2,
-      "format_conversion": 4,
-      "generation": 3,
+      "format_conversion": 6,
+      "generation": 4,
       "image_synthesis": 3,
       "memory": 1,
-      "reasoning": 9,
+      "reasoning": 11,
       "research": 2,
-      "retrieval": 16,
+      "retrieval": 28,
       "routing": 2,
-      "safety_gating": 21,
+      "safety_gating": 22,
       "summarization": 1,
       "tool_use": 5,
       "translation": 1,
-      "verification": 11
+      "verification": 16
     },
     "by_modality": {
       "audio": 1,
       "image": 7,
-      "structured": 16,
-      "text": 48
+      "structured": 19,
+      "text": 67
     },
     "by_lifecycle": {
-      "beta": 19,
-      "experimental": 26,
-      "stable": 10
+      "beta": 28,
+      "experimental": 30,
+      "stable": 17
     },
-    "total": 55
+    "total": 75
   },
   "_tree": {
     "api": {
       "api.model_call": {
         "adapter": {
           "cross_industry": [
-            "adapter/ollama-default"
+            "adapter/bge-embeddings-local",
+            "adapter/ollama-default",
+            "adapter/openai-embeddings"
+          ],
+          "ai": [
+            "adapter/bge-embeddings-local",
+            "adapter/openai-embeddings"
           ],
           "creative": [
             "adapter/sdxl-local"
@@ -177,6 +188,7 @@
         "processor": {
           "cross_industry": [
             "processor/audit-trace-emitter",
+            "processor/cost-meter",
             "processor/escalate-human-review"
           ]
         }
@@ -185,7 +197,10 @@
         "processor": {
           "cross_industry": [
             "processor/citation-coverage",
-            "processor/llm-judge"
+            "processor/hallucination-scorer",
+            "processor/llm-judge",
+            "processor/self-consistency-sampler",
+            "processor/self-refine-critique"
           ]
         },
         "rubric": {
@@ -287,28 +302,61 @@
       },
       "pre_api.context_assembly": {
         "knowledge-pack": {
+          "finance": [
+            "knowledge-pack/aml-red-flags-extended",
+            "knowledge-pack/fatf-typologies-sample",
+            "knowledge-pack/iso-country-codes",
+            "knowledge-pack/iso-currency-codes",
+            "knowledge-pack/sanctions-list-shape"
+          ],
+          "finance.aml": [
+            "knowledge-pack/aml-red-flags-extended",
+            "knowledge-pack/fatf-typologies-sample",
+            "knowledge-pack/sanctions-list-shape"
+          ],
+          "finance.kyc": [
+            "knowledge-pack/aml-red-flags-extended",
+            "knowledge-pack/sanctions-list-shape"
+          ],
           "healthcare": [
             "knowledge-pack/clinical-guidelines-sample",
+            "knowledge-pack/drug-interactions-sample",
             "knowledge-pack/icd10-sample"
           ],
           "healthcare.clinical": [
             "knowledge-pack/clinical-guidelines-sample",
+            "knowledge-pack/drug-interactions-sample",
             "knowledge-pack/icd10-sample"
           ],
-          "finance": [
-            "knowledge-pack/fatf-typologies-sample",
-            "knowledge-pack/sanctions-list-shape"
+          "cross_industry": [
+            "knowledge-pack/common-abbreviations",
+            "knowledge-pack/common-personas-library",
+            "knowledge-pack/iso-country-codes",
+            "knowledge-pack/iso-currency-codes",
+            "knowledge-pack/spdx-licenses-summary"
           ],
-          "finance.aml": [
-            "knowledge-pack/fatf-typologies-sample",
-            "knowledge-pack/sanctions-list-shape"
+          "healthcare.pharmacy": [
+            "knowledge-pack/drug-interactions-sample"
+          ],
+          "humanitarian": [
+            "knowledge-pack/iso-country-codes"
           ],
           "creative": [
             "knowledge-pack/lens-physics-primers",
             "knowledge-pack/style-references-cinematic"
           ],
-          "finance.kyc": [
-            "knowledge-pack/sanctions-list-shape"
+          "security": [
+            "knowledge-pack/mitre-attack-sample",
+            "knowledge-pack/owasp-top-10-llm"
+          ],
+          "ai": [
+            "knowledge-pack/owasp-top-10-llm"
+          ],
+          "legal": [
+            "knowledge-pack/spdx-licenses-summary"
+          ],
+          "software": [
+            "knowledge-pack/spdx-licenses-summary"
           ]
         },
         "persona": {
@@ -337,6 +385,33 @@
           "media": [
             "persona/fact-checker"
           ]
+        },
+        "processor": {
+          "cross_industry": [
+            "processor/cross-encoder-reranker",
+            "processor/inject-datetime-locale",
+            "processor/llmlingua-context-compressor"
+          ],
+          "ai": [
+            "processor/cross-encoder-reranker"
+          ]
+        },
+        "rule-pack": {
+          "cross_industry": [
+            "rule-pack/hybrid-retrieval-policy"
+          ]
+        }
+      },
+      "pre_api.query_sanitization": {
+        "processor": {
+          "cross_industry": [
+            "processor/hyde-query-expander"
+          ]
+        },
+        "rule-pack": {
+          "cross_industry": [
+            "rule-pack/web-search-allowlist-default"
+          ]
         }
       },
       "pre_api.classification": {
@@ -359,17 +434,44 @@
             "rule-pack/clinical-red-flags"
           ]
         }
-      },
-      "pre_api.query_sanitization": {
-        "rule-pack": {
-          "cross_industry": [
-            "rule-pack/web-search-allowlist-default"
-          ]
-        }
       }
     }
   },
   "rows": [
+    {
+      "id": "adapter/bge-embeddings-local",
+      "type": "adapter",
+      "name": "BGE embeddings (local)",
+      "description": "Local BGE (BAAI General Embeddings) via sentence-transformers. The\nsmall variant is 384-dim and runs on CPU; the large variant is\n1024-dim and benefits from GPU. Strong English + multilingual\nbaselines; no API key needed.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "ai"
+      ],
+      "capability": [
+        "embedding"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "api.model_call",
+      "lifecycle_stage": "api",
+      "trust_boundary": "local",
+      "tags": [
+        "bge",
+        "embeddings",
+        "local"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/adapters/bge-embeddings-local.yaml"
+    },
     {
       "id": "adapter/ollama-default",
       "type": "adapter",
@@ -403,6 +505,39 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/adapters/ollama-default.yaml"
+    },
+    {
+      "id": "adapter/openai-embeddings",
+      "type": "adapter",
+      "name": "OpenAI embeddings (text-embedding-3-small/large)",
+      "description": "OpenAI-compatible embeddings adapter. Defaults to\ntext-embedding-3-small (1536-dim, $0.02 / 1M tokens). Set\nOPENAI_API_KEY at runtime. Works against the OpenAI API directly,\nAzure OpenAI, or any OpenAI-compatible endpoint (Together, Groq,\nAnyscale, vLLM, etc.) by overriding the endpoint.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "ai"
+      ],
+      "capability": [
+        "embedding"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "api.model_call",
+      "lifecycle_stage": "api",
+      "trust_boundary": "external",
+      "tags": [
+        "openai",
+        "embeddings"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/adapters/openai-embeddings.yaml"
     },
     {
       "id": "adapter/sdxl-local",
@@ -1108,6 +1243,35 @@
       "path": "catalog/processors/verify/citation-coverage.yaml"
     },
     {
+      "id": "processor/cost-meter",
+      "type": "processor",
+      "name": "Cost meter",
+      "description": "Emit per-call USD cost accounting given (adapter_ref, input_tokens,\noutput_tokens, cached_tokens). Resolves the adapter's pricing card,\nmultiplies, and writes a metering row to the configured sink.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "evaluation"
+      ],
+      "modality": [
+        "structured"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "post_api.audit",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/telemetry/cost-meter.yaml"
+    },
+    {
       "id": "processor/escalate-human-review",
       "type": "processor",
       "name": "Escalate to human reviewer",
@@ -1137,6 +1301,36 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/processors/escalate/human-review.yaml"
+    },
+    {
+      "id": "processor/hallucination-scorer",
+      "type": "processor",
+      "name": "Hallucination scorer (SelfCheckGPT-style)",
+      "description": "Score per-sentence hallucination probability by sampling N alternative\ngenerations from the same model, then measuring semantic agreement\nbetween them. Sentences that vary widely across samples are flagged as\nlikely hallucinations. Based on SelfCheckGPT (Manakul et al. 2023).",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "verification",
+        "evaluation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "post_api.evaluation",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/verify/hallucination-scorer.yaml"
     },
     {
       "id": "processor/json-schema-repair",
@@ -1227,6 +1421,66 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/processors/safety/nsfw-image-classifier.yaml"
+    },
+    {
+      "id": "processor/self-consistency-sampler",
+      "type": "processor",
+      "name": "Self-consistency sampler",
+      "description": "Run N parallel samples of a chain-of-thought reasoning prompt, then\nmajority-vote on the final answer (Wang et al. 2023). Robust to\narithmetic and reasoning errors that a single sample would miss.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "reasoning",
+        "evaluation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "post_api.evaluation",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/sample/self-consistency.yaml"
+    },
+    {
+      "id": "processor/self-refine-critique",
+      "type": "processor",
+      "name": "Self-Refine critique loop",
+      "description": "Critique-and-revise loop (Madaan et al. 2023). The same model first\ndrafts an answer, then critiques its own draft against a rubric,\nthen revises. Iterates up to `max_iterations`. Useful when a single\npass produces verbose or weakly-grounded output.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "reasoning",
+        "evaluation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "post_api.evaluation",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/critique/self-refine.yaml"
     },
     {
       "id": "rubric/aml-investigation-v1",
@@ -1448,6 +1702,43 @@
       "path": "catalog/harnesses/redact-pii-text.yaml"
     },
     {
+      "id": "knowledge-pack/aml-red-flags-extended",
+      "type": "knowledge-pack",
+      "name": "AML red flags (extended)",
+      "description": "Extended catalog of anti-money-laundering red flags drawn from FATF\nguidance, FinCEN advisories, and Wolfsberg principles. Complements\n`knowledge-pack/fatf-typologies-sample` with finer-grained\nobservable indicators (transaction pattern, behavioral, document,\ngeographic) for use in AML pipelines.",
+      "version": "0.1.0",
+      "industry": [
+        "finance",
+        "finance.aml",
+        "finance.kyc"
+      ],
+      "capability": [
+        "retrieval",
+        "classification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "aml",
+        "red-flags",
+        "fatf",
+        "wolfsberg"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/aml-red-flags-extended.yaml"
+    },
+    {
       "id": "knowledge-pack/clinical-guidelines-sample",
       "type": "knowledge-pack",
       "name": "Clinical guidelines (sample chunks)",
@@ -1476,6 +1767,107 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/knowledge-packs/clinical-guidelines-sample.yaml"
+    },
+    {
+      "id": "knowledge-pack/common-abbreviations",
+      "type": "knowledge-pack",
+      "name": "Common abbreviations (cross-industry sample)",
+      "description": "Sampled abbreviations and acronyms across healthcare, finance,\nlegal, security, and technology, with expansions and a context tag.\nDesigned for the `expand.abbreviation` processor to look up\ndomain-specific expansions before retrieval or model call.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "abbreviations",
+        "glossary"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/common-abbreviations.yaml"
+    },
+    {
+      "id": "knowledge-pack/common-personas-library",
+      "type": "knowledge-pack",
+      "name": "Common personas / system-prompt library",
+      "description": "Reusable persona / system-prompt fragments for common roles \u2014\nresearch analyst, code reviewer, customer-support agent, technical\nwriter, translator, tutor, summarizer, fact-checker, plain-language\nrewriter. Each row is a self-contained system prompt the\n`inject.persona` processor or any harness can drop in.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "personas",
+        "system-prompts",
+        "library"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/common-personas-library.yaml"
+    },
+    {
+      "id": "knowledge-pack/drug-interactions-sample",
+      "type": "knowledge-pack",
+      "name": "Drug-drug interactions (sample, educational)",
+      "description": "Composite paraphrases of well-known drug-drug interaction patterns\nfor educational reference. NOT a substitute for an authoritative\ndatabase (e.g. RxNorm + Lexicomp + Micromedex). Each entry carries\ndrugA / drugB / severity / mechanism / management.",
+      "version": "0.1.0",
+      "industry": [
+        "healthcare",
+        "healthcare.pharmacy",
+        "healthcare.clinical"
+      ],
+      "capability": [
+        "retrieval",
+        "verification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "pharmacy",
+        "ddi",
+        "drug-interactions"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/drug-interactions-sample.yaml"
     },
     {
       "id": "knowledge-pack/fatf-typologies-sample",
@@ -1542,6 +1934,77 @@
       "path": "catalog/knowledge-packs/icd10-sample.yaml"
     },
     {
+      "id": "knowledge-pack/iso-country-codes",
+      "type": "knowledge-pack",
+      "name": "ISO 3166 country codes (sample)",
+      "description": "ISO 3166-1 alpha-2, alpha-3, numeric codes plus region and a coarse\nFATF risk hint. Useful for KYC, transaction-graph queries, and\ncross-border-flow analysis. Sample subset; full list (~250 entries)\ndrops in at production time.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "finance",
+        "humanitarian"
+      ],
+      "capability": [
+        "retrieval",
+        "verification"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "iso-3166",
+        "country-codes"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/iso-country-codes.yaml"
+    },
+    {
+      "id": "knowledge-pack/iso-currency-codes",
+      "type": "knowledge-pack",
+      "name": "ISO 4217 currency codes",
+      "description": "ISO 4217 three-letter currency codes with name, numeric code, and\nminor-unit precision. Useful for finance pipelines that need to\nvalidate currency strings or normalize amounts. Sample subset; the\nfull ISO 4217 list (~180 codes) drops in here at production time.",
+      "version": "0.1.0",
+      "industry": [
+        "finance",
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval",
+        "verification"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "iso-4217",
+        "currency"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/iso-currency-codes.yaml"
+    },
+    {
       "id": "knowledge-pack/lens-physics-primers",
       "type": "knowledge-pack",
       "name": "Lens physics primers",
@@ -1569,6 +2032,75 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/knowledge-packs/lens-physics-primers.yaml"
+    },
+    {
+      "id": "knowledge-pack/mitre-attack-sample",
+      "type": "knowledge-pack",
+      "name": "MITRE ATT&CK techniques (sample)",
+      "description": "Sample of MITRE ATT&CK Enterprise tactics + techniques. Each row\ncarries the technique ID, name, tactic, and a one-paragraph\ndescription. Use the canonical MITRE source at attack.mitre.org for\nproduction \u2014 this is a 30-row sample illustrating the row shape.",
+      "version": "0.1.0",
+      "industry": [
+        "security"
+      ],
+      "capability": [
+        "retrieval",
+        "classification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "mitre",
+        "attack",
+        "threat-intel"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/mitre-attack-sample.yaml"
+    },
+    {
+      "id": "knowledge-pack/owasp-top-10-llm",
+      "type": "knowledge-pack",
+      "name": "OWASP Top 10 for LLM Applications (2025)",
+      "description": "OWASP Top 10 risks for LLM-based applications \u2014 prompt injection,\ninsecure output handling, training-data poisoning, model DoS, supply\nchain, sensitive disclosure, plugin design, excessive agency,\noverreliance, model theft. Used by red-team harnesses and security\nevaluation pipelines.",
+      "version": "0.1.0",
+      "industry": [
+        "security",
+        "ai"
+      ],
+      "capability": [
+        "retrieval",
+        "safety_gating"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "owasp",
+        "llm-safety",
+        "security"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/owasp-top-10-llm.yaml"
     },
     {
       "id": "knowledge-pack/sanctions-list-shape",
@@ -1601,6 +2133,42 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/knowledge-packs/sanctions-list-shape.yaml"
+    },
+    {
+      "id": "knowledge-pack/spdx-licenses-summary",
+      "type": "knowledge-pack",
+      "name": "SPDX licenses (summary)",
+      "description": "Sampled summary of common SPDX licenses \u2014 permissive, copyleft,\nnon-commercial, public-domain. For each: license_id, category,\none-paragraph summary, redistribution-compatible flag, derivative\nwork permitted flag. Use the full SPDX list at spdx.org/licenses\nfor production.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "legal",
+        "software"
+      ],
+      "capability": [
+        "retrieval",
+        "verification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "spdx",
+        "licenses",
+        "compliance"
+      ],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/knowledge-packs/spdx-licenses-summary.yaml"
     },
     {
       "id": "knowledge-pack/style-references-cinematic",
@@ -1853,6 +2421,95 @@
       "path": "catalog/processors/policy/cost-ceiling-gate.yaml"
     },
     {
+      "id": "processor/cross-encoder-reranker",
+      "type": "processor",
+      "name": "Cross-encoder reranker",
+      "description": "Re-rank a list of retrieved candidates with a cross-encoder model\n(BAAI/bge-reranker-base, Cohere rerank-v3, or similar). Takes top-N\ncandidates from a hybrid retriever and returns the top-K most\nrelevant to the query. Typically used between hybrid retrieval and\ncontext-window assembly.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "ai"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/rerank/cross-encoder.yaml"
+    },
+    {
+      "id": "processor/hyde-query-expander",
+      "type": "processor",
+      "name": "HyDE query expander",
+      "description": "Hypothetical Document Embeddings (HyDE): generate a hypothetical\n*answer* to the user's query, then embed that hypothetical answer\nfor retrieval instead of (or in addition to) the original query.\nOften improves recall on questions that don't share vocabulary\nwith the source documents.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval",
+        "generation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.query_sanitization",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/query/hyde.yaml"
+    },
+    {
+      "id": "processor/inject-datetime-locale",
+      "type": "processor",
+      "name": "Inject datetime + locale into prompt",
+      "description": "Replace placeholders like `{{now}}`, `{{today}}`, `{{user_timezone}}`,\n`{{user_locale}}`, `{{user_currency}}` in the prompt template with the\nactual values at request time. Fixes the \"stale knowledge cutoff\" issue\nwhere the model otherwise has no idea what today's date is.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "format_conversion"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/inject/datetime-locale.yaml"
+    },
+    {
       "id": "processor/intent-dispatcher",
       "type": "processor",
       "name": "Intent dispatcher",
@@ -1881,6 +2538,35 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/processors/route/intent-dispatcher.yaml"
+    },
+    {
+      "id": "processor/llmlingua-context-compressor",
+      "type": "processor",
+      "name": "LLMLingua context compressor",
+      "description": "Compress long context (retrieved RAG chunks or prior conversation turns)\nby selectively pruning low-information tokens before the model sees\nthem. Implementations include LLMLingua, LongLLMLingua, and\nSelective-Context.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "format_conversion"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/compress/llmlingua-context.yaml"
     },
     {
       "id": "processor/pdf-to-text",
@@ -2069,6 +2755,41 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/rule-packs/grep/grep-prohibited-terms.yaml"
+    },
+    {
+      "id": "rule-pack/hybrid-retrieval-policy",
+      "type": "rule-pack",
+      "name": "Hybrid retrieval policy (BM25 + dense + RRF)",
+      "description": "A RAG retrieval policy pack: BM25 sparse + dense vector + Reciprocal\nRank Fusion + optional cross-encoder reranking + 1-hop citation\ngraph expansion. Pipelines and harnesses reference this pack to keep\nretrieval behaviour consistent across the catalog.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [
+        "rag",
+        "hybrid-retrieval",
+        "rrf",
+        "bm25",
+        "dense"
+      ],
+      "applied_layers": [],
+      "family": "rag",
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/rule-packs/rag/hybrid-retrieval-policy.yaml"
     },
     {
       "id": "rule-pack/phi-hipaa-en",
