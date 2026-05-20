@@ -73,13 +73,96 @@
         },
         "success_criteria": {
           "type": "array",
+          "description": "Pluggable success criteria. Each item is one of: rubric (legacy), regex, semantic, llm_judge, deterministic, tool_validate, composite. The runner walks the list and reports per-criterion pass/fail plus an aggregate pass.",
           "items": {
-            "type": "object",
-            "required": ["rubric", "threshold"],
-            "properties": {
-              "rubric":    { "$ref": "_common.schema.json#/$defs/artifactId" },
-              "threshold": { "type": "number" }
-            }
+            "oneOf": [
+              {
+                "type": "object",
+                "description": "Legacy/default: judge candidate against rubric, require score >= threshold.",
+                "required": ["rubric", "threshold"],
+                "properties": {
+                  "kind":      { "const": "rubric" },
+                  "rubric":    { "$ref": "_common.schema.json#/$defs/artifactId" },
+                  "threshold": { "type": "number" },
+                  "severity":  { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+                  "label":     { "type": "string" }
+                }
+              },
+              {
+                "type": "object",
+                "required": ["kind", "target", "pattern"],
+                "properties": {
+                  "kind":        { "const": "regex" },
+                  "target":      { "type": "string", "description": "$-path into trace, e.g. $.output.text" },
+                  "pattern":     { "type": "string" },
+                  "must_match":  { "type": "boolean", "default": true },
+                  "case_insensitive": { "type": "boolean", "default": true },
+                  "severity":    { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+                  "label":       { "type": "string" }
+                }
+              },
+              {
+                "type": "object",
+                "required": ["kind", "target", "must_cover"],
+                "properties": {
+                  "kind":        { "const": "semantic" },
+                  "target":      { "type": "string" },
+                  "must_cover":  { "type": "array", "items": { "type": "string" }, "minItems": 1, "description": "Reference topics — embedding similarity to each must clear similarity_threshold." },
+                  "embedder":    { "$ref": "_common.schema.json#/$defs/artifactId" },
+                  "similarity_threshold": { "type": "number", "default": 0.6 },
+                  "severity":    { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+                  "label":       { "type": "string" }
+                }
+              },
+              {
+                "type": "object",
+                "required": ["kind", "target"],
+                "properties": {
+                  "kind":         { "const": "llm_judge" },
+                  "target":       { "type": "string" },
+                  "rubric":       { "$ref": "_common.schema.json#/$defs/artifactId" },
+                  "judge_adapter":{ "$ref": "_common.schema.json#/$defs/artifactId" },
+                  "prompt":       { "type": "string", "description": "Optional custom prompt; otherwise derived from rubric." },
+                  "threshold":    { "type": "number" },
+                  "severity":     { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+                  "label":        { "type": "string" }
+                }
+              },
+              {
+                "type": "object",
+                "required": ["kind", "target", "op", "value"],
+                "properties": {
+                  "kind":     { "const": "deterministic" },
+                  "target":   { "type": "string" },
+                  "op":       { "type": "string", "enum": [">", ">=", "<", "<=", "==", "!=", "in", "not_in", "is_truthy", "is_falsy"] },
+                  "value":    {},
+                  "severity": { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+                  "label":    { "type": "string" }
+                }
+              },
+              {
+                "type": "object",
+                "required": ["kind", "tool"],
+                "properties": {
+                  "kind":     { "const": "tool_validate" },
+                  "tool":     { "$ref": "_common.schema.json#/$defs/artifactId" },
+                  "target":   { "type": "string" },
+                  "params":   { "type": "object" },
+                  "severity": { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+                  "label":    { "type": "string" }
+                }
+              },
+              {
+                "type": "object",
+                "required": ["kind", "op", "children"],
+                "properties": {
+                  "kind":     { "const": "composite" },
+                  "op":       { "type": "string", "enum": ["AND", "OR", "NOT"] },
+                  "children": { "type": "array", "items": {} },
+                  "label":    { "type": "string" }
+                }
+              }
+            ]
           }
         },
         "output_safety_packs": {

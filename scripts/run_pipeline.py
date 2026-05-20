@@ -309,6 +309,167 @@ _CURRENT_CATALOG: dict[str, dict] | None = None
 _CURRENT_CTX:     dict | None = None
 
 
+# ------------------------------------------------------------------
+# Composable success-criteria evaluator.
+# ------------------------------------------------------------------
+def _resolve_path(path: str, ctx: dict) -> Any:
+    """Resolve $.steps.X.output.field or $.inputs.field against ctx."""
+    if not isinstance(path, str) or not path.startswith("$."):
+        return path
+    parts = path[2:].split(".")
+    obj: Any = ctx
+    for p in parts:
+        if isinstance(obj, dict):
+            obj = obj.get(p)
+        else:
+            return None
+        if obj is None:
+            return None
+    return obj
+
+
+def _evaluate_criterion(criterion: dict, ctx: dict) -> dict:
+    """Evaluate one success criterion. Returns {pass, kind, label, details}."""
+    kind = criterion.get("kind", "rubric")  # legacy default
+    label = criterion.get("label") or kind
+    severity = criterion.get("severity", "medium")
+
+    try:
+        if kind == "rubric":
+            target = _find_judge_score_in_trace(ctx)
+            threshold = criterion.get("threshold", 0.7)
+            passed = target is not None and target >= threshold
+            return {"pass": passed, "kind": kind, "label": label, "severity": severity, "actual": target, "threshold": threshold}
+
+        if kind == "regex":
+            text = _resolve_path(criterion.get("target", ""), ctx) or ""
+            if not isinstance(text, str):
+                text = json.dumps(text)
+            flags = re.IGNORECASE if criterion.get("case_insensitive", True) else 0
+            matches = re.findall(criterion["pattern"], text, flags)
+            must = criterion.get("must_match", True)
+            passed = bool(matches) if must else not matches
+            return {"pass": passed, "kind": kind, "label": label, "severity": severity, "match_count": len(matches), "must_match": must, "first_match": (str(matches[0])[:80] if matches else None)}
+
+        if kind == "semantic":
+            text = _resolve_path(criterion.get("target", ""), ctx) or ""
+            topics = criterion.get("must_cover", [])
+            threshold = criterion.get("similarity_threshold", 0.6)
+            sims = _semantic_similarities(text, topics)
+            min_sim = min(sims.values()) if sims else 0.0
+            return {"pass": min_sim >= threshold, "kind": kind, "label": label, "severity": severity, "per_topic_similarity": sims, "min_similarity": round(min_sim, 3), "threshold": threshold}
+
+        if kind == "llm_judge":
+            text = _resolve_path(criterion.get("target", ""), ctx) or ""
+            rubric = _load_artifact(criterion.get("rubric"))
+            res = _llm_judge({"candidate": text, "rubric_ref": criterion.get("rubric")})
+            score = res.get("score")
+            threshold = criterion.get("threshold", 0.7)
+            passed = score is not None and score >= threshold
+            return {"pass": passed, "kind": kind, "label": label, "severity": severity, "score": score, "threshold": threshold, "method": res.get("method"), "rationale": (res.get("rationale") or "")[:300]}
+
+        if kind == "deterministic":
+            actual = _resolve_path(criterion.get("target", ""), ctx)
+            op = criterion.get("op")
+            value = criterion.get("value")
+            passed = _apply_op(actual, op, value)
+            return {"pass": passed, "kind": kind, "label": label, "severity": severity, "actual": actual, "op": op, "expected": value}
+
+        if kind == "tool_validate":
+            target = _resolve_path(criterion.get("target", ""), ctx) if criterion.get("target") else None
+            tool_id = criterion.get("tool")
+            params = criterion.get("params", {})
+            tool_result = _invoke_tool(tool_id, target, params)
+            return {"pass": bool(tool_result.get("pass")), "kind": kind, "label": label, "severity": severity, "tool": tool_id, "tool_result": tool_result}
+
+        if kind == "composite":
+            op = criterion.get("op", "AND")
+            children = criterion.get("children", [])
+            child_results = [_evaluate_criterion(c, ctx) for c in children]
+            child_pass = [r["pass"] for r in child_results]
+            if op == "AND":
+                passed = all(child_pass)
+            elif op == "OR":
+                passed = any(child_pass)
+            elif op == "NOT":
+                passed = not (child_pass[0] if child_pass else False)
+            else:
+                passed = False
+            return {"pass": passed, "kind": kind, "label": label, "op": op, "child_results": child_results}
+
+        return {"pass": False, "kind": kind, "label": label, "error": f"unknown criterion kind: {kind}"}
+    except Exception as e:
+        return {"pass": False, "kind": kind, "label": label, "error": f"evaluator_error: {e}"}
+
+
+def _find_judge_score_in_trace(ctx: dict) -> float | None:
+    for step in (ctx.get("steps") or {}).values():
+        if step.get("ref") == "processor/llm-judge":
+            out = step.get("output") or {}
+            s = out.get("score")
+            if s is not None:
+                return s
+    return None
+
+
+def _apply_op(actual, op, expected):
+    try:
+        if op == ">":          return actual > expected
+        if op == ">=":         return actual >= expected
+        if op == "<":          return actual < expected
+        if op == "<=":         return actual <= expected
+        if op == "==":         return actual == expected
+        if op == "!=":         return actual != expected
+        if op == "in":         return actual in expected
+        if op == "not_in":     return actual not in expected
+        if op == "is_truthy":  return bool(actual)
+        if op == "is_falsy":   return not bool(actual)
+    except Exception:
+        return False
+    return False
+
+
+def _semantic_similarities(text: str, topics: list[str]) -> dict[str, float]:
+    """Fallback semantic: word-set Jaccard if no embedder available."""
+    if not text or not topics:
+        return {t: 0.0 for t in topics}
+    text_words = set(re.findall(r"[a-z]{3,}", text.lower()))
+    out = {}
+    for t in topics:
+        t_words = set(re.findall(r"[a-z]{3,}", t.lower()))
+        if not t_words:
+            out[t] = 0.0
+            continue
+        overlap = len(text_words & t_words)
+        out[t] = round(overlap / len(t_words), 3)
+    return out
+
+
+def _invoke_tool(tool_id: str, target: Any, params: dict) -> dict:
+    """Minimal tool dispatch. Currently supports json-schema-validator."""
+    if tool_id == "tool/json-schema-validator":
+        try:
+            import jsonschema  # type: ignore[import]
+        except ImportError:
+            return {"pass": False, "error": "jsonschema not installed; pip install jsonschema"}
+        schema_path = params.get("schema_path")
+        if not schema_path:
+            return {"pass": False, "error": "schema_path required"}
+        try:
+            schema = json.loads((ROOT / schema_path).read_text())
+            jsonschema.Draft202012Validator(schema).validate(target)
+            return {"pass": True}
+        except jsonschema.ValidationError as e:
+            return {"pass": False, "error": str(e)[:300]}
+        except Exception as e:
+            return {"pass": False, "error": f"tool_error: {e}"}
+    return {"pass": False, "error": f"unknown tool: {tool_id}"}
+
+
+# Re-rooted ROOT for tool calls
+ROOT = Path(__file__).resolve().parent.parent
+
+
 def run_step(step: dict, catalog: dict[str, dict], ctx: dict, *, simulate: bool) -> dict:
     """Run one pipeline step. Returns a step-result record."""
     started = time.monotonic()
@@ -388,13 +549,21 @@ def run_pipeline(pipeline: dict, inputs: dict, *, simulate: bool) -> dict:
         ctx["steps"][step["id"]] = result
 
     last_output = trace[-1]["output"] if trace else {}
+
+    # Evaluate composable success criteria.
+    criteria = pipeline.get("success_criteria") or []
+    criterion_results = [_evaluate_criterion(c, ctx) for c in criteria]
+    aggregate_pass = all(r.get("pass") for r in criterion_results) if criterion_results else True
+
     return {
-        "pipeline":  pipeline["id"],
-        "inputs":    inputs,
-        "trace":     trace,
-        "output":    last_output,
-        "model":     os.environ.get("OH_MODEL", "simulated"),
-        "frozen_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "pipeline":           pipeline["id"],
+        "inputs":             inputs,
+        "trace":              trace,
+        "output":             last_output,
+        "success_criteria":   criterion_results,
+        "success_aggregate":  aggregate_pass,
+        "model":              os.environ.get("OH_MODEL", "simulated"),
+        "frozen_at":          time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
 
 
