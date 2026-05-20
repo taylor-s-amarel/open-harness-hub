@@ -3,49 +3,50 @@
   "_meta": {
     "by_stage": {
       "api": 12,
-      "cross_cutting": 14,
-      "post_api": 16,
-      "pre_api": 49
+      "cross_cutting": 16,
+      "post_api": 17,
+      "pre_api": 53
     },
     "by_position": {
       "api.model_call": 7,
       "api.tool_call": 5,
-      "cross_cutting.composition": 14,
+      "cross_cutting.composition": 16,
       "post_api.audit": 3,
-      "post_api.evaluation": 10,
+      "post_api.evaluation": 11,
       "post_api.format_coercion": 1,
       "post_api.output_safety": 2,
       "pre_api.classification": 3,
-      "pre_api.context_assembly": 29,
+      "pre_api.context_assembly": 32,
       "pre_api.input_gating": 15,
-      "pre_api.query_sanitization": 2
+      "pre_api.query_sanitization": 3
     },
     "by_type": {
       "adapter": 4,
       "harness": 4,
       "knowledge-pack": 15,
       "persona": 10,
-      "pipeline": 11,
-      "processor": 22,
+      "pipeline": 12,
+      "processor": 28,
       "rubric": 5,
       "rule-pack": 15,
       "tool": 5
     },
     "by_industry": {
-      "ai": 7,
+      "ai": 9,
       "creative": 11,
-      "cross_industry": 52,
+      "cross_industry": 59,
       "education": 1,
       "education.tutoring": 1,
-      "finance": 14,
+      "finance": 15,
       "finance.aml": 11,
       "finance.kyc": 4,
-      "healthcare": 10,
+      "government": 1,
+      "healthcare": 11,
       "healthcare.clinical": 9,
       "healthcare.pharmacy": 1,
       "humanitarian": 1,
       "legal": 1,
-      "media": 7,
+      "media": 8,
       "retail": 5,
       "retail.support": 2,
       "security": 9,
@@ -53,42 +54,42 @@
       "software.codereview": 2
     },
     "by_capability": {
-      "agent_loop": 1,
+      "agent_loop": 2,
       "anonymization": 8,
-      "classification": 10,
+      "classification": 11,
       "code_synthesis": 3,
       "dialogue": 5,
       "embedding": 3,
-      "evaluation": 12,
+      "evaluation": 13,
       "extraction": 2,
-      "format_conversion": 6,
+      "format_conversion": 7,
       "generation": 5,
       "image_synthesis": 3,
       "memory": 1,
       "planning": 1,
-      "reasoning": 19,
-      "research": 3,
-      "retrieval": 31,
-      "routing": 4,
+      "reasoning": 22,
+      "research": 4,
+      "retrieval": 33,
+      "routing": 5,
       "safety_gating": 29,
       "summarization": 1,
       "tool_use": 5,
       "translation": 2,
-      "verification": 21
+      "verification": 24
     },
     "by_modality": {
       "audio": 1,
       "code": 2,
       "image": 7,
-      "structured": 20,
-      "text": 83
+      "structured": 21,
+      "text": 90
     },
     "by_lifecycle": {
-      "beta": 33,
-      "experimental": 36,
+      "beta": 36,
+      "experimental": 40,
       "stable": 22
     },
-    "total": 91
+    "total": 98
   },
   "_tree": {
     "api": {
@@ -167,6 +168,7 @@
             "pipeline/chat-with-pdf-citations",
             "pipeline/deep-research-with-citations",
             "pipeline/email-triage-and-draft",
+            "pipeline/everything-research-pipeline",
             "pipeline/multi-doc-qa-subquestion",
             "pipeline/plan-execute-critic-loop",
             "pipeline/research-entity",
@@ -204,6 +206,7 @@
         "processor": {
           "cross_industry": [
             "processor/embedder-minilm",
+            "processor/iterative-revise-loop",
             "processor/memory-conversational-store",
             "processor/recursive-character-chunker"
           ]
@@ -226,8 +229,21 @@
             "processor/citation-coverage",
             "processor/hallucination-scorer",
             "processor/llm-judge",
+            "processor/official-sources-checker",
             "processor/self-consistency-sampler",
             "processor/self-refine-critique"
+          ],
+          "media": [
+            "processor/official-sources-checker"
+          ],
+          "government": [
+            "processor/official-sources-checker"
+          ],
+          "healthcare": [
+            "processor/official-sources-checker"
+          ],
+          "finance": [
+            "processor/official-sources-checker"
           ]
         },
         "rubric": {
@@ -454,12 +470,17 @@
         },
         "processor": {
           "cross_industry": [
+            "processor/context-window-packer",
             "processor/cross-encoder-reranker",
             "processor/inject-datetime-locale",
-            "processor/llmlingua-context-compressor"
+            "processor/inject-output-schema",
+            "processor/llmlingua-context-compressor",
+            "processor/reasoning-framework-selector"
           ],
           "ai": [
-            "processor/cross-encoder-reranker"
+            "processor/cross-encoder-reranker",
+            "processor/inject-output-schema",
+            "processor/reasoning-framework-selector"
           ]
         },
         "rule-pack": {
@@ -471,7 +492,8 @@
       "pre_api.query_sanitization": {
         "processor": {
           "cross_industry": [
-            "processor/hyde-query-expander"
+            "processor/hyde-query-expander",
+            "processor/sub-question-decomposer"
           ]
         },
         "rule-pack": {
@@ -1219,6 +1241,62 @@
       "path": "catalog/pipelines/triage-email/email-triage-and-draft.yaml"
     },
     {
+      "id": "pipeline/everything-research-pipeline",
+      "type": "pipeline",
+      "name": "Everything research pipeline (kitchen-sink, 22 passes)",
+      "description": "A comprehensive research pipeline that demonstrates every layer the\nhub supports \u2014 22 distinct passes from raw input through model call\nthrough iterative refinement to delivery.\n\nThis is the reference shape for \"production-grade\" RAG-with-everything:\npre-API the prompt goes through PII redact, prompt-injection guard,\nabbreviation expansion, intent classification, query decomposition,\nmulti-query expansion, allowlist sanitization, hybrid retrieval,\ncross-encoder rerank, citation-graph expansion, persona injection,\nreasoning-framework selection, output-schema directive,\ncontext-window packing, LLMLingua compression, cost-ceiling gate, and\ntrace attachment \u2014 THEN the LLM is called, THEN post-API the response\ngoes through citation extraction, hallucination scoring, official-source\nverification, schema validation, self-refine critique loop, audit\nemission, and delivery formatting.\n\nNot every use case needs all 22 passes \u2014 pick the subset that fits.\nUse this as a reference for what's possible.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "research",
+        "retrieval",
+        "reasoning",
+        "verification",
+        "evaluation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "mixed",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "research_entity",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "processor/cost-ceiling-gate",
+        "harness/redact-pii-text",
+        "rule-pack/grep-ai-vendor-keys",
+        "rule-pack/grep-prompt-injection-heuristics",
+        "knowledge-pack/common-abbreviations",
+        "processor/intent-dispatcher",
+        "processor/sub-question-decomposer",
+        "processor/hyde-query-expander",
+        "rule-pack/web-search-allowlist-default",
+        "rule-pack/hybrid-retrieval-policy",
+        "tool/web-search",
+        "processor/official-sources-checker",
+        "processor/cross-encoder-reranker",
+        "processor/reasoning-framework-selector",
+        "processor/context-window-packer",
+        "processor/llmlingua-context-compressor",
+        "processor/inject-output-schema",
+        "harness/text-safety-review",
+        "processor/hallucination-scorer",
+        "processor/citation-coverage",
+        "processor/iterative-revise-loop",
+        "processor/audit-trace-emitter"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/comprehensive-research/everything-research-pipeline.yaml"
+    },
+    {
       "id": "pipeline/multi-doc-qa-subquestion",
       "type": "pipeline",
       "name": "Multi-document QA with sub-question decomposition",
@@ -1438,6 +1516,37 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/processors/embed/text-minilm.yaml"
+    },
+    {
+      "id": "processor/iterative-revise-loop",
+      "type": "processor",
+      "name": "Iterative revise loop",
+      "description": "The \"send the response back to the LLM with accumulating context\" primitive.\nLoops:\n  1. Run an inner harness call.\n  2. Run one or more verification processors on the response.\n  3. If any verifier fails (citation coverage, schema, factuality,\n     safety), append the failure as additional context and call the\n     inner harness again.\n  4. Stop when (a) all verifiers pass, (b) max_iterations hit, or\n     (c) cost ceiling breached.\n\nThis is the key primitive for self-correction loops: Self-Refine,\nConstitutional-AI critique-revise, Self-RAG retrieve-then-judge,\nCorrective-RAG with knowledge refinement, Reflexion. Distinct from\n`processor/self-refine-critique` (which is a single critique-revise\npair); this primitive is the GENERIC LOOP that any verifier list can\ndrive.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "reasoning",
+        "verification",
+        "agent_loop"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/iterate/revise-loop.yaml"
     },
     {
       "id": "processor/memory-conversational-store",
@@ -1735,6 +1844,39 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/processors/safety/nsfw-image-classifier.yaml"
+    },
+    {
+      "id": "processor/official-sources-checker",
+      "type": "processor",
+      "name": "Official-sources analyzer",
+      "description": "Verify retrieved candidates against an allowlist of authoritative\nsources (gov, intergovernmental, academic, standards bodies).\nReturns per-candidate flags:\n  - is_official: bool\n  - authority_tier: enum [primary, secondary, tertiary, blog, unknown]\n  - jurisdiction_match: did the source's jurisdiction match the\n    query's geographic scope?\n  - freshness_ok: source date within the requested window?\n  - cross_referenced: does another official source corroborate?\nPairs naturally with `rule-pack/web-search-allowlist-default` and\nthe DueCare `official_sources` layer pattern.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "media",
+        "government",
+        "healthcare",
+        "finance"
+      ],
+      "capability": [
+        "verification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "post_api.evaluation",
+      "lifecycle_stage": "post_api",
+      "trust_boundary": "external",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/verify/official-sources-checker.yaml"
     },
     {
       "id": "processor/self-consistency-sampler",
@@ -2876,6 +3018,35 @@
       "path": "catalog/processors/format-convert/audio-to-text-whisper.yaml"
     },
     {
+      "id": "processor/context-window-packer",
+      "type": "processor",
+      "name": "Context-window packer (Lost-in-the-middle aware)",
+      "description": "Reorganize retrieved chunks into the model's context window so the\nmost important content lands at the BEGINNING and END of the window\n(Liu et al. 2023 \"Lost in the Middle\"). Also enforces:\n  - token budget cap\n  - per-source dedup\n  - chunk-priority ordering (rerank score \u2192 recency \u2192 source authority)\n  - explicit chunk delimiters with index labels for citation\nReturns the packed context string + chunk-index \u2192 source map.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/assemble/context-window-packer.yaml"
+    },
+    {
       "id": "processor/cost-ceiling-gate",
       "type": "processor",
       "name": "Cost ceiling gate",
@@ -2992,6 +3163,37 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/processors/inject/datetime-locale.yaml"
+    },
+    {
+      "id": "processor/inject-output-schema",
+      "type": "processor",
+      "name": "Inject output schema directive",
+      "description": "Render a target JSON Schema (or Pydantic model) into the prompt as\nan instruction the model is asked to follow. Pairs with\n`processor/json-schema-repair` on the response side: if the model's\noutput doesn't conform, the loop processor can re-prompt with the\nvalidation error appended.\n\nThree injection styles:\n  - `schema_only`: bare JSON Schema in a fenced code block.\n  - `schema_plus_example`: schema + a minimal conforming example.\n  - `constrained_grammar_marker`: hints for outlines / xgrammar /\n    llama.cpp grammar-constrained decoding.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "ai"
+      ],
+      "capability": [
+        "format_conversion"
+      ],
+      "modality": [
+        "text",
+        "structured"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/inject/output-schema.yaml"
     },
     {
       "id": "processor/intent-dispatcher",
@@ -3111,6 +3313,66 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/processors/safety/prompt-injection-detector.yaml"
+    },
+    {
+      "id": "processor/reasoning-framework-selector",
+      "type": "processor",
+      "name": "Reasoning framework selector",
+      "description": "Pick a reasoning framework (CoT / ReAct / Tree-of-Thoughts /\nSkeleton-of-Thought / Program-of-Thought / Self-Consistency / none)\nbased on the task profile. Cheap heuristic up front; can also call a\nsmall classifier model.\n\nSelector heuristics:\n  - CoT for multi-step math / logic, deterministic answer expected\n  - Self-Consistency on top of CoT for arithmetic / olympiad-level\n  - ReAct for tool-use loops\n  - Tree-of-Thoughts for exploratory planning with branching\n  - SoT for parallelizable structured outputs (lists, tables, code skeletons)\n  - PoT for problems best expressed as Python\n  - none for simple lookup / classification",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry",
+        "ai"
+      ],
+      "capability": [
+        "routing",
+        "classification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/select/reasoning-framework.yaml"
+    },
+    {
+      "id": "processor/sub-question-decomposer",
+      "type": "processor",
+      "name": "Sub-question decomposer",
+      "description": "Break a compound question into N atomic sub-questions, each\nindependently answerable. Used by `pipeline/multi-doc-qa-subquestion`\nand similar LlamaIndex SubQuestionQueryEngine flows.\n\nReturns the sub-question list + a small dependency graph (e.g. Q3\ndepends on Q1's answer). The pipeline runtime can then schedule\nretrieval / answering with the right ordering.",
+      "version": "0.1.0",
+      "industry": [
+        "cross_industry"
+      ],
+      "capability": [
+        "reasoning"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "pre_api.query_sanitization",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/query/sub-question-decomposer.yaml"
     },
     {
       "id": "rule-pack/aml-typologies-fatf",

@@ -84,6 +84,18 @@ nav:
     - Run a pipeline locally: howto/run-pipeline.md
     - Mine Kaggle for harnesses: howto/mine-kaggle-harnesses.md
     - Deploy the hub: howto/deploy.md
+  - Use cases:
+    - Index: use-cases/index.md
+    - Q&A on documents: use-cases/qa-on-documents.md
+    - Code review with security: use-cases/code-review.md
+    - Deep research: use-cases/deep-research.md
+    - Customer support: use-cases/customer-support.md
+    - Clinical decision support: use-cases/clinical-decision-support.md
+    - AML screening: use-cases/aml-screening.md
+    - Image generation: use-cases/image-gen.md
+    - LLM red-teaming: use-cases/llm-red-team.md
+  - Library:
+    - By capability: library/by-capability.md
   - Reference:
     - SPEC: reference/spec.md
     - Vocabularies: reference/vocabularies.md
