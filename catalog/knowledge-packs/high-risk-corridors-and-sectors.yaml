@@ -56,25 +56,9 @@ content_types:
   - rag_doc
   - classifier_rule
 files:
-  - path: "data/corridor-apparel-textile.jsonl"
+  - path: "data/corridors-pack/corridors.jsonl"
     format: "jsonl"
-  - path: "data/corridor-electronics-minerals.jsonl"
-    format: "jsonl"
-  - path: "data/corridor-agriculture.jsonl"
-    format: "jsonl"
-  - path: "data/corridor-construction-domestic.jsonl"
-    format: "jsonl"
-  - path: "data/corridor-seafood.jsonl"
-    format: "jsonl"
-  - path: "data/corridor-brick-kilns.jsonl"
-    format: "jsonl"
-  - path: "data/corridor-carpets-glass-footwear.jsonl"
-    format: "jsonl"
-  - path: "data/cbp-wro-active-snapshot.jsonl"
-    format: "jsonl"
-  - path: "data/uflpa-entity-list-snapshot.jsonl"
-    format: "jsonl"
-  - path: "data/ituc-global-rights-index.jsonl"
+  - path: "data/corridors-pack/cbp-wro-uflpa-snapshot.jsonl"
     format: "jsonl"
 indexing:
   bm25: true

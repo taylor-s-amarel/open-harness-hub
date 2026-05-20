@@ -45,7 +45,7 @@ updated: "2026-05-19"
 family: "grep"
 rules:
   - id: "passport_retention"
-    pattern: "(?i)\\b(passport|id|identity document|document|身份证|护照|पासपोर्ट|পাসপোর্ট|여권|hộ chiếu|หนังสือเดินทาง|paspor|pasaporte|passaporte|passeport|جواز)s?\\b\\s+(?:held|retain|withheld|confiscat|kept|surrender|deposit|in safe[ -]?keeping|with (?:the )?(?:hr|manager|company))"
+    pattern: "(?i)\\b(passport|id|identity document|document|身份证|护照|पासपोर्ट|পাসপোর্ট|여권|hộ chiếu|หนังสือเดินทาง|paspor|pasaporte|passaporte|passeport|جواز)s?\\b.{0,40}?\\b(?:held by|retain(?:ed)? by|withheld|confiscat|kept by|surrender(?:ed)? to|deposit(?:ed)? with|in safe[ -]?keeping|with (?:the )?(?:hr|manager|company|workshop|factory|employer)|on file with)"
     severity: "critical"
     category: "ilo.retention_of_identity_documents"
 
@@ -55,17 +55,17 @@ rules:
     category: "ilo.retention_of_identity_documents.kafala"
 
   - id: "recruitment_fee_abuse"
-    pattern: "(?i)(recruitment|placement|broker|agency|agent) fee|deposit (?:before|prior to) (?:start|joining|employment)|charge.*(?:joining|placement)|debt.*recruit"
+    pattern: "(?i)(recruitment|placement|broker|agency|agent)[- ]?fee|deposit (?:before|prior to) (?:start|joining|employment)|charge.*(?:joining|placement)|debt.*recruit|recruitment[- ]?fee[- ]?repay"
     severity: "high"
     category: "ilo.debt_bondage"
 
   - id: "wage_withholding"
-    pattern: "(?i)wage(s)?\\s+(?:held|withheld|not paid|delayed|deduct|garnish|advance.*recover)|pay.*withheld|salary.*deduct"
+    pattern: "(?i)wage(s)?\\s+(?:held|withheld|not paid|delayed|deduct|garnish|advance.*recover)|pay.*withheld|salary.*deduct|deductions for\\s+(?:housing|transport|recruitment|food|equipment)"
     severity: "high"
     category: "ilo.withholding_of_wages"
 
   - id: "restricted_movement_dormitory"
-    pattern: "(?i)(dormitory|hostel|compound|barrack)\\s+(?:locked|guarded|fenced|restrict|exit forbidden|curfew|chained)|cannot leave (?:the )?(?:dorm|hostel|compound|factory)|exit (?:must be|requires) approv"
+    pattern: "(?i)(dormitory|hostel|compound|barrack)\\b.{0,30}?(?:locked|guarded|fenced|restrict|exit forbidden|curfew|chained|fenced for safety)|cannot leave (?:the )?(?:dorm|hostel|compound|factory)|exit (?:must be|requires) approv|on[- ]?site\\s+dormitory.{0,40}?(?:fenced|locked|guarded|restrict)"
     severity: "critical"
     category: "ilo.restriction_of_movement"
 
@@ -90,7 +90,7 @@ rules:
     category: "ilo.intimidation_and_threats"
 
   - id: "isolation_unfree_communication"
-    pattern: "(?i)(no|forbidden|cannot|cannot use) (?:phone|mobile|cellphone)|communication (?:monitor|control|restrict)|cannot contact (?:family|home|union)"
+    pattern: "(?i)(?:no|forbidden|cannot|may not use|not allowed to use|prohibited from using) (?:phones?|mobiles?|cellphones?)|communication (?:monitor|control|restrict)|cannot contact (?:family|home|union)"
     severity: "high"
     category: "ilo.isolation"
 
@@ -100,7 +100,7 @@ rules:
     category: "ilo.abusive_working_and_living_conditions"
 
   - id: "audit_gap_tier_3_4"
-    pattern: "(?i)(unable to|cannot|could not)\\s+(?:trace|verify|audit|confirm)\\s+(?:tier[- ]?[34]|deep tier|sub[- ]?contract|sub[- ]?supplier|cotton (?:source|origin)|raw material (?:source|origin))"
+    pattern: "(?i)(unable to|cannot|could not)\\s+(?:trace|verify|audit|confirm)\\s+(?:them|tier[- ]?[34]|deep tier|sub[- ]?contract|sub[- ]?supplier|cotton (?:source|origin)|raw material (?:source|origin)|the source|the origin|grey cloth|raw material)"
     severity: "medium"
     category: "supply_chain.audit_gap_tier_3_4"
 
@@ -125,6 +125,6 @@ rules:
     category: "supply_chain.thai_seafood"
 
   - id: "abusive_overtime_consent"
-    pattern: "(?i)(must|required|forced|compulsory).*(?:overtime|extra hours)|cannot refuse (?:overtime|extra hours)"
+    pattern: "(?i)(must|required to work|forced to work|compulsory)\\s+(?:overtime|extra hours)(?!.{0,40}(voluntary|optional|opt[- ]?in|may decline))|cannot refuse (?:overtime|extra hours)|overtime\\s+is\\s+(?:mandatory|required|not voluntary)"
     severity: "high"
     category: "ilo.excessive_overtime.consent"

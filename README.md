@@ -44,6 +44,49 @@ browsable, searchable index.
 
 Both goals share the same primitives. The catalog is the substrate.
 
+## Catalog status (v0.3.0)
+
+- **172 artifacts**, all validating against the schemas.
+- **14 artifact types**: harness · pipeline · benchmark · rule-pack ·
+  knowledge-pack · logic-pack · tool · persona · adapter · rubric ·
+  dataset · schema · processor · pattern.
+- **2 deep verticals shipped**:
+  - **ESG / Supply-Chain Due Diligence** — full E + S + G coverage,
+    12 jurisdictions (EU CSDDD + CSRD + EUDR + Conflict Minerals,
+    UK MSA, German LkSG, French Loi Vigilance, Norway Åpenhetsloven,
+    Swiss CO 964j, Netherlands CLDD, CA SB 657, US UFLPA + Tariff
+    Act §307, Canada S-211, Australia MSA, Japan METI), 13 GREP-
+    rule languages, 4 rubrics (combined + sub-rubrics E/S/G),
+    3 pipelines, k-anonymity cross-org pattern, CBP-WRO tool, 3
+    synthetic disclosure samples, regression benchmark. The GREP
+    rules have been LIVE-TESTED — see `data/esg-grep-findings.json`
+    and `docs/use-cases/esg-supply-chain-due-diligence.md`.
+  - **Kaggle-mined verified pipelines** — 24 verified-evidence shapes
+    each attributed to a real Kaggle kernel or production GitHub
+    repo (LoRA-QLoRA pairwise pref, TF-IDF+LightGBM, DeBERTa,
+    Self-RAG concrete, code-act Jupyter, SWE-patch sample-and-
+    review, STORM persona curation, deep-research supervisor-
+    workers, multi-agent debate, GraphRAG, quantized inference,
+    synthetic data gen, perplexity baseline, large-model FAISS
+    RAG, multi-model ensemble, LLM-judge essay grading, 20-
+    questions agent, plus vLLM batch / AWQ / Qwen-EEDI rerank /
+    DeepSeek-R1 code-interpreter / two-time-retrieval — see
+    `docs/research/kernel-mining-findings.md`).
+- **20 named design patterns** (Self-RAG, ReAct, ToT, SoT, Reflexion,
+  Self-Refine, Plan-Execute, Orchestrator-Workers, Evaluator-
+  Optimizer, Multi-Agent-Debate, Routing, Prompt-Chaining,
+  Naive/Corrective/Fusion RAG, HyDE, Step-Back, Two-Stage-Retrieve-
+  Rerank, K-Anonymity-Aggregation).
+- **10 zero-LLM-cost code templates** (extract_email/url/phone,
+  normalize_date, validate_iban with mod-97, count_tokens,
+  fuzzy_jaro_winkler, cosine_sim, sha256_hash).
+- **5 model adapters**: Ollama-default, vLLM-AWQ-local, BGE-embeddings-
+  local, OpenAI-embeddings, SDXL-local, Anthropic-Claude-Sonnet,
+  Anthropic-Claude-Opus, OpenAI-GPT-frontier, Google-Gemini.
+- **13 emitters** under `scripts/emit/`: Croissant, MCP, Agent
+  Skills, HF cards, lm-eval-harness, promptfoo, CycloneDX-ML,
+  OpenLineage, C2PA, EU AI Act, SPDX 3.0, JSON-LD, DPV.
+
 ## What lives in the catalog
 
 The hub hosts every shape of pipeline that can be built by composing the

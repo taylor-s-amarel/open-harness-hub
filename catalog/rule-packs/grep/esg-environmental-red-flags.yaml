@@ -100,3 +100,28 @@ rules:
     pattern: "(?i)(cfc|hcfc|hfc|hydrochlorofluorocarbon|methyl bromide|halon)\\s+(?:use|emission|stockpile|legacy)|montreal protocol.*non[- ]?complian"
     severity: "high"
     category: "environmental.ozone_depleting"
+
+  - id: "land_clearing_legacy"
+    pattern: "(?i)(land|plot|area|hectare|forest)\\s+(?:was |were |has been )?(?:cleared|deforested|converted|burned)(?!.{0,80}(prior to|before)\\s+(?:2018|2019|2020))|legacy\\s+clearing|clearing.*\\b201[0-9]\\b"
+    severity: "high"
+    category: "environmental.deforestation_legacy"
+
+  - id: "scope_3_excluded_categories"
+    pattern: "(?i)scope[ -]?3.*(?:cat(?:egory)?\\s*\\d+).*(?:null|excluded|not (?:measured|reported|calculated)|n[\\.\\/]?a)|categor(?:y|ies)\\s+[\\d, ]+\\s+(?:not|excluded|null)"
+    severity: "medium"
+    category: "environmental.scope_3_underreporting"
+
+  - id: "no_third_party_ghg_verification"
+    pattern: "(?i)(?:ghg|emissions|carbon)\\s+(?:not|no|never)\\s+(?:third[- ]?party|externally|independently)\\s+(?:verified|audited|assured)|self[- ]?(?:estimated|reported)\\s+(?:not\\s+)?verified"
+    severity: "medium"
+    category: "environmental.ghg_no_verification"
+
+  - id: "near_protected_area"
+    pattern: "(?i)(?:within|near|adjacent|kilometre|km|miles?)\\s+(?:of|to|from)\\s+(?:(?:national|natural)?\\s*(?:park|reserve|sanctuary)|protected area|key biodiversity area|kba|ramsar|natura 2000|world heritage)|defensores del chaco|amazon rainforest"
+    severity: "high"
+    category: "environmental.biodiversity_proximity"
+
+  - id: "untreated_dye_effluent"
+    pattern: "(?i)(?:dye|tannery|leather|textile)\\s+effluent.*(?:discharge|release|dump|drain|canal|river|stream)|effluent\\s+(?:to|into|in)\\s+(?:back\\s+)?(?:canal|river|stream|drain)|untreated\\s+(?:dye|wastewater|effluent)"
+    severity: "critical"
+    category: "environmental.water_pollution.textile_dye"

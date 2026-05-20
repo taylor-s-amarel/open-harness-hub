@@ -30,7 +30,7 @@ updated: "2026-05-19"
 family: "grep"
 rules:
   - id: "beneficial_ownership_opaque"
-    pattern: "(?i)(ultimate beneficial owner|ubo|shareholder|owner)\\s+(?:unknown|not disclosed|confidential|n[\\.\\/]a)|nominee\\s+(?:director|shareholder)|shell\\s+(?:company|entity|corporation)"
+    pattern: "(?i)(ultimate beneficial owner|ubo|shareholder|owner)\\s+(?:unknown|not disclosed|confidential|n[\\.\\/]?a|undisclosed)|nominee\\s+(?:director|shareholder)|shell\\s+(?:company|entity|corporation)|name:\\s*\\(?undisclosed\\)?|is nominee:\\s*True"
     severity: "high"
     category: "governance.beneficial_ownership"
 
@@ -40,7 +40,7 @@ rules:
     category: "governance.opaque_jurisdiction"
 
   - id: "facilitation_payment"
-    pattern: "(?i)(facilitation|grease|expediting|customs|port|inspector|permit)\\s+(?:payment|fee|gift|consideration)|tea money|chai pani"
+    pattern: "(?i)(?<!prohibited\\s)(?<!not\\sallowed\\s)(?<!against\\spolicy\\s)(?<!do\\snot\\spermit\\s)(facilitation|grease|expediting)\\s+(?:payment|fee|gift|consideration)(?!.{0,40}(prohibited|forbidden|not\\sallowed|against\\spolicy))|tea money|chai pani"
     severity: "critical"
     category: "governance.bribery"
 
