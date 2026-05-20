@@ -2,22 +2,22 @@
   "_version": "0.1.0",
   "_meta": {
     "by_stage": {
-      "api": 12,
-      "cross_cutting": 33,
+      "api": 13,
+      "cross_cutting": 44,
       "post_api": 17,
-      "pre_api": 53
+      "pre_api": 58
     },
     "by_position": {
       "api.model_call": 7,
-      "api.tool_call": 5,
-      "cross_cutting": 17,
-      "cross_cutting.composition": 16,
+      "api.tool_call": 6,
+      "cross_cutting": 20,
+      "cross_cutting.composition": 24,
       "post_api.audit": 3,
       "post_api.evaluation": 11,
       "post_api.format_coercion": 1,
       "post_api.output_safety": 2,
       "pre_api.classification": 3,
-      "pre_api.context_assembly": 32,
+      "pre_api.context_assembly": 37,
       "pre_api.input_gating": 15,
       "pre_api.query_sanitization": 3
     },
@@ -25,19 +25,19 @@
       "adapter": 4,
       "harness": 4,
       "knowledge-pack": 15,
-      "pattern": 17,
+      "pattern": 20,
       "persona": 10,
-      "pipeline": 12,
-      "processor": 28,
+      "pipeline": 19,
+      "processor": 35,
       "rubric": 5,
       "rule-pack": 15,
       "tool": 5
     },
     "by_industry": {
-      "ai": 26,
+      "ai": 43,
       "creative": 11,
-      "cross_industry": 71,
-      "education": 1,
+      "cross_industry": 81,
+      "education": 4,
       "education.tutoring": 1,
       "finance": 15,
       "finance.aml": 11,
@@ -48,50 +48,50 @@
       "healthcare.pharmacy": 1,
       "humanitarian": 1,
       "legal": 1,
-      "media": 8,
+      "media": 13,
       "retail": 5,
       "retail.support": 2,
       "security": 9,
-      "software": 5,
-      "software.codereview": 2
+      "software": 8,
+      "software.codereview": 3
     },
     "by_capability": {
-      "agent_loop": 6,
+      "agent_loop": 9,
       "anonymization": 8,
-      "classification": 12,
-      "code_synthesis": 3,
+      "classification": 16,
+      "code_synthesis": 5,
       "dialogue": 5,
       "embedding": 3,
-      "evaluation": 15,
-      "extraction": 2,
+      "evaluation": 17,
+      "extraction": 3,
       "format_conversion": 7,
-      "generation": 8,
+      "generation": 11,
       "image_synthesis": 3,
       "memory": 1,
-      "planning": 4,
-      "reasoning": 31,
-      "research": 4,
-      "retrieval": 39,
-      "routing": 6,
+      "planning": 7,
+      "reasoning": 36,
+      "research": 6,
+      "retrieval": 45,
+      "routing": 7,
       "safety_gating": 29,
-      "summarization": 2,
-      "tool_use": 6,
+      "summarization": 4,
+      "tool_use": 7,
       "translation": 2,
-      "verification": 27
+      "verification": 29
     },
     "by_modality": {
       "audio": 1,
-      "code": 2,
+      "code": 5,
       "image": 7,
       "structured": 21,
-      "text": 107
+      "text": 124
     },
     "by_lifecycle": {
-      "beta": 39,
-      "experimental": 41,
-      "stable": 35
+      "beta": 41,
+      "experimental": 53,
+      "stable": 38
     },
-    "total": 115
+    "total": 132
   },
   "_tree": {
     "api": {
@@ -129,6 +129,14 @@
         }
       },
       "api.tool_call": {
+        "processor": {
+          "ai": [
+            "processor/action-sampler-multi-rollout"
+          ],
+          "software": [
+            "processor/action-sampler-multi-rollout"
+          ]
+        },
         "tool": {
           "healthcare": [
             "tool/lookup-icd10"
@@ -176,7 +184,10 @@
             "pattern/self-refine",
             "pattern/skeleton-of-thought",
             "pattern/step-back-prompting",
-            "pattern/tree-of-thoughts"
+            "pattern/tree-of-thoughts",
+            "pipeline/deberta-finetune-classification",
+            "pipeline/lora-qlora-pairwise-pref-finetune",
+            "pipeline/tfidf-lightgbm-text-classification"
           ],
           "cross_industry": [
             "pattern/corrective-rag",
@@ -190,7 +201,13 @@
             "pattern/react",
             "pattern/routing",
             "pattern/self-rag",
-            "pattern/self-refine"
+            "pattern/self-refine",
+            "pipeline/deberta-finetune-classification",
+            "pipeline/lora-qlora-pairwise-pref-finetune",
+            "pipeline/tfidf-lightgbm-text-classification"
+          ],
+          "media": [
+            "pipeline/tfidf-lightgbm-text-classification"
           ]
         }
       },
@@ -205,25 +222,42 @@
           ],
           "cross_industry": [
             "pipeline/chat-with-pdf-citations",
+            "pipeline/deep-research-supervisor-workers",
             "pipeline/deep-research-with-citations",
             "pipeline/email-triage-and-draft",
             "pipeline/everything-research-pipeline",
+            "pipeline/knowledge-graph-from-corpus",
             "pipeline/multi-doc-qa-subquestion",
             "pipeline/plan-execute-critic-loop",
             "pipeline/research-entity",
+            "pipeline/self-rag-grade-and-revise",
             "pipeline/verify-claim-against-corpus"
           ],
+          "ai": [
+            "pipeline/code-act-jupyter-loop",
+            "pipeline/deep-research-supervisor-workers",
+            "pipeline/knowledge-graph-from-corpus",
+            "pipeline/multi-agent-debate-with-judge",
+            "pipeline/self-rag-grade-and-revise",
+            "pipeline/storm-persona-curation-article",
+            "pipeline/swe-patch-sample-and-review"
+          ],
           "software": [
-            "pipeline/code-review-with-risk-score"
+            "pipeline/code-act-jupyter-loop",
+            "pipeline/code-review-with-risk-score",
+            "pipeline/swe-patch-sample-and-review"
           ],
           "software.codereview": [
-            "pipeline/code-review-with-risk-score"
+            "pipeline/code-review-with-risk-score",
+            "pipeline/swe-patch-sample-and-review"
           ],
           "security": [
             "pipeline/code-review-with-risk-score"
           ],
           "media": [
+            "pipeline/deep-research-supervisor-workers",
             "pipeline/deep-research-with-citations",
+            "pipeline/storm-persona-curation-article",
             "pipeline/verify-claim-against-corpus"
           ],
           "healthcare": [
@@ -235,6 +269,9 @@
           "retail.support": [
             "pipeline/email-triage-and-draft"
           ],
+          "education": [
+            "pipeline/storm-persona-curation-article"
+          ],
           "finance": [
             "pipeline/suspicious-transaction-review"
           ],
@@ -243,7 +280,11 @@
           ]
         },
         "processor": {
+          "ai": [
+            "processor/community-summary-mapreduce"
+          ],
           "cross_industry": [
+            "processor/community-summary-mapreduce",
             "processor/embedder-minilm",
             "processor/iterative-revise-loop",
             "processor/memory-conversational-store",
@@ -511,15 +552,31 @@
           "cross_industry": [
             "processor/context-window-packer",
             "processor/cross-encoder-reranker",
+            "processor/document-grader",
             "processor/inject-datetime-locale",
             "processor/inject-output-schema",
             "processor/llmlingua-context-compressor",
-            "processor/reasoning-framework-selector"
+            "processor/multi-vector-fusion",
+            "processor/reasoning-framework-selector",
+            "processor/runtime-tool-selector"
           ],
           "ai": [
             "processor/cross-encoder-reranker",
+            "processor/document-grader",
             "processor/inject-output-schema",
-            "processor/reasoning-framework-selector"
+            "processor/multi-vector-fusion",
+            "processor/persona-set-generator",
+            "processor/reasoning-framework-selector",
+            "processor/runtime-tool-selector",
+            "processor/skeleton-outliner"
+          ],
+          "media": [
+            "processor/persona-set-generator",
+            "processor/skeleton-outliner"
+          ],
+          "education": [
+            "processor/persona-set-generator",
+            "processor/skeleton-outliner"
           ]
         },
         "rule-pack": {
@@ -860,6 +917,38 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/harnesses/text-safety-review.yaml"
+    },
+    {
+      "id": "processor/action-sampler-multi-rollout",
+      "type": "processor",
+      "name": "Action sampler \u2014 N parallel rollouts",
+      "description": "Sample N independent action trajectories for an agent task; return\nthe trajectories + final-state candidates for downstream judging.\nThe N candidates can be reviewed by a separate judge processor to\npick the best.\n\nVerified by Open Harness Hub clone:\n`SWE-agent/sweagent/agent/action_sampler.py`.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "software"
+      ],
+      "capability": [
+        "agent_loop",
+        "planning"
+      ],
+      "modality": [
+        "text",
+        "code"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "api.tool_call",
+      "lifecycle_stage": "api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/sample/action-sampler-multi-rollout.yaml"
     },
     {
       "id": "tool/lookup-icd10",
@@ -1615,6 +1704,98 @@
       "path": "catalog/patterns/tree-of-thoughts.yaml"
     },
     {
+      "id": "pipeline/deberta-finetune-classification",
+      "type": "pattern",
+      "name": "DeBERTa-v3-large fine-tune for closed-set classification",
+      "description": "DeBERTa-v3-large fine-tuning shape used as the heavy half of nearly\nevery top Kaggle LLM-classification submission since 2023. Combined\nwith `pipeline/tfidf-lightgbm-text-classification` as a stacked\nensemble for the final leaderboard score.\n\nVerified by Open Harness Hub Meta Kaggle deep mining: top kernels\nacross `llm-detect-ai-generated-text`, `llm-classification-finetuning`,\n`h2oai-predict-the-llm` use this exact stack.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "classification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/pipelines/classify/deberta-finetune.yaml"
+    },
+    {
+      "id": "pipeline/lora-qlora-pairwise-pref-finetune",
+      "type": "pattern",
+      "name": "LoRA + QLoRA pairwise-preference fine-tune (Gemma-2-9b 4-bit)",
+      "description": "Production-verified fine-tune shape for the LMSYS / WSDM Chatbot\nArena class of pairwise-preference competitions. Load Gemma-2-9b\nwith 4-bit BitsAndBytes quantization, attach a PEFT LoRA adapter,\nfine-tune SFTTrainer on (prompt, response_A, response_B) \u2192 A/B/tie\ntriples. Inference: same loaded model + classifier head over the\nthree classes.\n\nVerified by the Open Harness Hub Meta Kaggle deep miner: 3 of 9\npulled WSDM-Cup top-voted kernels match this exact stack\n(transformers + peft + bitsandbytes + trl).",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "classification",
+        "evaluation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/pipelines/finetune/lora-qlora-pairwise-pref-finetune.yaml"
+    },
+    {
+      "id": "pipeline/tfidf-lightgbm-text-classification",
+      "type": "pattern",
+      "name": "TF-IDF + LightGBM text classification",
+      "description": "The non-LLM baseline that consistently wins or co-wins Kaggle text-\nclassification competitions. Char- and word-ngram TF-IDF feature\nextraction \u2192 LightGBM (often stacked with SGDClassifier / MultinomialNB)\n\u2192 calibrated probability.\n\nVerified by Open Harness Hub Meta Kaggle deep mining: top kernels of\n`llm-detect-ai-generated-text` all use this stack, often as the lead\nbaseline before any DeBERTa fine-tune is added.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry",
+        "media"
+      ],
+      "capability": [
+        "classification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/pipelines/classify/tfidf-lightgbm-text.yaml"
+    },
+    {
       "id": "pipeline/brand-safe-product-photo",
       "type": "pipeline",
       "name": "Brand-Safe Product Photo",
@@ -1698,6 +1879,43 @@
       "path": "catalog/pipelines/qa-attachment/chat-with-pdf-citations.yaml"
     },
     {
+      "id": "pipeline/code-act-jupyter-loop",
+      "type": "pipeline",
+      "name": "Code-act Jupyter loop",
+      "description": "The OpenInterpreter pattern: model emits Python code in fenced\nblocks, runtime renders the message + executes the code in a\nJupyter kernel, streams the observation back into the model's\ncontext, loops until the model emits a `DONE` marker.\n\nVerified by Open Harness Hub mining of the OpenInterpreter clone:\n`interpreter/core/respond.py` implements exactly this loop.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "software"
+      ],
+      "capability": [
+        "agent_loop",
+        "code_synthesis",
+        "tool_use"
+      ],
+      "modality": [
+        "text",
+        "code"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "code_act",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "rule-pack/grep-cloud-secrets",
+        "processor/iterative-revise-loop",
+        "processor/audit-trace-emitter"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/code-act/code-act-jupyter-loop.yaml"
+    },
+    {
       "id": "pipeline/code-review-with-risk-score",
       "type": "pipeline",
       "name": "Code review with risk score",
@@ -1740,6 +1958,48 @@
       ],
       "links": {},
       "path": "catalog/pipelines/review-code/code-review-with-risk-score.yaml"
+    },
+    {
+      "id": "pipeline/deep-research-supervisor-workers",
+      "type": "pipeline",
+      "name": "Deep research: supervisor + parallel workers",
+      "description": "LangChain's open_deep_research pattern. A supervisor LLM decomposes\nthe user query into research briefs and dispatches N parallel\nresearcher subagents (each gets its own context + tools), then\ncompresses and writes the final report.\n\nVerified by Open Harness Hub clone:\n`langchain-ai/open_deep_research/src/open_deep_research/deep_researcher.py`\n(~700 LOC) + `prompts.py`.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "media",
+        "cross_industry"
+      ],
+      "capability": [
+        "research",
+        "retrieval",
+        "reasoning"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "external",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "research_web",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "harness/redact-pii-text",
+        "harness/text-safety-review",
+        "harness/text-safety-review",
+        "processor/sub-question-decomposer",
+        "harness/text-safety-review",
+        "processor/llmlingua-context-compressor",
+        "harness/text-safety-review",
+        "processor/citation-coverage"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/research-web/deep-research-supervisor-workers.yaml"
     },
     {
       "id": "pipeline/deep-research-with-citations",
@@ -1921,6 +2181,81 @@
       "path": "catalog/pipelines/comprehensive-research/everything-research-pipeline.yaml"
     },
     {
+      "id": "pipeline/knowledge-graph-from-corpus",
+      "type": "pipeline",
+      "name": "GraphRAG: knowledge-graph from corpus + global/local query",
+      "description": "Microsoft GraphRAG pattern. Extract entities + relationships from\ndocuments into a graph; build community summaries via Leiden\nclustering; query via local (ego-network), global (map-reduce over\ncommunities), or DRIFT (primer + follow-up hybrid).\n\nVerified by Open Harness Hub clone:\n`microsoft/graphrag/packages/graphrag/graphrag/query/structured_search/`\ncontains `local_search/`, `global_search/`, `drift_search/` modules.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval",
+        "reasoning",
+        "extraction"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "knowledge_graph",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "harness/text-safety-review",
+        "processor/community-summary-mapreduce",
+        "harness/text-safety-review",
+        "harness/text-safety-review",
+        "harness/text-safety-review",
+        "processor/citation-coverage"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/knowledge-graph/graphrag-from-corpus.yaml"
+    },
+    {
+      "id": "pipeline/multi-agent-debate-with-judge",
+      "type": "pipeline",
+      "name": "Multi-agent debate with judge",
+      "description": "Two or more debater personas argue different sides of a question\nacross N rounds. A judge persona scores the final positions. Used\nfor hard reasoning tasks where stress-testing improves accuracy.\n\nVerified by Open Harness Hub clone:\n`microsoft/autogen` implements the group-chat round-table pattern.",
+      "version": "0.1.0",
+      "industry": [
+        "ai"
+      ],
+      "capability": [
+        "reasoning",
+        "evaluation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "multi_agent",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "rule-pack/grep-prompt-injection-heuristics",
+        "processor/persona-set-generator",
+        "harness/text-safety-review",
+        "processor/iterative-revise-loop",
+        "processor/llm-judge"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/multi-agent/multi-agent-debate.yaml"
+    },
+    {
       "id": "pipeline/multi-doc-qa-subquestion",
       "type": "pipeline",
       "name": "Multi-document QA with sub-question decomposition",
@@ -2038,6 +2373,87 @@
       "path": "catalog/pipelines/research-entity/research-entity.yaml"
     },
     {
+      "id": "pipeline/self-rag-grade-and-revise",
+      "type": "pipeline",
+      "name": "Self-RAG: grade-and-revise (concrete implementation)",
+      "description": "Concrete pipeline implementing `pattern/self-rag`. Retrieve \u2192 per-doc\nrelevance grader \u2192 rewrite-query loop on irrelevant retrieval \u2192\ngenerate with grounding \u2192 answer-support grader \u2192 iterate up to\nmax_iterations on low support.\n\nVerified by Open Harness Hub deep mining: the LangGraph reference\nimplementation at `langchain-ai/langgraph/tutorials/rag/langgraph_self_rag/`\n+ Akari Asai's canonical implementation at\n`AkariAsai/self-rag/retrieval_lm/run_short_form.py` (both cloned).",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval",
+        "reasoning",
+        "verification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "rag_iterative",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "harness/text-safety-review",
+        "rule-pack/hybrid-retrieval-policy",
+        "processor/document-grader",
+        "harness/text-safety-review",
+        "harness/text-safety-review",
+        "processor/hallucination-scorer",
+        "processor/iterative-revise-loop"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/rag-self/self-rag-grade-and-revise.yaml"
+    },
+    {
+      "id": "pipeline/storm-persona-curation-article",
+      "type": "pipeline",
+      "name": "STORM: persona-curation + outline-fanout article",
+      "description": "Stanford OVAL's STORM pattern. Generate N personas with different\nperspectives \u2192 run simulated dialogue per persona to curate\nknowledge \u2192 outline \u2192 parallel-expand each outline section \u2192\npolish into final article.\n\nVerified by Open Harness Hub clone: `stanford-oval/storm` \u2014\n`knowledge_storm/storm_wiki/modules/{persona_generator,knowledge_curation,outline_generation,article_generation,article_polish}.py`.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "media",
+        "education"
+      ],
+      "capability": [
+        "research",
+        "generation",
+        "summarization"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "external",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "writing_long_form",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "harness/redact-pii-text",
+        "processor/persona-set-generator",
+        "harness/text-safety-review",
+        "processor/skeleton-outliner",
+        "harness/text-safety-review",
+        "processor/self-refine-critique",
+        "processor/citation-coverage"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/writing/storm-persona-curation.yaml"
+    },
+    {
       "id": "pipeline/suspicious-transaction-review",
       "type": "pipeline",
       "name": "Suspicious Transaction Review",
@@ -2079,6 +2495,45 @@
       "path": "catalog/pipelines/finance-aml/suspicious-transaction-review.yaml"
     },
     {
+      "id": "pipeline/swe-patch-sample-and-review",
+      "type": "pipeline",
+      "name": "SWE-agent: sample N patches + reviewer judges",
+      "description": "The princeton-nlp/SWE-agent pattern. Given a bug report + repo: sample\nN action-rollouts (each producing a candidate patch via file-edit + run-\ntest loop), then a reviewer model judges the N candidates and picks\nthe best patch.\n\nVerified by Open Harness Hub clone: SWE-agent's\n`sweagent/agent/{agents,reviewer,history_processors,action_sampler}.py`\nimplements exactly this.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "software",
+        "software.codereview"
+      ],
+      "capability": [
+        "reasoning",
+        "code_synthesis",
+        "agent_loop"
+      ],
+      "modality": [
+        "text",
+        "code"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "code_patch_search",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "rule-pack/grep-prompt-injection-heuristics",
+        "processor/action-sampler-multi-rollout",
+        "processor/llm-judge",
+        "processor/audit-trace-emitter"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/code-review/swe-patch-sample-and-review.yaml"
+    },
+    {
       "id": "pipeline/verify-claim-against-corpus",
       "type": "pipeline",
       "name": "Verify Claim Against Corpus",
@@ -2111,6 +2566,37 @@
       ],
       "links": {},
       "path": "catalog/pipelines/verify-data/verify-claim-against-corpus.yaml"
+    },
+    {
+      "id": "processor/community-summary-mapreduce",
+      "type": "processor",
+      "name": "Community-summary map-reduce (GraphRAG global)",
+      "description": "Per-community map step (LLM summarizes each Leiden community), then\nreduce step combines partial answers across communities. The core\nprimitive of GraphRAG's global-search mode.\n\nVerified by Open Harness Hub clone:\n`microsoft/graphrag/packages/graphrag/graphrag/query/structured_search/global_search/`.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "summarization",
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/fusion/community-summary-mapreduce.yaml"
     },
     {
       "id": "processor/embedder-minilm",
@@ -3730,6 +4216,37 @@
       "path": "catalog/processors/rerank/cross-encoder.yaml"
     },
     {
+      "id": "processor/document-grader",
+      "type": "processor",
+      "name": "Per-document relevance grader (Self-RAG)",
+      "description": "Score each retrieved document for relevance to the user query. Emits\nper-doc grade \u2208 {relevant, irrelevant, ambiguous} with a confidence\nscore. Used by Self-RAG and CRAG to filter or trigger fallback.\n\nVerified by Open Harness Hub clone: pattern shows up in Self-RAG's\nreflection-token approach and is the canonical first step of\nCorrective-RAG.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "verification",
+        "classification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/verify/document-grader.yaml"
+    },
+    {
       "id": "processor/hyde-query-expander",
       "type": "processor",
       "name": "HyDE query expander",
@@ -3879,6 +4396,36 @@
       "path": "catalog/processors/compress/llmlingua-context.yaml"
     },
     {
+      "id": "processor/multi-vector-fusion",
+      "type": "processor",
+      "name": "Multi-vector / multi-query fusion (RRF + weighted)",
+      "description": "Fuse N ranked candidate lists from independent retrievers (sparse +\ndense + graph + cross-encoder reranker output) via Reciprocal Rank\nFusion or weighted score blending. Returns a single deduped ranked\nlist.\n\nVerified by Open Harness Hub clones: shape appears in\n`Raudaschl/rag-fusion`, `superlinear-ai/raglite/_search.py`, and\n`microsoft/graphrag/global_search/`.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/fusion/multi-vector-fusion.yaml"
+    },
+    {
       "id": "processor/pdf-to-text",
       "type": "processor",
       "name": "PDF to text",
@@ -3906,6 +4453,38 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/processors/format-convert/pdf-to-text.yaml"
+    },
+    {
+      "id": "processor/persona-set-generator",
+      "type": "processor",
+      "name": "Persona-set generator (STORM)",
+      "description": "Spawn N personas with distinct perspectives on a topic. Used by\nSTORM's multi-perspective curation and by multi-agent debate\npipelines. Each persona carries a role, an angle, prior knowledge\ncues, and a few biased priors the simulated dialogue can surface.\n\nVerified by Open Harness Hub clone:\n`stanford-oval/storm/knowledge_storm/storm_wiki/modules/persona_generator.py`.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "media",
+        "education"
+      ],
+      "capability": [
+        "generation",
+        "planning"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/select/persona-set-generator.yaml"
     },
     {
       "id": "processor/prompt-injection-detector",
@@ -3968,6 +4547,69 @@
       "step_refs": [],
       "links": {},
       "path": "catalog/processors/select/reasoning-framework.yaml"
+    },
+    {
+      "id": "processor/runtime-tool-selector",
+      "type": "processor",
+      "name": "Runtime tool selector (Toolformer / pydantic-ai)",
+      "description": "Given a user query + a large registry of tools, semantically select\nthe top-K most likely-relevant tools to expose to the model. Avoids\noverflowing the context window with every tool definition when only\na few apply.\n\nVerified by Open Harness Hub clone: implemented at\n`pydantic/pydantic-ai/_tool_search.py` (Toolformer-style).",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "routing",
+        "retrieval"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/select/runtime-tool-selector.yaml"
+    },
+    {
+      "id": "processor/skeleton-outliner",
+      "type": "processor",
+      "name": "Skeleton outliner (Skeleton-of-Thought)",
+      "description": "Generate a skeleton (bullet outline) for a long-form output, then\nreturn the outline so parallel sub-expansion can fan out per bullet.\nUsed by Skeleton-of-Thought, STORM, and any pattern that benefits\nfrom outline-then-expand.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "media",
+        "education"
+      ],
+      "capability": [
+        "generation",
+        "planning"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "experimental",
+      "lifecycle_position": "pre_api.context_assembly",
+      "lifecycle_stage": "pre_api",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": null,
+      "consumes": [],
+      "emits": [],
+      "step_refs": [],
+      "links": {},
+      "path": "catalog/processors/outliner/skeleton-outliner.yaml"
     },
     {
       "id": "processor/sub-question-decomposer",
