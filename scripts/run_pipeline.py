@@ -66,6 +66,85 @@ def resolve(value: Any, ctx: dict) -> Any:
     return obj
 
 
+# ------------------------------------------------------------------
+# Processor implementations — small, deterministic, no external calls.
+# Open vocabulary: add new ones by id.
+# ------------------------------------------------------------------
+
+_PII_PATTERNS = [
+    (re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b"), "EMAIL"),
+    (re.compile(r"\b(\+?\d{1,3}[ -]?)?\(?\d{2,4}\)?[ -]?\d{2,4}[ -]?\d{2,4}\b"), "PHONE"),
+    (re.compile(r"\b\d{3}-\d{2}-\d{4}\b"), "US_SSN"),
+    (re.compile(r"\b[A-Z]{2}\d{2}[A-Z0-9]{1,30}\b"), "IBAN"),
+    (re.compile(r"\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13})\b"), "CREDIT_CARD"),
+]
+
+def _redact_pii(text: str) -> tuple[str, list[dict]]:
+    found: list[dict] = []
+    for pat, kind in _PII_PATTERNS:
+        for m in pat.finditer(text):
+            found.append({"type": kind, "start": m.start(), "end": m.end(), "value": m.group()[:32]})
+        text = pat.sub(f"[REDACTED:{kind}]", text)
+    return text, found
+
+
+def _structured_to_prose(data, prefix: str = "") -> list[str]:
+    out: list[str] = []
+    if isinstance(data, dict):
+        for k, v in data.items():
+            label = k.replace("_", " ")
+            if isinstance(v, (str, int, float, bool)) and v not in (None, "", 0):
+                out.append(f"{label}: {v}")
+            else:
+                out.extend(_structured_to_prose(v, label))
+    elif isinstance(data, list):
+        for item in data:
+            if isinstance(item, str):
+                if item.strip():
+                    out.append(f"{prefix}: {item}" if prefix else item)
+            elif isinstance(item, dict):
+                out.extend(_structured_to_prose(item, prefix))
+    elif isinstance(data, str) and data.strip():
+        out.append(f"{prefix}: {data}" if prefix else data)
+    return out
+
+
+def _run_processor(ref_id: str, inputs: dict, artifact: dict | None) -> dict:
+    """Dispatch on processor id. Falls back to structured echo if unknown."""
+    if ref_id == "processor/structured-to-prose":
+        lines = _structured_to_prose(inputs.get("data", {}))
+        return {"prose": "\n".join(lines), "lines": lines, "line_count": len(lines)}
+
+    if ref_id == "processor/redact-pii-text":
+        text = inputs.get("text", "")
+        if not isinstance(text, str):
+            text = json.dumps(text) if text else ""
+        redacted, found = _redact_pii(text)
+        counts: dict[str, int] = {}
+        for f in found:
+            counts[f["type"]] = counts.get(f["type"], 0) + 1
+        return {"text": redacted, "detected_entities": found, "entity_counts_by_type": counts}
+
+    if ref_id == "processor/audit-trace-emitter":
+        return {
+            "step_id":        inputs.get("step_id", "unknown"),
+            "applied_layers": inputs.get("applied_layers", []),
+            "trace_ts":       time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        }
+
+    if ref_id == "processor/llm-judge":
+        # Deterministic stub: emit a fixed score so the pipeline returns
+        # a complete trace. Real implementation routes to an adapter.
+        return {
+            "_simulated": True,
+            "score":       0.0,
+            "rationale":   "Replace with real adapter call; this is a stub.",
+            "rubric_ref":  inputs.get("rubric_ref"),
+        }
+
+    return {"_simulated": True, "echo": inputs, "processor": ref_id}
+
+
 def run_step(step: dict, catalog: dict[str, dict], ctx: dict, *, simulate: bool) -> dict:
     """Run one pipeline step. Returns a step-result record."""
     started = time.monotonic()
@@ -86,16 +165,29 @@ def run_step(step: dict, catalog: dict[str, dict], ctx: dict, *, simulate: bool)
     elif step["kind"] == "rule_pack":
         # Deterministic: report which rules would fire over the input text.
         text = inputs.get("text", "")
+        if isinstance(text, (dict, list)):
+            text = json.dumps(text)
+        elif not isinstance(text, str):
+            text = str(text)
         fired = []
         for rule in artifact.get("rules", []) or []:
             pattern = rule.get("pattern")
-            if pattern and isinstance(text, str):
+            if pattern:
                 try:
-                    if re.search(pattern, text):
-                        fired.append({"rule_id": rule["id"], "severity": rule.get("severity")})
+                    matches = re.findall(pattern, text, re.IGNORECASE)
+                    if matches:
+                        fired.append({
+                            "rule_id":     rule["id"],
+                            "category":    rule.get("category"),
+                            "severity":    rule.get("severity"),
+                            "match_count": len(matches),
+                            "first_match": str(matches[0])[:120] if matches else None,
+                        })
                 except re.error:
                     pass
-        output = {"fired": fired, "pack": ref_id}
+        output = {"fired": fired, "pack": ref_id, "hit_count": len(fired)}
+    elif step["kind"] == "processor":
+        output = _run_processor(ref_id, inputs, artifact)
     elif step["kind"] == "harness":
         # Deferred to the playground app; here we stub.
         output = {"_simulated": True, "echo": inputs, "harness": ref_id}
