@@ -1,24 +1,39 @@
-# Use case: ESG / Supply-Chain Due Diligence (CSDDD-aligned)
+# Use case: ESG / Supply-Chain Due Diligence (CSDDD + CSRD + 12 jurisdictions)
 
 ## What this answers
 
 > "We need to audit our deep-tier supplier networks (tier 3 and tier
-> 4+) for forced labor and grade supplier-submitted policies against
-> the EU CSDDD, ILO indicators, and our own code of conduct — without
-> hiring 100 more ESG analysts."
+> 4+) for forced labor, environmental harm, AND governance gaps —
+> across the EU CSDDD, CSRD ESRS E1-E5 / S1-S2, the UK MSA, German
+> LkSG, France Loi Vigilance, Norway Åpenhetsloven, Swiss CO Art.
+> 964j, California SB 657, US UFLPA + Tariff Act §307, Canada Bill
+> S-211, Australia MSA, and Japan METI Guidelines — without hiring
+> 100 more ESG analysts. AND we need to share rogue-broker / rogue-
+> corridor signals with peer orgs without leaking confidential
+> supply-chain data."
 
-## Catalog ingredients
+## Catalog ingredients (v0.2.0 — full E + S + G coverage)
 
 | Layer | Artifact | Role |
 |---|---|---|
-| Persona | `persona/esg-auditor` | Structured, citation-first ESG auditor system prompt |
-| GREP rule pack | `rule-pack/grep-esg-forced-labor-red-flags` | First-pass detector for 13 red-flag categories incl. ILO indicators 1-11 + corridor flags |
-| RAG knowledge pack | `knowledge-pack/csddd-and-forced-labor-indicators` | Citation backbone: CSDDD articles, ILO indicators, Modern Slavery Act §54, LkSG, SB 657 |
-| PII redaction | `rule-pack/privacy-pii-text-en` + `processor/redact-pii-text` | Strips worker grievance transcript PII before LLM call |
-| Judge rubric | `rubric/esg-supplier-compliance-v1` | 7-dimension grading rubric |
-| Grading pipeline | `pipeline/supplier-policy-grading` | Persona → PII redact → GREP → RAG (CSDDD + lead code) → judge → propose remediation |
+| Persona | `persona/esg-auditor` | Citation-first auditor covering all 12 jurisdictions, ESRS E1-E5 + S1-S2, ILO core conventions, ISO 37001 |
+| GREP rule pack (**S**) | `rule-pack/grep-esg-forced-labor-red-flags` | 17 detectors for ILO indicators 1-11 + child labor + recruitment-fee abuse + 12 high-risk corridors + 13-language coverage (en/zh/hi/bn/ko/vi/th/id/tl/es/pt/fr/ar) |
+| GREP rule pack (**E**) | `rule-pack/grep-esg-environmental-red-flags` | 14 detectors for deforestation, hazardous waste, water pollution, water-stress sourcing, Scope-3 underreporting, missing transition plans, biodiversity (KBA/protected areas), conflict minerals, ozone-depleting substances |
+| GREP rule pack (**G**) | `rule-pack/grep-esg-governance-red-flags` | 12 detectors for UBO opacity, shell-jurisdictions, facilitation payments, third-party-agent gaps, whistleblower retaliation, audit-trail gaps, sanctions / PEP screening |
+| RAG knowledge pack (regulatory) | `knowledge-pack/csddd-and-forced-labor-indicators` | 21-source citation backbone: CSDDD + CSRD + EUDR + Conflict Minerals + UK MSA + LkSG + Loi Vigilance + Åpenhetsloven + Swiss 964j + NL CLDD + SB 657 + UFLPA + Tariff Act §307 + Canada S-211 + Australia MSA + Japan METI + UNGPs + OECD MNE + OECD DD + ETI Base Code + CBP WRO snapshot |
+| RAG knowledge pack (corridors) | `knowledge-pack/high-risk-corridors-and-sectors` | Geographic + sectoral risk map (apparel/electronics/agri/construction/seafood/brick-kilns/carpets), CBP WRO snapshot, UFLPA Entity List snapshot, ITUC Global Rights Index |
+| PII redaction | `rule-pack/privacy-pii-text-en` + `processor/redact-pii-text` | Strips worker grievance transcript PII before LLM call (HIPAA Safe Harbor 18-category) |
+| Judge rubric (full) | `rubric/esg-supplier-compliance-v1` | **12-dimension** rubric, explicit E + S + G + cross-cutting groups |
+| Judge rubric (E only) | `rubric/esg-env-v1` | 5-dimension ESRS E1-E5 sub-rubric |
+| Judge rubric (S only) | `rubric/esg-social-v1` | 6-dimension ILO + ESRS S1-S2 sub-rubric |
+| Judge rubric (G only) | `rubric/esg-gov-v1` | 6-dimension OECD MNE + ISO 37001 + EU 2019/1937 sub-rubric |
+| Input shape | `dataset/supplier-disclosure-pack-schema` + `schemas/supplier-disclosure-pack.schema.json` | Canonical JSON Schema for the supplier disclosure pack + 3 synthetic samples for testing |
+| Grading pipeline | `pipeline/supplier-policy-grading` | Persona → PII redact → 3 GREP packs (S+E+G) → 3 RAG passes (regulatory + corridors + lead code) → judge → propose remediation |
 | Multi-tier audit | `pipeline/deep-tier-supplier-audit` | Walks T1 → T4+ with `processor/iterative-revise-loop`; escalates high-severity |
 | Cross-org sharing | `pipeline/anonymized-illicit-recruitment-pattern-sharing` | k-anonymity gate before hub-sharing systemic broker / corridor patterns |
+| Cross-org pattern | `pattern/k-anonymity-aggregation` | Generalized k-anonymity + HMACed-key + optional DP-noise design pattern |
+| Live lookup tool | `tool/cbp-wro-lookup` | US CBP WRO + UFLPA Entity List check; HALT on hit |
+| Regression bench | `benchmark/esg-supplier-grading-bench` | Runs the grading pipeline against the 3 synthetic disclosure packs across 2 model arms (Ollama-Llama-3-8B vs vLLM-Qwen-2.5-32B-AWQ); per-dimension reporting |
 
 ## End-to-end flow
 

@@ -62,6 +62,8 @@ defaults:
   model_adapter: "adapter/ollama-default"
   rule_packs:
     - "rule-pack/grep-esg-forced-labor-red-flags"
+    - "rule-pack/grep-esg-environmental-red-flags"
+    - "rule-pack/grep-esg-governance-red-flags"
     - "rule-pack/privacy-pii-text-en"
 
 steps:
@@ -71,25 +73,45 @@ steps:
     inputs:
       text: "$.inputs.supplier_disclosure_pack.text"
 
-  - id: "grep_red_flags"
+  - id: "grep_social_red_flags"
     kind: "rule_pack"
     ref: "rule-pack/grep-esg-forced-labor-red-flags"
     inputs:
       text: "$.steps.redact_pii.output.text"
 
-  - id: "rag_against_csddd"
+  - id: "grep_environmental_red_flags"
+    kind: "rule_pack"
+    ref: "rule-pack/grep-esg-environmental-red-flags"
+    inputs:
+      text: "$.steps.redact_pii.output.text"
+
+  - id: "grep_governance_red_flags"
+    kind: "rule_pack"
+    ref: "rule-pack/grep-esg-governance-red-flags"
+    inputs:
+      text: "$.steps.redact_pii.output.text"
+
+  - id: "rag_against_global_pack"
     kind: "rule_pack"
     ref: "rule-pack/hybrid-retrieval-policy"
     inputs:
-      query: "$.steps.grep_red_flags.output.hits"
+      query: "$.steps.grep_social_red_flags.output.hits"
       corpus: "knowledge-pack/csddd-and-forced-labor-indicators"
-      top_k: 8
+      top_k: 12
+
+  - id: "rag_against_corridors"
+    kind: "rule_pack"
+    ref: "rule-pack/hybrid-retrieval-policy"
+    inputs:
+      query: "$.inputs.supplier_disclosure_pack.sectors"
+      corpus: "knowledge-pack/high-risk-corridors-and-sectors"
+      top_k: 6
 
   - id: "rag_against_lead_code"
     kind: "rule_pack"
     ref: "rule-pack/hybrid-retrieval-policy"
     inputs:
-      query: "$.steps.grep_red_flags.output.hits"
+      query: "$.steps.grep_social_red_flags.output.hits"
       corpus: "$.inputs.lead_company_code_ref"
       top_k: 4
 
