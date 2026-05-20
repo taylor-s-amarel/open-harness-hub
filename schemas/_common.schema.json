@@ -120,6 +120,7 @@
         "unsloth",
         "llama_cpp",
         "ollama",
+        "vllm",
         "openai_compatible",
         "anthropic",
         "google_gemini",

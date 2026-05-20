@@ -52,3 +52,9 @@ capabilities:
     label: Code synthesis — generate or refactor code.
   - id: embedding
     label: Embedding — produce vector representations.
+  - id: reranking
+    label: Reranking — re-order a candidate set by a stronger signal.
+  - id: serving
+    label: Serving — host a model behind a runtime / API.
+  - id: code_execution
+    label: Code execution — run code emitted by an LLM in a sandbox.

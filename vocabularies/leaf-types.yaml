@@ -69,6 +69,12 @@ leaf_types:
   - id: context_snippet
     parent: trace
     description: A bounded snippet of context passed to the model.
+  - id: tool_call
+    parent: trace
+    description: A single tool invocation emitted by the model.
+  - id: tool_observation
+    parent: trace
+    description: The result of a tool invocation, fed back to the model.
 
   # ---- evaluation ----
   - id: rubric_dimension
