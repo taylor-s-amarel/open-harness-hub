@@ -107,6 +107,28 @@ industries:
         label: Identity & fraud
   - id: climate
     label: Climate, energy & sustainability
+  - id: esg
+    label: ESG, sustainability reporting & supply chain due diligence
+    sub:
+      - id: esg.csddd
+        label: EU CSDDD (Corporate Sustainability Due Diligence)
+      - id: esg.modern_slavery
+        label: Modern Slavery Act compliance
+      - id: esg.cdp
+        label: Climate Disclosure Project / carbon
+      - id: esg.csrd
+        label: EU CSRD (Corporate Sustainability Reporting)
+  - id: supply_chain
+    label: Supply chain & deep-tier supplier networks
+    sub:
+      - id: supply_chain.due_diligence
+        label: Supply chain due diligence
+      - id: supply_chain.audit
+        label: Supplier audit
+  - id: sustainability
+    label: Sustainability (general)
+  - id: compliance
+    label: Compliance & regulatory governance (cross-domain)
   - id: agriculture
     label: Agriculture & food systems
   - id: energy

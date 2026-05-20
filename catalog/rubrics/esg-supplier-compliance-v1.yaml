@@ -1,0 +1,65 @@
+id: "rubric/esg-supplier-compliance-v1"
+type: rubric
+version: "0.1.0"
+name: "ESG supplier compliance v1"
+description: |
+  Seven-dimension rubric for grading supplier-submitted policy texts,
+  self-assessments, and grievance transcripts against the CSDDD, the
+  ILO forced-labor indicators, and the lead company's code of conduct.
+  Used by `pipeline/supplier-policy-grading` and `pipeline/deep-tier-
+  supplier-audit`.
+authors:
+  - name: "Open Harness Hub contributors"
+license: "MIT"
+industry:   ["esg", "supply_chain", "compliance"]
+capability: ["evaluation"]
+modality:   ["text", "structured"]
+lifecycle:  "experimental"
+trust_boundary: "local"
+created: "2026-05-19"
+updated: "2026-05-19"
+
+dimensions:
+  - id: "indicators_grounded"
+    label: "Every finding cites an ILO indicator or CSDDD article"
+    weight: 0.25
+    scale: "0..1"
+    evidence_required: "for each finding (severity ≥ medium): non-empty (indicator_id, article_id) tuple"
+
+  - id: "tier_traced"
+    label: "Each finding is tied to its supplier tier (T1/T2/T3/T4+)"
+    weight: 0.15
+    scale: "0..1"
+    evidence_required: "supplier_tier field is set and matched to a known supplier registry node"
+
+  - id: "no_accusation_without_pattern"
+    label: "No accusation of forced labor from a single indicator"
+    weight: 0.15
+    scale: "0..1"
+    evidence_required: "either ≥2 indicators OR an audit-team direct observation; otherwise label = 'risk flag', not 'violation'"
+
+  - id: "remediation_path_proposed"
+    label: "Each finding has a CSDDD Art. 10 remediation path"
+    weight: 0.15
+    scale: "0..1"
+    evidence_required: "non-empty remediation field (corrective action + supplier right of reply + timeline)"
+
+  - id: "grievance_pii_safe"
+    label: "Worker grievance transcripts are PII-redacted before quotation"
+    weight: 0.10
+    scale: "0..1"
+    evidence_required: "rule-pack/privacy-pii-text-en fires zero critical hits on quoted snippets"
+
+  - id: "high_risk_corridor_flag"
+    label: "Sourcing from high-risk corridors triggers heightened review"
+    weight: 0.10
+    scale: "0..1"
+    evidence_required: "presence of high-risk corridor (Xinjiang / Sialkot / Mae Sot / etc.) routes to escalation = 'heightened_review'"
+
+  - id: "lead_company_policy_alignment"
+    label: "Findings reference the lead company's code of conduct"
+    weight: 0.10
+    scale: "0..1"
+    evidence_required: "non-empty code_of_conduct_section field"
+
+scoring_method: "weighted_sum"

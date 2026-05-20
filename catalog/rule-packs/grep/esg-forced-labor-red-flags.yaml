@@ -1,0 +1,98 @@
+id: "rule-pack/grep-esg-forced-labor-red-flags"
+type: rule-pack
+version: "0.1.0"
+name: "ESG / forced-labor red-flag detectors"
+description: |
+  Heuristic regex detectors for the 11 ILO forced-labor indicators
+  + recruitment-fee abuse + tier-3/4 supply-chain transparency gaps.
+  Designed to be run over: supplier policy texts, supplier self-
+  assessments, worker grievance transcripts (post-PII redaction),
+  audit reports, contract clauses.
+
+  Multi-lingual core (English / Mandarin transliteration / Hindi
+  transliteration / Spanish / Portuguese) — most factory-floor
+  grievance transcripts arrive translated, but key fragments remain.
+  Pair with a small-model classifier (`processor/forced-labor-
+  classifier`) for robust detection.
+
+  These are FAST FIRST-PASS heuristics that TRIGGER reviews; they are
+  not authoritative determinations of forced labor.
+authors:
+  - name: "Open Harness Hub contributors"
+license: "MIT"
+industry:   ["esg", "supply_chain", "compliance"]
+capability: ["safety_gating", "classification"]
+modality:   ["text"]
+lifecycle:  "beta"
+trust_boundary: "local"
+freshness:  "volatile"
+tags: ["esg", "ilo", "forced-labor", "modern-slavery", "supply-chain", "multilingual"]
+created: "2026-05-19"
+updated: "2026-05-19"
+
+family: "grep"
+rules:
+  - id: "passport_retention"
+    pattern: "(?i)\\b(passport|id|identity document|document|身份证|护照|पासपोर्ट)s?\\s+(?:held|retain|withheld|confiscat|kept|surrender|deposit|in safe[ -]?keeping|with (?:the )?(?:hr|manager|company))"
+    severity: "critical"
+    category: "ilo.retention_of_identity_documents"
+
+  - id: "recruitment_fee_abuse"
+    pattern: "(?i)(recruitment|placement|broker|agency|agent) fee|deposit (?:before|prior to) (?:start|joining|employment)|charge.*(?:joining|placement)|debt.*recruit"
+    severity: "high"
+    category: "ilo.debt_bondage"
+
+  - id: "wage_withholding"
+    pattern: "(?i)wage(s)?\\s+(?:held|withheld|not paid|delayed|deduct|garnish|advance.*recover)|pay.*withheld|salary.*deduct"
+    severity: "high"
+    category: "ilo.withholding_of_wages"
+
+  - id: "restricted_movement_dormitory"
+    pattern: "(?i)(dormitory|hostel|compound|barrack)\\s+(?:locked|guarded|fenced|restrict|exit forbidden|curfew|chained)|cannot leave (?:the )?(?:dorm|hostel|compound|factory)|exit (?:must be|requires) approv"
+    severity: "critical"
+    category: "ilo.restriction_of_movement"
+
+  - id: "excessive_overtime"
+    pattern: "(?i)(\\d{1,3}|seventy|eighty|ninety|hundred)\\s*(?:\\+|plus)?\\s*hour(s)?\\s+(?:per|/)\\s*(?:week|day)|overtime\\s+(?:exceeds|over)\\s+\\d+|no day off|seven-day"
+    severity: "medium"
+    category: "ilo.excessive_overtime"
+
+  - id: "deceptive_recruitment"
+    pattern: "(?i)(promised|told)\\s+(?:job|salary|wage|role).*(?:different|other|not what)|misrepresent.*(?:job|wage|hours)|signed.*contract (?:in a |in another )(?:language|tongue)|did not understand (?:the )?contract"
+    severity: "high"
+    category: "ilo.deception"
+
+  - id: "child_labor"
+    pattern: "(?i)\\b(child|minor|under(-| )?age|under 1[5678]|under 16|under 18|14[- ]year[- ]old|15[- ]year[- ]old)\\b.*(work|labour|labor|factory|shift|line)|童工"
+    severity: "critical"
+    category: "ilo.child_labor"
+
+  - id: "threats_intimidation"
+    pattern: "(?i)(threat|intimidat|coerc|punish|beat|hit|slap|abus).*(worker|labourer|laborer|staff|employee)|deport(ation)?\\s+threat|family\\s+(?:will be )?(?:threatened|harm)"
+    severity: "critical"
+    category: "ilo.intimidation_and_threats"
+
+  - id: "isolation_unfree_communication"
+    pattern: "(?i)(no|forbidden|cannot|cannot use) (?:phone|mobile|cellphone)|communication (?:monitor|control|restrict)|cannot contact (?:family|home|union)"
+    severity: "high"
+    category: "ilo.isolation"
+
+  - id: "abusive_living_conditions"
+    pattern: "(?i)(unsanitary|unsafe|unventilated|no (?:water|toilet|food|heating|cooling)|infested|rat[- ]infested|cockroach)\\s+(?:dormitory|hostel|housing|barrack|compound)"
+    severity: "high"
+    category: "ilo.abusive_working_and_living_conditions"
+
+  - id: "audit_gap_tier_3_4"
+    pattern: "(?i)(unable to|cannot|could not)\\s+(?:trace|verify|audit|confirm)\\s+(?:tier[- ]?[34]|deep tier|sub[- ]?contract|sub[- ]?supplier|cotton (?:source|origin)|raw material (?:source|origin))"
+    severity: "medium"
+    category: "supply_chain.audit_gap_tier_3_4"
+
+  - id: "sourcing_high_risk_corridor"
+    pattern: "(?i)\\b(xinjiang|XUAR|qaem shahr|sialkot|raipur|bhainsa|mae sot|prey veng|kafala)\\b"
+    severity: "high"
+    category: "supply_chain.high_risk_corridor"
+
+  - id: "abusive_overtime_consent"
+    pattern: "(?i)(must|required|forced|compulsory).*(?:overtime|extra hours)|cannot refuse (?:overtime|extra hours)"
+    severity: "high"
+    category: "ilo.excessive_overtime.consent"

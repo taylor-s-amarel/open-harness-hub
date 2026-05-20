@@ -1,0 +1,62 @@
+id: "knowledge-pack/csddd-and-forced-labor-indicators"
+type: knowledge-pack
+version: "0.1.0"
+name: "CSDDD + ILO forced-labor indicators + Modern Slavery Act"
+description: |
+  Reference pack of (composite, educational) extracts from:
+   - EU Corporate Sustainability Due Diligence Directive (CSDDD) —
+     focus on Arts. 5 (risk-based due diligence), 7 (integration into
+     policy), 10 (remediation), 11 (grievance), 26 (board oversight).
+   - ILO 11 forced-labor indicators (abuse of vulnerability, deception,
+     restriction of movement, isolation, physical/sexual violence,
+     intimidation/threats, retention of identity documents, withholding
+     of wages, debt bondage, abusive working/living conditions,
+     excessive overtime).
+   - UK Modern Slavery Act §54 transparency-in-supply-chains.
+   - German LkSG (Lieferkettensorgfaltspflichtengesetz).
+   - California Transparency in Supply Chains Act SB 657.
+
+  Designed as a citation backbone for `pipeline/supplier-policy-grading`
+  and downstream ESG audit pipelines.
+authors:
+  - name: "Open Harness Hub contributors"
+license: "CC-BY-4.0"
+industry:   ["esg", "supply_chain", "compliance", "cross_industry"]
+capability: ["retrieval", "verification"]
+modality:   ["text"]
+lifecycle:  "beta"
+trust_boundary: "local"
+freshness:  "dated"
+tags: ["csddd", "ilo", "modern-slavery", "lksg", "sb-657", "supply-chain"]
+created: "2026-05-19"
+updated: "2026-05-19"
+
+content_types:
+  - rag_doc
+  - citation_edge
+files:
+  - path: "data/csddd-articles.jsonl"
+    format: "jsonl"
+  - path: "data/ilo-forced-labor-indicators.jsonl"
+    format: "jsonl"
+  - path: "data/modern-slavery-act-uk-s54.jsonl"
+    format: "jsonl"
+  - path: "data/lksg-germany.jsonl"
+    format: "jsonl"
+  - path: "data/sb-657-california.jsonl"
+    format: "jsonl"
+indexing:
+  bm25: true
+  dense:
+    embedder: "adapter/bge-embeddings-local"
+    chunk_tokens: 512
+    overlap_tokens: 64
+provenance:
+  sources:
+    - "EU Directive 2024/1760 (CSDDD), composite extracts"
+    - "ILO Hard to See, Harder to Count (2012), composite extracts"
+    - "UK Modern Slavery Act 2015 §54, composite extracts"
+    - "Germany LkSG (2021), composite extracts"
+    - "California SB 657 (2010), composite extracts"
+  collected_through: "2026-04-30"
+  note: "Composite educational extracts; not authoritative legal text."
