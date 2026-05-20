@@ -1045,6 +1045,45 @@ for `processor.process_kind` and an allowed value for
 The list is OPEN. New `process_kind` values are added by PR with no
 schema migration.
 
+### 16.5 Deeper pre/post-API process kinds (extended)
+
+The §16.1–16.4 enumeration captures the broad buckets. Real production
+pipelines also use these named patterns. All are valid
+`process_kind` values; the categories are open.
+
+**Pre-API (advanced):**
+
+| Family | process_kind | Reference |
+|---|---|---|
+| Context compression | `compress.llmlingua` · `compress.gist` · `compress.multi_turn_summary` | LLMLingua, Gist Tokens, conversation summary |
+| System-context injection | `inject.datetime` · `inject.locale` · `inject.user_profile` · `inject.constitutional` · `inject.seed` · `inject.output_schema` | Replace `today`/locale/seed; render JSON Schema into prompt |
+| Query optimization (advanced) | `query.hyde` · `query.step_back` · `query.multi_query` · `query.decompose` | HyDE, Step-Back, MultiQueryRetriever, Sub-Query Decomposition |
+| Linguistic normalization | `resolve.coreference` · `expand.abbreviation` · `language.detect_translate` · `correct.spelling_grammar` | spaCy / domain glossaries |
+| Tool / model selection | `select.tools_top_k` · `select.few_shot_by_difficulty` · `select.expert_route` | Gorilla, RouteLLM |
+| Budget management | `count.tokens` · `cache.key_gen` | tiktoken; prompt-cache key reuse |
+| Modality preprocessing | `image.preprocess` · `audio.preprocess` · `code.lint_format` | Crop / VAD / fmt |
+| Safety preprocessing (advanced) | `gate.prompt_injection_paraphrase` · `watermark.canary_inject` | Spotlighting; canary tokens for leak detection |
+
+**Post-API (advanced):**
+
+| Family | process_kind | Reference |
+|---|---|---|
+| Sampling strategies | `sample.n_best` · `sample.self_consistency` · `sample.tree_of_thoughts` · `sample.beam_search` | Best-of-N, Self-Consistency, Tree-of-Thoughts |
+| Critique & revision | `critique.self` · `critique.constitutional` · `critique.adversarial_judge` | Self-Refine, Constitutional AI, debate |
+| Verification (advanced) | `verify.hallucination_score` · `verify.fact_check_external` · `verify.numerical_recompute` · `verify.code_execute` | SelfCheckGPT, Ragas, code interpreter |
+| Format repair (broader) | `coerce.xml_repair` · `coerce.yaml_repair` · `coerce.csv_repair` · `coerce.markdown_to_pdf` · `coerce.markdown_to_slack` | WeasyPrint, pandoc, Slack Block Kit |
+| Style adjustment | `style.tone_adjust` · `style.simplify_flesch` · `style.persona_lock` | Brand-voice + reading-level targeting |
+| Augmentation (advanced) | `augment.citation_backfill` · `augment.confidence_intervals` · `augment.glossary` | Perplexity-style citations, calibrated CIs |
+| Provenance & signing | `sign.cryptographic` · `watermark.text` · `watermark.image` · `provenance.run_hash` | Sigstore, statistical watermarking, C2PA |
+| Routing & abstention | `abstain.confidence_threshold` · `route.fallback_model` | Calibrated refusal; cascades |
+| Ensembling | `ensemble.blend` · `ensemble.dedupe` | Weighted blending, dedup across samples |
+| Telemetry | `meter.cost` · `meter.latency` · `meter.tokens` · `meter.experiment_tag` | Cost / SRE / A/B |
+| Active learning | `flag.active_learning` · `personalize.update_profile` · `feedback.collect_thumbs` · `writeback.training_jsonl` | RLHF data collection; per-harness JSONL |
+
+These are the most common 30+ named patterns; the list will grow as
+new techniques land. See `docs/concepts/pre-post-api.md` for the
+full walkthrough.
+
 ---
 
 ## 17. Processor artifact type
