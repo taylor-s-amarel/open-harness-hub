@@ -3,7 +3,7 @@
   "_meta": {
     "by_stage": {
       "api": 13,
-      "cross_cutting": 44,
+      "cross_cutting": 51,
       "post_api": 17,
       "pre_api": 58
     },
@@ -11,7 +11,7 @@
       "api.model_call": 7,
       "api.tool_call": 6,
       "cross_cutting": 20,
-      "cross_cutting.composition": 24,
+      "cross_cutting.composition": 31,
       "post_api.audit": 3,
       "post_api.evaluation": 11,
       "post_api.format_coercion": 1,
@@ -27,17 +27,17 @@
       "knowledge-pack": 15,
       "pattern": 20,
       "persona": 10,
-      "pipeline": 19,
+      "pipeline": 26,
       "processor": 35,
       "rubric": 5,
       "rule-pack": 15,
       "tool": 5
     },
     "by_industry": {
-      "ai": 43,
+      "ai": 50,
       "creative": 11,
-      "cross_industry": 81,
-      "education": 4,
+      "cross_industry": 82,
+      "education": 7,
       "education.tutoring": 1,
       "finance": 15,
       "finance.aml": 11,
@@ -51,27 +51,28 @@
       "media": 13,
       "retail": 5,
       "retail.support": 2,
+      "scientific_research": 1,
       "security": 9,
       "software": 8,
       "software.codereview": 3
     },
     "by_capability": {
-      "agent_loop": 9,
+      "agent_loop": 10,
       "anonymization": 8,
-      "classification": 16,
+      "classification": 19,
       "code_synthesis": 5,
       "dialogue": 5,
       "embedding": 3,
-      "evaluation": 17,
+      "evaluation": 20,
       "extraction": 3,
       "format_conversion": 7,
-      "generation": 11,
+      "generation": 13,
       "image_synthesis": 3,
       "memory": 1,
       "planning": 7,
-      "reasoning": 36,
+      "reasoning": 40,
       "research": 6,
-      "retrieval": 45,
+      "retrieval": 46,
       "routing": 7,
       "safety_gating": 29,
       "summarization": 4,
@@ -84,14 +85,14 @@
       "code": 5,
       "image": 7,
       "structured": 21,
-      "text": 124
+      "text": 131
     },
     "by_lifecycle": {
-      "beta": 41,
+      "beta": 44,
       "experimental": 53,
-      "stable": 38
+      "stable": 42
     },
-    "total": 132
+    "total": 139
   },
   "_tree": {
     "api": {
@@ -229,6 +230,7 @@
             "pipeline/knowledge-graph-from-corpus",
             "pipeline/multi-doc-qa-subquestion",
             "pipeline/plan-execute-critic-loop",
+            "pipeline/quantized-llm-inference",
             "pipeline/research-entity",
             "pipeline/self-rag-grade-and-revise",
             "pipeline/verify-claim-against-corpus"
@@ -237,10 +239,17 @@
             "pipeline/code-act-jupyter-loop",
             "pipeline/deep-research-supervisor-workers",
             "pipeline/knowledge-graph-from-corpus",
+            "pipeline/large-model-faiss-rag",
+            "pipeline/llm-judge-essay-grading",
             "pipeline/multi-agent-debate-with-judge",
+            "pipeline/multi-model-judging-ensemble",
+            "pipeline/perplexity-baseline-scoring",
+            "pipeline/quantized-llm-inference",
             "pipeline/self-rag-grade-and-revise",
             "pipeline/storm-persona-curation-article",
-            "pipeline/swe-patch-sample-and-review"
+            "pipeline/swe-patch-sample-and-review",
+            "pipeline/synthetic-data-gen-with-teacher-llm",
+            "pipeline/twenty-questions-agent"
           ],
           "software": [
             "pipeline/code-act-jupyter-loop",
@@ -269,8 +278,14 @@
           "retail.support": [
             "pipeline/email-triage-and-draft"
           ],
+          "scientific_research": [
+            "pipeline/large-model-faiss-rag"
+          ],
           "education": [
-            "pipeline/storm-persona-curation-article"
+            "pipeline/large-model-faiss-rag",
+            "pipeline/llm-judge-essay-grading",
+            "pipeline/storm-persona-curation-article",
+            "pipeline/twenty-questions-agent"
           ],
           "finance": [
             "pipeline/suspicious-transaction-review"
@@ -2220,6 +2235,79 @@
       "path": "catalog/pipelines/knowledge-graph/graphrag-from-corpus.yaml"
     },
     {
+      "id": "pipeline/large-model-faiss-rag",
+      "type": "pipeline",
+      "name": "Large-model FAISS RAG (Platypus2-70b style)",
+      "description": "Use a large (70B-class) instruction-tuned model with FAISS-indexed\nWikipedia retrieval. The \"go big or go home\" Kaggle pattern that\nwins multi-choice-with-context competitions.\n\nVerified by Open Harness Hub mining of simjeg's \"Platypus2-70B with\nWikipedia RAG\" (1248 votes) on kaggle-llm-science-exam.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "scientific_research",
+        "education"
+      ],
+      "capability": [
+        "retrieval",
+        "reasoning",
+        "classification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "qa_multichoice_rag",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "rule-pack/hybrid-retrieval-policy",
+        "processor/cross-encoder-reranker",
+        "harness/text-safety-review"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/faiss-rag/large-model-faiss-rag.yaml"
+    },
+    {
+      "id": "pipeline/llm-judge-essay-grading",
+      "type": "pipeline",
+      "name": "LLM-judge essay grading (with adversarial prompt prefix)",
+      "description": "Run a frontier LLM as judge on candidate essays, using a few-shot\nprompt with adversarial prefix patterns to discourage gaming. The\n\"you can't please them all\" pattern: grade strictly, refuse to\ninflate scores under social-engineering pressure.\n\nVerified by Open Harness Hub mining of richolson's \"Mash It Up\" (561\nvotes), \"Add It Up!\" (333 votes), and jiprud's \"Essays - simple\nsubmission\" (484 votes) on llms-you-cant-please-them-all.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "education"
+      ],
+      "capability": [
+        "evaluation",
+        "reasoning"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "evaluation",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "rule-pack/grep-prompt-injection-heuristics",
+        "processor/llm-judge",
+        "processor/self-consistency-sampler",
+        "processor/audit-trace-emitter"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/llm-judge/essay-grading.yaml"
+    },
+    {
       "id": "pipeline/multi-agent-debate-with-judge",
       "type": "pipeline",
       "name": "Multi-agent debate with judge",
@@ -2295,6 +2383,73 @@
       "path": "catalog/pipelines/qa-documents/multi-doc-qa-subquestion.yaml"
     },
     {
+      "id": "pipeline/multi-model-judging-ensemble",
+      "type": "pipeline",
+      "name": "Multi-model judging ensemble",
+      "description": "Run inference across N different LLMs (e.g. Mixtral / Mistral-7B /\nGemma-7B / Llama-3-8B), score each model's prediction with a\nperplexity baseline, then majority-vote or weighted-blend for final\noutput.\n\nVerified by Open Harness Hub mining of aatiffraz's\n\"Prompt Prediction w/ Mixtral/Mistral7B/Gemma/Llama\" (640 votes).",
+      "version": "0.1.0",
+      "industry": [
+        "ai"
+      ],
+      "capability": [
+        "reasoning",
+        "evaluation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "ensemble",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "rule-pack/grep-prompt-injection-heuristics",
+        "processor/action-sampler-multi-rollout",
+        "processor/multi-vector-fusion"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/multi-model-ensemble/multi-model-judging.yaml"
+    },
+    {
+      "id": "pipeline/perplexity-baseline-scoring",
+      "type": "pipeline",
+      "name": "Perplexity-baseline scoring",
+      "description": "Score candidate answers by their perplexity under a reference LLM.\nLower perplexity = better fit. Used as a baseline for\nprompt-recovery, AI-text-detection, and any task where \"fluency\nunder a fixed prior\" is a useful signal.\n\nVerified by Open Harness Hub mining of itahiro's \"Perplexity\nBaseline [Phi-2, Gemma-7b-it]\" (1005 votes) on llm-prompt-recovery.",
+      "version": "0.1.0",
+      "industry": [
+        "ai"
+      ],
+      "capability": [
+        "evaluation",
+        "classification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "evaluation",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "harness/text-safety-review",
+        "processor/multi-vector-fusion"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/perplexity/perplexity-baseline-scoring.yaml"
+    },
+    {
       "id": "pipeline/plan-execute-critic-loop",
       "type": "pipeline",
       "name": "Plan / execute / critic loop",
@@ -2331,6 +2486,41 @@
       ],
       "links": {},
       "path": "catalog/pipelines/plan-and-execute/plan-execute-critic-loop.yaml"
+    },
+    {
+      "id": "pipeline/quantized-llm-inference",
+      "type": "pipeline",
+      "name": "Quantized LLM inference (4-bit BitsAndBytes)",
+      "description": "Inference-only path: load a 7-70B LLM with 4-bit BitsAndBytes\nquantization, run generation with controlled sampling kwargs and a\nchat template. The lightest production shape \u2014 no LoRA, no fine-tune,\njust memory-efficient inference for production deployments.\n\nVerified across 5+ Kaggle kernels: cdeotte/starter-code-for-llama-8b,\nitahiro/perplexity-baseline-phi-2-gemma-7b-it, richolson/{add-it-up,mash-it-up},\naatiffraz/prompt-prediction-w-mixtral-mistral7b-gemma-llama.",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "cross_industry"
+      ],
+      "capability": [
+        "generation",
+        "classification"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "inference",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "rule-pack/grep-prompt-injection-heuristics",
+        "harness/text-safety-review",
+        "processor/audit-trace-emitter"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/inference/quantized-llm-inference.yaml"
     },
     {
       "id": "pipeline/research-entity",
@@ -2532,6 +2722,75 @@
       ],
       "links": {},
       "path": "catalog/pipelines/code-review/swe-patch-sample-and-review.yaml"
+    },
+    {
+      "id": "pipeline/synthetic-data-gen-with-teacher-llm",
+      "type": "pipeline",
+      "name": "Synthetic-data generation with teacher LLM",
+      "description": "Use a teacher LLM to generate (input, output) training pairs for a\ndownstream student fine-tune. Includes filtering for diversity +\ndifficulty + safety. The pattern that won the prompt-recovery class\nof competitions.\n\nVerified by Open Harness Hub mining of wlifferth's \"Starter Notebook:\nGenerating More Data With Gemma\" (1820 votes) on llm-prompt-recovery.",
+      "version": "0.1.0",
+      "industry": [
+        "ai"
+      ],
+      "capability": [
+        "generation"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "stable",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "external",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "synthetic_data_gen",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "harness/text-safety-review",
+        "processor/persona-set-generator",
+        "processor/multi-vector-fusion",
+        "processor/audit-trace-emitter"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/synthetic-data/teacher-llm-data-gen.yaml"
+    },
+    {
+      "id": "pipeline/twenty-questions-agent",
+      "type": "pipeline",
+      "name": "20-questions agent (Akinator-style)",
+      "description": "An agent that plays 20 Questions \u2014 asks yes/no questions to narrow\ndown a hidden concept. Uses a candidate set + binary-search-style\nquestion generation. The classic agent-game pattern with a clear\nwin condition.\n\nVerified by Open Harness Hub mining of ryanholbrook's \"LLM 20\nQuestions Starter Notebook\" (1420 votes) + cdeotte's \"Starter Code\nfor Llama 8B LLM\" (447 votes).",
+      "version": "0.1.0",
+      "industry": [
+        "ai",
+        "education"
+      ],
+      "capability": [
+        "reasoning",
+        "agent_loop"
+      ],
+      "modality": [
+        "text"
+      ],
+      "lifecycle": "beta",
+      "lifecycle_position": "cross_cutting.composition",
+      "lifecycle_stage": "cross_cutting",
+      "trust_boundary": "local",
+      "tags": [],
+      "applied_layers": [],
+      "family": null,
+      "pipeline_kind": "agent_loop",
+      "consumes": [],
+      "emits": [],
+      "step_refs": [
+        "rule-pack/grep-prompt-injection-heuristics",
+        "processor/iterative-revise-loop",
+        "processor/audit-trace-emitter"
+      ],
+      "links": {},
+      "path": "catalog/pipelines/multi-agent/twenty-questions-agent.yaml"
     },
     {
       "id": "pipeline/verify-claim-against-corpus",
