@@ -1,28 +1,28 @@
 # Open Harness Hub — single-page catalog index
 
-Auto-generated from `scripts/build_index_page.py` against 260 live artifacts. Run that script to refresh after any catalog change.
+Auto-generated from `scripts/build_index_page.py` against 273 live artifacts. Run that script to refresh after any catalog change.
 
 Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency tree of any entry below.
 
 ## Stats
 
-- **Total artifacts:** 260
+- **Total artifacts:** 273
 - **Artifact types:** 12
-- **Industries:** 45
+- **Industries:** 46
 
 ## Table of contents
 
-- [harness (10)](#harness)
-- [pipeline (48)](#pipeline)
+- [harness (13)](#harness)
+- [pipeline (51)](#pipeline)
 - [benchmark (1)](#benchmark)
-- [rule-pack (27)](#rule-pack)
-- [knowledge-pack (25)](#knowledge-pack)
+- [rule-pack (28)](#rule-pack)
+- [knowledge-pack (26)](#knowledge-pack)
 - [tool (14)](#tool)
-- [persona (20)](#persona)
+- [persona (22)](#persona)
 - [adapter (9)](#adapter)
 - [rubric (18)](#rubric)
 - [dataset (10)](#dataset)
-- [processor (51)](#processor)
+- [processor (54)](#processor)
 - [pattern (27)](#pattern)
 
 ## harness
@@ -31,6 +31,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _finance, finance.aml_ • Harness for AML suspicious-transaction review. Composes the AML-analyst persona, sanctions-screening heuristic, FATF-typology classifier, financial-PII privacy gate, FATF-typology …
 - **`harness/appsec-code-audit`** — AppSec Code Audit harness  
   _security, security.appsec, software_ • CWE-cite-first AppSec audit harness for source-code review. Detects secrets-in-code + injection + crypto/auth weaknesses + describes attack vectors + proposes fixes.
+- **`harness/chat-with-memory`** — Persistent chat with memory (multi-turn, preference-aware)  
+  _personal_productivity, cross_industry_ • Multi-turn chat harness with persistent memory across sessions. Loads user preferences, recalls prior conversation context, and honors the user's stated rules (don't reveal X, alwa…
 - **`harness/clinical-decision-support`** — Clinical Decision Support  
   _healthcare, healthcare.clinical_ • Healthcare-specific harness for differential-diagnosis reasoning. Composes the clinical-reasoner persona, red-flag classifier rules, HIPAA PHI privacy gate, clinical-guideline RAG,…
 - **`harness/code-act-jupyter`** — Code-Act Jupyter (tool-augmented reasoning via sandboxed Python)  
@@ -39,8 +41,12 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _legal, legal.contract, legal.compliance_ • Playbook-cite-first harness for commercial contract review. Surfaces red-flag clauses + proposes concrete redline language + cites the playbook clause family for every finding.
 - **`harness/data-cleaning-and-enrichment`** — Data cleaning + entity enrichment harness  
   _cross_industry, retail, finance, healthcare_ • Cross-vertical harness that normalizes a raw customer / vendor / applicant record: addresses → USPS standardized + geocoded; phones → E.164; names → canonical with given/family spl…
+- **`harness/email-triage-and-draft`** — Email Triage + Draft harness (preference-aware, tone-matched)  
+  _personal_productivity, cross_industry_ • Email-handling harness: loads user preferences + recipient tone history, triages each thread (do-now/delegate/defer/drop), drafts reply candidates matching the recipient's tone, an…
 - **`harness/esg-disclosure-grading`** — ESG Disclosure Grading harness  
   _esg, supply_chain, compliance_ • Wraps the ESG supplier-policy-grading flow as a reusable harness with persona + GREP + RAG + tools layers. Targets local-Ollama or Anthropic/OpenAI for the judge model arm; emits c…
+- **`harness/personal-corpus-search`** — Personal corpus search (RAG over user's own files / notes / docs)  
+  _personal_productivity, cross_industry_ • Search the user's personal corpus — their own files, notes, emails, calendar, contacts — and return answer + citations scoped to ONLY the user's data. Authorization-gated; refuses …
 - **`harness/radiology-report-review`** — Radiology Report Review harness  
   _healthcare, healthcare.radiology_ • RADS-aware + Fleischner-aware harness for grading radiology reports with HIPAA-safe PHI redaction. Wraps `pipeline/radiology-report- grading` with reusable layers.
 - **`harness/redact-pii-text`** — Redact PII (text)  
@@ -86,6 +92,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _healthcare, healthcare.clinical_ • Educational decision-support pipeline. Given (presentation, history, exam) text, returns a ranked differential diagnosis with cited guideline sections, ICD-10 code candidates, and …
 - **`pipeline/email-triage-and-draft`** — Email triage + reply draft  
   _retail, retail.support, cross_industry_ • Customer-support email workflow. Layered chain:   redact PII →   grep (prompt-injection guard on email body — emails often carry attack     content from untrusted senders) →   clas…
+- **`pipeline/email-triage-pipeline`** — Email triage pipeline (preference-loaded, tone-matched, leakage-checked)  
+  _personal_productivity, cross_industry_ • Concrete pipeline wrapping `harness/email-triage-and-draft`. Loads user prefs + recipient tone → triages each thread → drafts replies → leakage-checks each draft → returns thread d…
 - **`pipeline/everything-research-pipeline`** — Everything research pipeline (kitchen-sink, 22 passes)  
   _cross_industry_ • A comprehensive research pipeline that demonstrates every layer the hub supports — 22 distinct passes from raw input through model call through iterative refinement to delivery.
 - **`pipeline/full-vendor-due-diligence`** — Full vendor due-diligence (ESG + AppSec + Legal — kitchen-sink)  
@@ -110,6 +118,10 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _ai_ • Run inference across N different LLMs (e.g. Mixtral / Mistral-7B / Gemma-7B / Llama-3-8B), score each model's prediction with a perplexity baseline, then majority-vote or weighted-…
 - **`pipeline/perplexity-baseline-scoring`** — Perplexity-baseline scoring  
   _ai_ • Score candidate answers by their perplexity under a reference LLM. Lower perplexity = better fit. Used as a baseline for prompt-recovery, AI-text-detection, and any task where "flu…
+- **`pipeline/personal-chat-pipeline`** — Personal chat pipeline (preference + memory + tool-aware)  
+  _personal_productivity, cross_industry_ • Wraps `harness/chat-with-memory` in a concrete pipeline that loads user preferences, resolves any tool calls, and persists the turn to the memory backend.
+- **`pipeline/personal-search-pipeline`** — Personal corpus search pipeline (RAG over user's own data)  
+  _personal_productivity, cross_industry_ • Concrete pipeline wrapping `harness/personal-corpus-search` for answering user queries from their own files / notes / emails / calendar / contacts. Local-first; opt-in for hosted m…
 - **`pipeline/plan-execute-critic-loop`** — Plan / execute / critic loop  
   _cross_industry_ • The classic agentic pattern: planner LLM drafts a step list, executor runs the steps (with tool calls), critic LLM reviews the trace + re-plans on failure. Iterates until either th…
 - **`pipeline/quantized-llm-inference`** — Quantized LLM inference (4-bit BitsAndBytes)  
@@ -188,6 +200,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _security, threat_intelligence_ • Extracts indicators-of-compromise from threat-intel reports, incident write-ups, sandbox outputs. Output IOCs feed into `pipeline/threat-intel-ioc-review` for verification + ATT&CK…
 - **`rule-pack/grep-output-safety-image`** — Image-output safety checks  
   _creative, media_ • Post-generation safety check pack for image outputs. Pairs of (detector-call, threshold) plus a watermark presence check. Designed to be called by an image-gen pipeline AFTER the t…
+- **`rule-pack/grep-personal-info-leakage`** — Personal-info leakage detectors (assistant drafts → wrong audience)  
+  _personal_productivity, cross_industry_ • GREP detectors that fire when a personal-assistant DRAFT is about to be sent to a recipient and contains content the user has marked private (salary / health / family conflict / me…
 - **`rule-pack/grep-private-key-blocks`** — Private key block detectors  
   _security, cross_industry_ • Detection patterns for PEM-encoded private keys (RSA, EC, DSA, OpenSSH, PGP) and modern formats (Age, Sigstore). Any match is a critical-severity hit — full revocation + key rotati…
 - **`rule-pack/grep-prohibited-terms`** — Prohibited Terms (image-gen guard rails)  
@@ -261,6 +275,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry, legal, software_ • Sampled summary of common SPDX licenses — permissive, copyleft, non-commercial, public-domain. For each: license_id, category, one-paragraph summary, redistribution-compatible flag…
 - **`knowledge-pack/style-references-cinematic`** — Cinematic style references  
   _creative_ • Curated style descriptors for cinematic product / scene photography. Each entry is a textual descriptor of a style — lighting, color palette, composition, atmosphere — with attribu…
+- **`knowledge-pack/user-preference-schema`** — User preference schema (canonical shape for personal assistants)  
+  _personal_productivity, cross_industry_ • Canonical schema for storing user preferences that personal- assistant harnesses load before taking action. Covers:  - Communication tone preferences (formal / casual / terse / war…
 
 ## tool
 
@@ -317,12 +333,16 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry, media_ • A careful fact-checker persona. Reasons about claims, evidence, and the gap between them. Prefers primary sources and refuses to confirm controversial claims without independent co…
 - **`persona/gxp-auditor`** — GxP Auditor (21-CFR-11 / EU GMP Annex 11 / ICH / ALCOA+)  
   _pharma, pharma.gxp, healthcare.pharmacy, compliance_ • Pharmaceutical/biotech GxP auditor reviewing electronic records, audit trails, and validated systems against 21-CFR-11, EU GMP Annex 11, ICH Q9/Q10, ALCOA+ data-integrity principle…
+- **`persona/inbox-zero-coach`** — Inbox Zero Coach (triage + reply-draft + delegation)  
+  _personal_productivity_ • Email triage assistant that classifies each thread (do-now / delegate / defer / drop) and drafts reply candidates using the user's prior tone with each correspondent.
 - **`persona/insurance-claims-adjuster`** — Insurance Claims Adjuster (fraud-aware, NAIC-aligned)  
   _insurance, insurance.claims, insurance.fraud, finance_ • Insurance claims adjuster persona reviewing first-notice-of-loss reports, repair invoices, medical bills, and supporting documentation for legitimacy + fraud indicators. Aligned to…
 - **`persona/linux-terminal`** — Linux terminal  
   _cross_industry, software_ • The single most-cloned community persona — model behaves like a Linux terminal, returning only the would-be terminal output. Doubles as a deterministic-IO eval (the same command sh…
 - **`persona/math-tutor`** — Math tutor  
   _education, education.tutoring_ • Patient math-tutor persona that uses Socratic prompts and step-by-step reasoning. Diagnoses what the student understands before introducing new material. Useful baseline for `pipel…
+- **`persona/personal-assistant`** — Personal Assistant (preference-aware, privacy-first)  
+  _personal_productivity, cross_industry_ • Personal AI assistant persona that reads user preferences BEFORE taking action, never reveals private info to wrong audiences, cites the user's stated rule when declining a request…
 - **`persona/radiologist-cite-first`** — Radiologist (citation-first, specialty radiology)  
   _healthcare, healthcare.radiology_ • Specialization of `persona/clinical-reasoner` for radiology report generation and review. Citation-first: every BI-RADS / Fleischner / ACR Appropriateness Criteria assertion is gro…
 - **`persona/research-analyst`** — Research Analyst  
@@ -429,6 +449,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry_ • Speech-to-text via a Whisper-family model. Returns transcript + per-segment timestamps + detected language. Wraps `openai-whisper`, `faster-whisper`, or `distil-whisper` based on t…
 - **`processor/audit-trace-emitter`** — Audit trace emitter  
   _cross_industry_ • Emit a per-step audit trace including hashed input/output, model version, adapter, applied layers, latency, and cost. Writes to a configured sink (local JSONL, Loki, OpenTelemetry,…
+- **`processor/calendar-slot-finder`** — Calendar slot finder (preference-aware)  
+  _personal_productivity_ • Given the user's calendar + their preferences (no-meeting hours, focus blocks, preferred meeting hours), find N candidate slots for a new meeting. Honors duration, time-zone, atten…
 - **`processor/citation-coverage`** — Citation coverage verifier  
   _cross_industry_ • Verify that every factual sentence in a response carries at least one citation marker (e.g. `[1]`, `[smith-2026]`). Returns coverage ratio and a list of uncited sentences for re-pr…
 - **`processor/community-summary-mapreduce`** — Community-summary map-reduce (GraphRAG global)  
@@ -487,10 +509,14 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _ai, media, education_ • Spawn N personas with distinct perspectives on a topic. Used by STORM's multi-perspective curation and by multi-agent debate pipelines. Each persona carries a role, an angle, prior…
 - **`processor/phone-normalize-e164`** — Phone number normalize → E.164 (Google libphonenumber)  
   _cross_industry_ • Parse free-form phone numbers into E.164 international format (+CCNNNNNNNNNNNN) using Google libphonenumber conventions. Returns the E.164 string + country code + number type (mobi…
+- **`processor/preference-loader`** — User preference loader  
+  _personal_productivity, cross_industry_ • Load the user's preference file from `knowledge-pack/user-preference-schema` (or per-user overrides), resolve any inheritance from defaults, and emit a structured preference object…
 - **`processor/prompt-injection-detector`** — Prompt-injection detector  
   _cross_industry, security_ • Detect prompt-injection / jailbreak attempts in user input, retrieved documents, or tool results. Two-tier: a fast regex / classifier first pass plus an optional small-model classi…
 - **`processor/reasoning-framework-selector`** — Reasoning framework selector  
   _cross_industry, ai_ • Pick a reasoning framework (CoT / ReAct / Tree-of-Thoughts / Skeleton-of-Thought / Program-of-Thought / Self-Consistency / none) based on the task profile. Cheap heuristic up front…
+- **`processor/recipient-tone-history`** — Recipient tone-history loader  
+  _personal_productivity_ • Load the user's prior N email / chat exchanges with a specific recipient, summarize the tone signals (formality, length, warmth, sign-off style), and emit a tone-profile that downs…
 - **`processor/recursive-character-chunker`** — Recursive character chunker  
   _cross_industry_ • Split text into chunks using a recursive character splitter (LangChain-style) that prefers paragraph → sentence → word boundaries. Returns chunks with overlap + per-chunk byte offs…
 - **`processor/redact-pii-text`** — Redact PII from text (English-centric, MS Presidio-compatible)  
@@ -740,7 +766,10 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `adapter/ollama-default` — Ollama (local default)
 - `adapter/openai-embeddings` — OpenAI embeddings (text-embedding-3-small/large)
 - `adapter/openai-gpt-frontier` — OpenAI frontier-class chat + tool-use
+- `harness/chat-with-memory` — Persistent chat with memory (multi-turn, preference-aware)
 - `harness/data-cleaning-and-enrichment` — Data cleaning + entity enrichment harness
+- `harness/email-triage-and-draft` — Email Triage + Draft harness (preference-aware, tone-matched)
+- `harness/personal-corpus-search` — Personal corpus search (RAG over user's own files / notes / docs)
 - `harness/redact-pii-text` — Redact PII (text)
 - `harness/text-safety-review` — Text Safety Review
 - `knowledge-pack/common-abbreviations` — Common abbreviations (cross-industry sample)
@@ -750,6 +779,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `knowledge-pack/iso-currency-codes` — ISO 4217 currency codes
 - `knowledge-pack/lead-company-code-stub` — Lead-company code-of-conduct stub (placeholder)
 - `knowledge-pack/spdx-licenses-summary` — SPDX licenses (summary)
+- `knowledge-pack/user-preference-schema` — User preference schema (canonical shape for personal assistants)
 - `pattern/chain-of-density` — Chain-of-Density (iterative dense summarization)
 - `pattern/chain-of-verification` — Chain-of-Verification (CoVe)
 - `pattern/composable-success-criteria` — Composable success criteria (regex + semantic + LLM-judge + deterministic + tool + composite)
@@ -772,6 +802,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pipeline/tfidf-lightgbm-text-classification` — TF-IDF + LightGBM text classification
 - `persona/fact-checker` — Fact Checker
 - `persona/linux-terminal` — Linux terminal
+- `persona/personal-assistant` — Personal Assistant (preference-aware, privacy-first)
 - `persona/research-analyst` — Research Analyst
 - `persona/support-agent` — Customer support agent
 - `persona/translator-improver` — Translator + improver
@@ -780,11 +811,14 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pipeline/deep-research-supervisor-workers` — Deep research: supervisor + parallel workers
 - `pipeline/deep-research-with-citations` — Deep research with citations
 - `pipeline/email-triage-and-draft` — Email triage + reply draft
+- `pipeline/email-triage-pipeline` — Email triage pipeline (preference-loaded, tone-matched, leakage-checked)
 - `pipeline/everything-research-pipeline` — Everything research pipeline (kitchen-sink, 22 passes)
 - `pipeline/full-vendor-due-diligence` — Full vendor due-diligence (ESG + AppSec + Legal — kitchen-sink)
 - `pipeline/knowledge-graph-from-corpus` — GraphRAG: knowledge-graph from corpus + global/local query
 - `pipeline/mixed-criteria-demo` — Mixed success-criteria demo (regex + semantic + deterministic + LLM + composite)
 - `pipeline/multi-doc-qa-subquestion` — Multi-document QA with sub-question decomposition
+- `pipeline/personal-chat-pipeline` — Personal chat pipeline (preference + memory + tool-aware)
+- `pipeline/personal-search-pipeline` — Personal corpus search pipeline (RAG over user's own data)
 - `pipeline/plan-execute-critic-loop` — Plan / execute / critic loop
 - `pipeline/quantized-llm-inference` — Quantized LLM inference (4-bit BitsAndBytes)
 - `pipeline/research-entity` — Research Entity
@@ -820,6 +854,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `processor/official-sources-checker` — Official-sources analyzer
 - `processor/pdf-to-text` — PDF to text
 - `processor/phone-normalize-e164` — Phone number normalize → E.164 (Google libphonenumber)
+- `processor/preference-loader` — User preference loader
 - `processor/prompt-injection-detector` — Prompt-injection detector
 - `processor/reasoning-framework-selector` — Reasoning framework selector
 - `processor/recursive-character-chunker` — Recursive character chunker
@@ -838,6 +873,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rubric/research-entity-v1` — Research Entity v1
 - `rubric/verification-v1` — Verification v1
 - `rule-pack/grep-cloud-secrets` — Cloud provider secret detectors
+- `rule-pack/grep-personal-info-leakage` — Personal-info leakage detectors (assistant drafts → wrong audience)
 - `rule-pack/grep-private-key-blocks` — Private key block detectors
 - `rule-pack/grep-prompt-injection-heuristics` — Prompt-injection heuristic detectors
 - `rule-pack/hybrid-retrieval-policy` — Hybrid retrieval policy (BM25 + dense + RRF)
@@ -1158,6 +1194,22 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rubric/verification-v1` — Verification v1
 - `rule-pack/grep-output-safety-image` — Image-output safety checks
 - `rule-pack/grep-prohibited-terms` — Prohibited Terms (image-gen guard rails)
+
+### personal_productivity
+
+- `harness/chat-with-memory` — Persistent chat with memory (multi-turn, preference-aware)
+- `harness/email-triage-and-draft` — Email Triage + Draft harness (preference-aware, tone-matched)
+- `harness/personal-corpus-search` — Personal corpus search (RAG over user's own files / notes / docs)
+- `knowledge-pack/user-preference-schema` — User preference schema (canonical shape for personal assistants)
+- `persona/inbox-zero-coach` — Inbox Zero Coach (triage + reply-draft + delegation)
+- `persona/personal-assistant` — Personal Assistant (preference-aware, privacy-first)
+- `pipeline/email-triage-pipeline` — Email triage pipeline (preference-loaded, tone-matched, leakage-checked)
+- `pipeline/personal-chat-pipeline` — Personal chat pipeline (preference + memory + tool-aware)
+- `pipeline/personal-search-pipeline` — Personal corpus search pipeline (RAG over user's own data)
+- `processor/calendar-slot-finder` — Calendar slot finder (preference-aware)
+- `processor/preference-loader` — User preference loader
+- `processor/recipient-tone-history` — Recipient tone-history loader
+- `rule-pack/grep-personal-info-leakage` — Personal-info leakage detectors (assistant drafts → wrong audience)
 
 ### pharma
 
