@@ -1,29 +1,29 @@
 # Open Harness Hub — single-page catalog index
 
-Auto-generated from `scripts/build_index_page.py` against 223 live artifacts. Run that script to refresh after any catalog change.
+Auto-generated from `scripts/build_index_page.py` against 248 live artifacts. Run that script to refresh after any catalog change.
 
 Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency tree of any entry below.
 
 ## Stats
 
-- **Total artifacts:** 223
+- **Total artifacts:** 248
 - **Artifact types:** 12
-- **Industries:** 38
+- **Industries:** 43
 
 ## Table of contents
 
 - [harness (9)](#harness)
-- [pipeline (44)](#pipeline)
+- [pipeline (47)](#pipeline)
 - [benchmark (1)](#benchmark)
-- [rule-pack (24)](#rule-pack)
-- [knowledge-pack (22)](#knowledge-pack)
-- [tool (7)](#tool)
-- [persona (17)](#persona)
+- [rule-pack (27)](#rule-pack)
+- [knowledge-pack (25)](#knowledge-pack)
+- [tool (10)](#tool)
+- [persona (20)](#persona)
 - [adapter (9)](#adapter)
-- [rubric (15)](#rubric)
-- [dataset (7)](#dataset)
+- [rubric (18)](#rubric)
+- [dataset (10)](#dataset)
 - [processor (45)](#processor)
-- [pattern (23)](#pattern)
+- [pattern (27)](#pattern)
 
 ## harness
 
@@ -48,10 +48,14 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 ## pipeline
 
+- **`pipeline/academic-integrity-review`** — Academic integrity review (plagiarism / AI / citation fabrication)  
+  _education, education.higher, compliance_ • Ninth vertical. Same chain — only persona / GREP / KB / rubric change.
 - **`pipeline/anonymized-illicit-recruitment-pattern-sharing`** — Anonymized cross-org pattern sharing for illicit recruitment corridors  
   _esg, supply_chain, compliance_ • Mechanism for cross-industry knowledge sharing of systemic bad actors (rogue labor brokers, repeat-offender contractors, illicit recruitment corridors) WITHOUT leaking corporate-co…
 - **`pipeline/awq-quantized-inference`** — AWQ-quantized LLM inference (alternative to bitsandbytes nf4)  
   _ai_ • Serve a 4-bit AWQ (Activation-aware Weight Quantization) checkpoint for inference. AWQ preserves activation statistics, generally delivering lower perplexity drop than naive nf4. T…
+- **`pipeline/benefits-adjudication-review`** — Government benefits adjudication review (SNAP / Medicaid / UI / SSI)  
+  _government, government.benefits, compliance_ • Tenth vertical. Same 6-step chain — persona / GREP / KB / rubric swap for benefits-eligibility adjudication.
 - **`pipeline/brand-safe-product-photo`** — Brand-Safe Product Photo  
   _creative, retail_ • Image-generation pipeline that composes a cinematic-photography persona, style-reference RAG, lens-physics RAG, GREP guard rules, a tool call to a text-to-image model, and an outpu…
 - **`pipeline/chat-with-pdf-citations`** — Chat with PDF (with citations)  
@@ -84,6 +88,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry, compliance, supply_chain, security_ • Cross-vertical kitchen-sink pipeline. Accepts a vendor onboarding packet containing (a) ESG/supply-chain disclosure, (b) representative code bundle, (c) draft MSA, and runs each th…
 - **`pipeline/gxp-validation-review`** — GxP validation review (21-CFR-11 + Annex 11 + ALCOA+)  
   _pharma, pharma.gxp, compliance_ • Review a GxP-validated electronic-records system against the rubric. Same 6-step chain as ESG / radiology / legal / AppSec — fifth vertical proving the architecture's industry-agno…
+- **`pipeline/insurance-claim-review`** — Insurance claim review (NAIC fraud-aware)  
+  _insurance, insurance.claims, insurance.fraud, finance_ • Eighth vertical proving the architecture's industry-agnosticism. Same 6-step chain — only persona/rule-pack/knowledge-pack/rubric change.
 - **`pipeline/knowledge-graph-from-corpus`** — GraphRAG: knowledge-graph from corpus + global/local query  
   _ai, cross_industry_ • Microsoft GraphRAG pattern. Extract entities + relationships from documents into a graph; build community summaries via Leiden clustering; query via local (ego-network), global (ma…
 - **`pipeline/large-model-faiss-rag`** — Large-model FAISS RAG (Platypus2-70b style)  
@@ -150,8 +156,12 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _healthcare, healthcare.clinical_ • A classifier rule pack of presenting-symptom patterns that require immediate clinical evaluation. Fires inside the clinical-decision- support harness BEFORE differential reasoning,…
 - **`rule-pack/financial-pii-en`** — Financial PII (English)  
   _finance_ • Detection patterns for common financial PII in English transaction narratives and KYC documents — account numbers, IBANs, SWIFT/BIC, card PANs (Luhn-likely), SSN/TIN. Designed to g…
+- **`rule-pack/grep-academic-integrity-flags`** — Academic integrity red-flag detectors (plagiarism / AI / fabricated citations)  
+  _education, education.higher, compliance_ • Heuristic detectors for academic integrity violations. Designed to TRIGGER deep review (similarity check + AI detector + citation DB lookup) — not to determine guilt directly.
 - **`rule-pack/grep-ai-vendor-keys`** — AI vendor API key detectors  
   _security, ai_ • Detection patterns for API keys issued by major LLM / AI vendors — Anthropic, OpenAI, Hugging Face, Cohere, Replicate, Mistral, Groq, Together, fal, Perplexity, Voyage, NVIDIA NIM.…
+- **`rule-pack/grep-benefits-eligibility-flags`** — Benefits-eligibility red-flag detectors (SNAP / Medicaid / UI)  
+  _government, government.benefits, compliance_ • GREP detectors for the highest-leverage benefits-eligibility signals: countable-income markers above thresholds, asset deemers, undisclosed household members, immigration-status qu…
 - **`rule-pack/grep-climate-disclosure-gaps`** — Climate disclosure gap detectors (TCFD / ISSB / ESRS E1)  
   _climate, esg, finance, compliance_ • GREP detectors for the highest-leverage climate-disclosure gaps: missing Scope-3 categories, missing transition plan, board- oversight silence, no 2C scenario analysis, no SBTi com…
 - **`rule-pack/grep-cloud-secrets`** — Cloud provider secret detectors  
@@ -168,6 +178,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, compliance, finance_ • GREP detectors for the governance dimension: beneficial-ownership opacity, anti-bribery / corruption signals, whistleblower-channel weaknesses, conflict-of-interest, board-independ…
 - **`rule-pack/grep-gxp-data-integrity-red-flags`** — GxP data-integrity red-flag detectors (21-CFR-11 / ALCOA+)  
   _pharma, pharma.gxp, compliance_ • GREP detectors for the highest-leverage 21-CFR-11 + ALCOA+ data- integrity violations: missing audit trails, shared accounts, post- hoc record alteration, validation gaps, missing …
+- **`rule-pack/grep-insurance-fraud-red-flags`** — Insurance claim fraud red-flag detectors (NAIC + CAIF)  
+  _insurance, insurance.claims, insurance.fraud, finance_ • GREP detectors for the highest-leverage insurance-claim fraud red flags drawn from NAIC fraud-fighter handbook + Coalition Against Insurance Fraud indicators. Pair with `pipeline/i…
 - **`rule-pack/grep-ioc-extraction`** — IOC extraction GREP pack (file hashes / domains / IPs / URLs)  
   _security, threat_intelligence_ • Extracts indicators-of-compromise from threat-intel reports, incident write-ups, sandbox outputs. Output IOCs feed into `pipeline/threat-intel-ioc-review` for verification + ATT&CK…
 - **`rule-pack/grep-output-safety-image`** — Image-output safety checks  
@@ -195,6 +207,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 ## knowledge-pack
 
+- **`knowledge-pack/academic-honor-codes`** — Academic honor codes + AI-policy frameworks  
+  _education, education.higher, compliance_ • Composite educational reference of academic honor codes, AI-use policies, plagiarism definitions, and citation standards (APA / MLA / Chicago).
 - **`knowledge-pack/aml-red-flags-extended`** — AML red flags (extended)  
   _finance, finance.aml, finance.kyc_ • Extended catalog of anti-money-laundering red flags drawn from FATF guidance, FinCEN advisories, and Wolfsberg principles. Complements `knowledge-pack/fatf-typologies-sample` with …
 - **`knowledge-pack/climate-disclosure-frameworks`** — Climate disclosure frameworks (TCFD + ISSB IFRS S2 + CDP + ESRS E1)  
@@ -213,12 +227,16 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _healthcare, healthcare.pharmacy, healthcare.clinical_ • Composite paraphrases of well-known drug-drug interaction patterns for educational reference. NOT a substitute for an authoritative database (e.g. RxNorm + Lexicomp + Micromedex). …
 - **`knowledge-pack/fatf-typologies-sample`** — FATF typologies (sample chunks)  
   _finance, finance.aml_ • Sample paraphrased typology chunks for catalog-demo purposes. Real deployments should ingest the latest FATF and FinCEN typology reports; this pack anchors the data shape and citat…
+- **`knowledge-pack/gov-benefits-rules`** — Government benefits program rules (SNAP / Medicaid / UI / SSI)  
+  _government, government.benefits, compliance_ • Composite educational reference of the major US federal benefits programs' eligibility rules: SNAP (7 CFR 273), Medicaid (42 CFR + state plan), Unemployment Insurance (state UI man…
 - **`knowledge-pack/gxp-21-cfr-11-guidelines`** — 21-CFR-11 + EU GMP Annex 11 + ICH + ALCOA+ regulatory pack  
   _pharma, pharma.gxp, healthcare.pharmacy, compliance_ • Composite educational extracts of GxP electronic-records / electronic-signatures / data-integrity guidance:  - US FDA 21 CFR Part 11 (Subpart B — Electronic Records;    Subpart C —…
 - **`knowledge-pack/high-risk-corridors-and-sectors`** — High-risk corridors & sector-specific labor / environmental risks  
   _esg, supply_chain, compliance, humanitarian_ • Composite reference of high-risk geographic corridors and product sectors with documented patterns of forced labor, child labor, environmental harm, or governance opacity. Used by …
 - **`knowledge-pack/icd10-sample`** — ICD-10 sample  
   _healthcare, healthcare.clinical_ • Sampled subset of ICD-10 diagnosis codes for catalog-demo purposes. Use the public, full ICD-10 release for any production deployment; this pack exists to anchor the data shape, no…
+- **`knowledge-pack/insurance-fraud-typologies`** — Insurance fraud typologies (NAIC + CAIF + ABI)  
+  _insurance, insurance.claims, insurance.fraud, finance_ • Composite reference of insurance-fraud typologies and red-flag indicators across personal auto, property, workers-comp, and health insurance. Sourced from NAIC Fraud Section + Coal…
 - **`knowledge-pack/iso-country-codes`** — ISO 3166 country codes (sample)  
   _cross_industry, finance, humanitarian_ • ISO 3166-1 alpha-2, alpha-3, numeric codes plus region and a coarse FATF risk hint. Useful for KYC, transaction-graph queries, and cross-border-flow analysis. Sample subset; full l…
 - **`knowledge-pack/iso-currency-codes`** — ISO 4217 currency codes  
@@ -248,8 +266,14 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry_ • Validates a candidate JSON object against a JSON Schema 2020-12 document. Used by `processor/verify-tool-validate-criterion` to enforce structural acceptance bars on pipeline outpu…
 - **`tool/lookup-icd10`** — ICD-10 lookup  
   _healthcare, healthcare.clinical_ • Lookup an ICD-10 diagnosis code by code or label substring. Returns code + label + category. Backend-agnostic; intended to bind to a local copy of the WHO ICD-10 release or to an i…
+- **`tool/mitre-attack-mapper`** — MITRE ATT&CK technique mapper  
+  _security, threat_intelligence, threat_intelligence.ttp_ • Map free-text TTPs to MITRE ATT&CK technique IDs (T1234.xxx). Returns the matched technique + tactic + sub-techniques + KEV status if any associated CVE is on the CISA Known Exploi…
+- **`tool/presidio-pii-detect`** — Microsoft Presidio PII detection proxy  
+  _cross_industry, healthcare, finance, insurance_ • Proxy to Microsoft Presidio Analyzer for PII detection. Substantially more thorough than `processor/redact-pii-text` regex baseline — supports 30+ entity types across multiple lang…
 - **`tool/sanctions-check`** — Sanctions list check  
   _finance, finance.aml, finance.kyc_ • Check a normalized entity name against one or more sanctions lists (OFAC SDN, UN Consolidated, EU Consolidated, HMT, or institutional PEP). Returns matches above the configured fuz…
+- **`tool/semgrep-sast-proxy`** — Semgrep SAST proxy (CWE-tagged code findings)  
+  _security, security.appsec, software_ • Proxy to Semgrep CLI for static-analysis code scanning. Used by `pipeline/code-security-review` to corroborate GREP findings with a real SAST tool that has community-maintained rul…
 - **`tool/transaction-graph-query`** — Transaction graph query  
   _finance, finance.aml_ • Query a transaction-graph store for one-hop or multi-hop paths between accounts / entities. Used by AML harnesses to find shell layering, circular flows, and rapid-in-rapid-out pat…
 - **`tool/txt2img-sdxl`** — Text-to-Image (SDXL)  
@@ -259,8 +283,12 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 ## persona
 
+- **`persona/academic-integrity-officer`** — Academic Integrity Officer (plagiarism / AI-generated / citation fabrication)  
+  _education, education.higher, compliance_ • Higher-ed academic integrity persona reviewing student submissions for plagiarism, AI-generated content, fabricated citations, and honor-code violations. Cite-first — every flagged…
 - **`persona/aml-analyst`** — AML Analyst  
   _finance, finance.aml_ • Anti-money-laundering analyst persona. Reasons about transaction patterns, FATF typologies, sanctions hits, and behavioral signals. Produces SAR-style narratives with cited typolog…
+- **`persona/benefits-adjudicator`** — Government Benefits Adjudicator (SNAP / Medicaid / UI / SSI)  
+  _government, government.benefits, compliance_ • Government benefits eligibility adjudicator. Applies the programmatic rules (SNAP / Medicaid / Unemployment Insurance / SSI / SSDI / TANF) to a beneficiary application, decides eli…
 - **`persona/cinematic-product-photographer`** — Cinematic Product Photographer  
   _creative, retail_ • A persona for image-gen prompt-shaping. Writes prompts in the voice of a working commercial photographer: specific lens, lighting, aperture, color palette, composition. Refuses cel…
 - **`persona/climate-risk-analyst`** — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)  
@@ -277,6 +305,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry, media_ • A careful fact-checker persona. Reasons about claims, evidence, and the gap between them. Prefers primary sources and refuses to confirm controversial claims without independent co…
 - **`persona/gxp-auditor`** — GxP Auditor (21-CFR-11 / EU GMP Annex 11 / ICH / ALCOA+)  
   _pharma, pharma.gxp, healthcare.pharmacy, compliance_ • Pharmaceutical/biotech GxP auditor reviewing electronic records, audit trails, and validated systems against 21-CFR-11, EU GMP Annex 11, ICH Q9/Q10, ALCOA+ data-integrity principle…
+- **`persona/insurance-claims-adjuster`** — Insurance Claims Adjuster (fraud-aware, NAIC-aligned)  
+  _insurance, insurance.claims, insurance.fraud, finance_ • Insurance claims adjuster persona reviewing first-notice-of-loss reports, repair invoices, medical bills, and supporting documentation for legitimacy + fraud indicators. Aligned to…
 - **`persona/linux-terminal`** — Linux terminal  
   _cross_industry, software_ • The single most-cloned community persona — model behaves like a Linux terminal, returning only the would-be terminal output. Doubles as a deterministic-IO eval (the same command sh…
 - **`persona/math-tutor`** — Math tutor  
@@ -317,8 +347,12 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 ## rubric
 
+- **`rubric/academic-integrity-quality-v1`** — Academic integrity review quality v1  
+  _education, education.higher, compliance_ • Six-dimension rubric for grading an academic-integrity review.
 - **`rubric/aml-investigation-v1`** — AML investigation v1  
   _finance, finance.aml_ • Six-dimension rubric for AML-investigation outputs. Used by `pipeline/suspicious-transaction-review`.
+- **`rubric/benefits-adjudication-quality-v1`** — Benefits adjudication quality v1  
+  _government, government.benefits, compliance_ • Eight-dimension rubric for grading a benefits-eligibility adjudication.
 - **`rubric/brand-safe-image-v1`** — Brand-safe image v1  
   _creative, retail_ • Five-dimension rubric for brand-safe image generation. Used by `pipeline/brand-safe-product-photo`.
 - **`rubric/climate-disclosure-quality-v1`** — Climate disclosure quality v1 (TCFD/ISSB/ESRS aligned)  
@@ -339,6 +373,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, supply_chain, compliance_ • Twelve-dimension rubric for grading supplier-submitted policy texts, self-assessments, and grievance transcripts against the CSDDD, the ILO forced-labor indicators, the major natio…
 - **`rubric/gxp-validation-quality-v1`** — GxP validation review quality v1  
   _pharma, pharma.gxp, compliance_ • Eight-dimension rubric for grading a GxP system validation review. Used by `pipeline/gxp-validation-review`.
+- **`rubric/insurance-claim-quality-v1`** — Insurance claim review quality v1  
+  _insurance, insurance.claims, insurance.fraud, finance_ • Seven-dimension rubric for grading an insurance claim review.
 - **`rubric/radiology-report-quality-v1`** — Radiology report quality v1  
   _healthcare, healthcare.radiology_ • Seven-dimension rubric for grading a radiology report. Used by `pipeline/radiology-report-grading`.
 - **`rubric/research-entity-v1`** — Research Entity v1  
@@ -350,14 +386,20 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 ## dataset
 
+- **`dataset/academic-essay-samples`** — Synthetic academic essay samples (integrity-review test set)  
+  _education, education.higher, compliance_ • Two synthetic student-essay submissions:  - sample-essay-clean.json — proper Aristotle / Kant / Mill /    Hursthouse citations, no AI artefacts, AI-disclosure present.  - sample-es…
 - **`dataset/climate-disclosure-samples`** — Synthetic climate disclosure samples (2 cases)  
   _climate, esg, finance_ • Two synthetic corporate climate disclosures for testing `pipeline/climate-disclosure-review`:  - sample-disclosure-good.json — Acme Corp, manufacturing, board    oversight quarterl…
 - **`dataset/code-review-samples`** — Synthetic code-review samples (3 cases)  
   _security, security.appsec, software_ • Three synthetic code bundles for testing `pipeline/code-security-review`. Fully synthetic — values that look like AWS keys / JWT / Slack tokens follow the format documented in AWS …
 - **`dataset/contract-samples`** — Synthetic commercial contract samples (3 cases)  
   _legal, legal.contract, legal.compliance_ • Three synthetic commercial contracts for testing `pipeline/contract-clause-review`. Fully synthetic — no real contract data.
+- **`dataset/gov-benefits-samples`** — Synthetic SNAP application samples  
+  _government, government.benefits_ • Two synthetic SNAP applications:  - sample-snap-app-clean.json — 3-person household with minor    children, $1850 gross income (below 130% poverty for HH of 3),    ID + paystub + r…
 - **`dataset/gxp-validation-samples`** — Synthetic GxP validation samples (3 cases)  
   _pharma, pharma.gxp, healthcare.pharmacy, compliance_ • Three synthetic GxP-validated-system packets for testing `pipeline/gxp-validation-review`. Fully synthetic.
+- **`dataset/insurance-claim-samples`** — Synthetic insurance claim samples  
+  _insurance, insurance.claims, insurance.fraud, finance_ • Two synthetic insurance claims:  - sample-claim-clean.json — straightforward rear-end auto claim    with police report, witness, repair estimate. Expected ~0 hits.  - sample-claim-…
 - **`dataset/radiology-report-samples`** — Synthetic radiology report samples (3 cases, fully synthetic)  
   _healthcare, healthcare.radiology_ • Three synthetic radiology reports for testing `pipeline/radiology-report-grading`. Fully synthetic — no real patient data.
 - **`dataset/supplier-disclosure-pack-schema`** — Supplier disclosure pack schema (canonical input shape)  
@@ -460,10 +502,16 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 ## pattern
 
+- **`pattern/chain-of-density`** — Chain-of-Density (iterative dense summarization)  
+  _ai, media, cross_industry_ • Iteratively compress a summary by N rounds: each round the model identifies a missing entity / fact from the source and rewrites the summary to include it WHILE keeping length cons…
+- **`pattern/chain-of-verification`** — Chain-of-Verification (CoVe)  
+  _ai, cross_industry_ • Generate a draft response, decompose it into atomic verifiable claims, execute independent verification queries per claim, and emit a final response that drops or revises unverifia…
 - **`pattern/composable-success-criteria`** — Composable success criteria (regex + semantic + LLM-judge + deterministic + tool + composite)  
   _cross_industry, ai, compliance_ • Treat success criteria as first-class composable artifacts rather than a single rubric+threshold check. Six concrete criterion kinds combine via AND / OR / NOT into arbitrary boole…
 - **`pattern/corrective-rag`** — Corrective RAG (CRAG)  
   _ai, cross_industry_ • RAG with a three-state retrieval evaluator. After initial retrieval, an evaluator classifies the retrieval as {correct, incorrect, ambiguous}. Correct → strip-and-recompose; incorr…
+- **`pattern/diamond-model-attribution`** — Diamond Model attribution (CTI threat-actor analysis)  
+  _security, threat_intelligence_ • Classical CTI threat-actor attribution framework. An incident is analyzed across 4 vertices: Adversary (who) + Capability (how) + Infrastructure (with what) + Victim (against whom)…
 - **`pattern/evaluator-optimizer`** — Evaluator-Optimizer  
   _ai, cross_industry_ • One LLM call generates a candidate output; a second LLM (or processor) evaluates against a rubric and provides specific feedback; the generator revises. Loops until the evaluator p…
 - **`pattern/hyde`** — HyDE (Hypothetical Document Embeddings)  
@@ -480,6 +528,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _ai, cross_industry_ • Separate planning from execution. A planner LLM produces an explicit step list; an executor (often a different / cheaper model) runs each step. After execution, a re-planner can up…
 - **`pattern/prompt-chaining`** — Prompt Chaining  
   _ai, cross_industry_ • Break a task into a SEQUENCE of LLM calls where each call's output is the next call's input. The simplest agent pattern — no tools, no loops, no routing — just a linear chain. Usef…
+- **`pattern/raft-retrieval-aug-finetune`** — RAFT (Retrieval-Augmented Fine-Tuning)  
+  _ai, cross_industry_ • Fine-tune an LLM on (question, retrieved_docs_including_distractors, reasoning_chain, gold_answer) tuples so the model learns to USE the retrieved docs at inference time AND ignore…
 - **`pattern/rag-fusion`** — RAG-Fusion  
   _ai, cross_industry_ • Generate N rewrites of the user query, run retrieval for each, and fuse the ranked lists via Reciprocal Rank Fusion. Outperforms single- query retrieval when the user's wording dif…
 - **`pattern/react`** — ReAct (Reason + Act)  
@@ -520,6 +570,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `adapter/vllm-awq-local` — Local vLLM engine with AWQ-quantized weights
 - `harness/code-act-jupyter` — Code-Act Jupyter (tool-augmented reasoning via sandboxed Python)
 - `knowledge-pack/owasp-top-10-llm` — OWASP Top 10 for LLM Applications (2025)
+- `pattern/chain-of-density` — Chain-of-Density (iterative dense summarization)
+- `pattern/chain-of-verification` — Chain-of-Verification (CoVe)
 - `pattern/composable-success-criteria` — Composable success criteria (regex + semantic + LLM-judge + deterministic + tool + composite)
 - `pattern/corrective-rag` — Corrective RAG (CRAG)
 - `pattern/evaluator-optimizer` — Evaluator-Optimizer
@@ -529,6 +581,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pattern/orchestrator-workers` — Orchestrator-Workers
 - `pattern/plan-and-execute` — Plan-and-Execute
 - `pattern/prompt-chaining` — Prompt Chaining
+- `pattern/raft-retrieval-aug-finetune` — RAFT (Retrieval-Augmented Fine-Tuning)
 - `pattern/rag-fusion` — RAG-Fusion
 - `pattern/react` — ReAct (Reason + Act)
 - `pattern/reflexion` — Reflexion
@@ -592,19 +645,26 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### compliance
 
 - `benchmark/esg-supplier-grading-bench` — ESG supplier-grading benchmark v1
+- `dataset/academic-essay-samples` — Synthetic academic essay samples (integrity-review test set)
 - `dataset/gxp-validation-samples` — Synthetic GxP validation samples (3 cases)
 - `dataset/supplier-disclosure-pack-schema` — Supplier disclosure pack schema (canonical input shape)
 - `harness/esg-disclosure-grading` — ESG Disclosure Grading harness
+- `knowledge-pack/academic-honor-codes` — Academic honor codes + AI-policy frameworks
 - `knowledge-pack/csddd-and-forced-labor-indicators` — Global supply-chain due-diligence regulatory pack
+- `knowledge-pack/gov-benefits-rules` — Government benefits program rules (SNAP / Medicaid / UI / SSI)
 - `knowledge-pack/gxp-21-cfr-11-guidelines` — 21-CFR-11 + EU GMP Annex 11 + ICH + ALCOA+ regulatory pack
 - `knowledge-pack/high-risk-corridors-and-sectors` — High-risk corridors & sector-specific labor / environmental risks
 - `knowledge-pack/lead-company-code-stub` — Lead-company code-of-conduct stub (placeholder)
 - `pattern/composable-success-criteria` — Composable success criteria (regex + semantic + LLM-judge + deterministic + tool + composite)
 - `pattern/k-anonymity-aggregation` — K-anonymity + HMACed-key cross-organization aggregation
+- `persona/academic-integrity-officer` — Academic Integrity Officer (plagiarism / AI-generated / citation fabrication)
+- `persona/benefits-adjudicator` — Government Benefits Adjudicator (SNAP / Medicaid / UI / SSI)
 - `persona/climate-risk-analyst` — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)
 - `persona/esg-auditor` — ESG / Supply Chain Due Diligence Auditor (E + S + G)
 - `persona/gxp-auditor` — GxP Auditor (21-CFR-11 / EU GMP Annex 11 / ICH / ALCOA+)
+- `pipeline/academic-integrity-review` — Academic integrity review (plagiarism / AI / citation fabrication)
 - `pipeline/anonymized-illicit-recruitment-pattern-sharing` — Anonymized cross-org pattern sharing for illicit recruitment corridors
+- `pipeline/benefits-adjudication-review` — Government benefits adjudication review (SNAP / Medicaid / UI / SSI)
 - `pipeline/climate-disclosure-review` — Climate disclosure review (TCFD + ISSB IFRS S2 + ESRS E1)
 - `pipeline/deep-tier-supplier-audit` — Deep-tier (T1→T4+) supplier audit with traceability
 - `pipeline/full-vendor-due-diligence` — Full vendor due-diligence (ESG + AppSec + Legal — kitchen-sink)
@@ -613,12 +673,16 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pipeline/supplier-policy-grading` — Supplier policy & disclosure grading (CSDDD-aligned)
 - `pipeline/sustainability-report-full-review` — Sustainability report full review (Climate + ESG-S + ESG-G chained)
 - `processor/structured-to-prose` — Structured JSON → prose normalizer (for GREP-style rule packs)
+- `rubric/academic-integrity-quality-v1` — Academic integrity review quality v1
+- `rubric/benefits-adjudication-quality-v1` — Benefits adjudication quality v1
 - `rubric/climate-disclosure-quality-v1` — Climate disclosure quality v1 (TCFD/ISSB/ESRS aligned)
 - `rubric/esg-env-v1` — ESG environmental (E) sub-rubric v1
 - `rubric/esg-gov-v1` — ESG governance (G) sub-rubric v1
 - `rubric/esg-social-v1` — ESG social (S) sub-rubric v1
 - `rubric/esg-supplier-compliance-v1` — ESG supplier compliance v1 (full E + S + G)
 - `rubric/gxp-validation-quality-v1` — GxP validation review quality v1
+- `rule-pack/grep-academic-integrity-flags` — Academic integrity red-flag detectors (plagiarism / AI / fabricated citations)
+- `rule-pack/grep-benefits-eligibility-flags` — Benefits-eligibility red-flag detectors (SNAP / Medicaid / UI)
 - `rule-pack/grep-climate-disclosure-gaps` — Climate disclosure gap detectors (TCFD / ISSB / ESRS E1)
 - `rule-pack/grep-esg-environmental-red-flags` — ESG environmental red-flag detectors (the 'E' of ESG)
 - `rule-pack/grep-esg-forced-labor-red-flags` — ESG / forced-labor red-flag detectors (the 'S' of ESG)
@@ -658,6 +722,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `knowledge-pack/iso-currency-codes` — ISO 4217 currency codes
 - `knowledge-pack/lead-company-code-stub` — Lead-company code-of-conduct stub (placeholder)
 - `knowledge-pack/spdx-licenses-summary` — SPDX licenses (summary)
+- `pattern/chain-of-density` — Chain-of-Density (iterative dense summarization)
+- `pattern/chain-of-verification` — Chain-of-Verification (CoVe)
 - `pattern/composable-success-criteria` — Composable success criteria (regex + semantic + LLM-judge + deterministic + tool + composite)
 - `pattern/corrective-rag` — Corrective RAG (CRAG)
 - `pattern/evaluator-optimizer` — Evaluator-Optimizer
@@ -667,6 +733,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pattern/orchestrator-workers` — Orchestrator-Workers
 - `pattern/plan-and-execute` — Plan-and-Execute
 - `pattern/prompt-chaining` — Prompt Chaining
+- `pattern/raft-retrieval-aug-finetune` — RAFT (Retrieval-Augmented Fine-Tuning)
 - `pattern/rag-fusion` — RAG-Fusion
 - `pattern/react` — ReAct (Reason + Act)
 - `pattern/routing` — Routing
@@ -742,13 +809,18 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rule-pack/privacy-pii-text-en` — Privacy PII (English text)
 - `rule-pack/web-search-allowlist-default` — Web search allowlist (default)
 - `tool/json-schema-validator` — JSON Schema 2020-12 validator
+- `tool/presidio-pii-detect` — Microsoft Presidio PII detection proxy
 - `tool/web-search` — Web Search
 
 ### education
 
+- `dataset/academic-essay-samples` — Synthetic academic essay samples (integrity-review test set)
 - `harness/code-act-jupyter` — Code-Act Jupyter (tool-augmented reasoning via sandboxed Python)
+- `knowledge-pack/academic-honor-codes` — Academic honor codes + AI-policy frameworks
 - `pattern/two-stage-retrieve-rerank` — Two-stage retrieve + constrained rerank
+- `persona/academic-integrity-officer` — Academic Integrity Officer (plagiarism / AI-generated / citation fabrication)
 - `persona/math-tutor` — Math tutor
+- `pipeline/academic-integrity-review` — Academic integrity review (plagiarism / AI / citation fabrication)
 - `pipeline/deepseek-r1-code-interpreter-math` — DeepSeek-R1 / QwQ + Python code-interpreter for math reasoning
 - `pipeline/large-model-faiss-rag` — Large-model FAISS RAG (Platypus2-70b style)
 - `pipeline/llm-judge-essay-grading` — LLM-judge essay grading (with adversarial prompt prefix)
@@ -760,6 +832,17 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `processor/persona-set-generator` — Persona-set generator (STORM)
 - `processor/skeleton-outliner` — Skeleton outliner (Skeleton-of-Thought)
 - `processor/two-time-retrieval` — Two-time retrieval (refine query, re-retrieve)
+- `rubric/academic-integrity-quality-v1` — Academic integrity review quality v1
+- `rule-pack/grep-academic-integrity-flags` — Academic integrity red-flag detectors (plagiarism / AI / fabricated citations)
+
+### education.higher
+
+- `dataset/academic-essay-samples` — Synthetic academic essay samples (integrity-review test set)
+- `knowledge-pack/academic-honor-codes` — Academic honor codes + AI-policy frameworks
+- `persona/academic-integrity-officer` — Academic Integrity Officer (plagiarism / AI-generated / citation fabrication)
+- `pipeline/academic-integrity-review` — Academic integrity review (plagiarism / AI / citation fabrication)
+- `rubric/academic-integrity-quality-v1` — Academic integrity review quality v1
+- `rule-pack/grep-academic-integrity-flags` — Academic integrity red-flag detectors (plagiarism / AI / fabricated citations)
 
 ### education.tutoring
 
@@ -812,17 +895,21 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### finance
 
 - `dataset/climate-disclosure-samples` — Synthetic climate disclosure samples (2 cases)
+- `dataset/insurance-claim-samples` — Synthetic insurance claim samples
 - `harness/aml-investigation` — AML Investigation
 - `knowledge-pack/aml-red-flags-extended` — AML red flags (extended)
 - `knowledge-pack/climate-disclosure-frameworks` — Climate disclosure frameworks (TCFD + ISSB IFRS S2 + CDP + ESRS E1)
 - `knowledge-pack/fatf-typologies-sample` — FATF typologies (sample chunks)
+- `knowledge-pack/insurance-fraud-typologies` — Insurance fraud typologies (NAIC + CAIF + ABI)
 - `knowledge-pack/iso-country-codes` — ISO 3166 country codes (sample)
 - `knowledge-pack/iso-currency-codes` — ISO 4217 currency codes
 - `knowledge-pack/sanctions-list-shape` — Sanctions list (shape, with placeholder entries)
 - `pattern/k-anonymity-aggregation` — K-anonymity + HMACed-key cross-organization aggregation
 - `persona/aml-analyst` — AML Analyst
 - `persona/climate-risk-analyst` — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)
+- `persona/insurance-claims-adjuster` — Insurance Claims Adjuster (fraud-aware, NAIC-aligned)
 - `pipeline/climate-disclosure-review` — Climate disclosure review (TCFD + ISSB IFRS S2 + ESRS E1)
+- `pipeline/insurance-claim-review` — Insurance claim review (NAIC fraud-aware)
 - `pipeline/suspicious-transaction-review` — Suspicious Transaction Review
 - `pipeline/sustainability-report-full-review` — Sustainability report full review (Climate + ESG-S + ESG-G chained)
 - `processor/official-sources-checker` — Official-sources analyzer
@@ -830,11 +917,14 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rubric/aml-investigation-v1` — AML investigation v1
 - `rubric/climate-disclosure-quality-v1` — Climate disclosure quality v1 (TCFD/ISSB/ESRS aligned)
 - `rubric/esg-gov-v1` — ESG governance (G) sub-rubric v1
+- `rubric/insurance-claim-quality-v1` — Insurance claim review quality v1
 - `rule-pack/aml-typologies-fatf` — FATF AML typologies (sampled)
 - `rule-pack/financial-pii-en` — Financial PII (English)
 - `rule-pack/grep-climate-disclosure-gaps` — Climate disclosure gap detectors (TCFD / ISSB / ESRS E1)
 - `rule-pack/grep-esg-governance-red-flags` — ESG governance red-flag detectors (the 'G' of ESG)
+- `rule-pack/grep-insurance-fraud-red-flags` — Insurance claim fraud red-flag detectors (NAIC + CAIF)
 - `rule-pack/sanctions-screening` — Sanctions screening (deterministic)
+- `tool/presidio-pii-detect` — Microsoft Presidio PII detection proxy
 - `tool/sanctions-check` — Sanctions list check
 - `tool/transaction-graph-query` — Transaction graph query
 
@@ -861,7 +951,23 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 ### government
 
+- `dataset/gov-benefits-samples` — Synthetic SNAP application samples
+- `knowledge-pack/gov-benefits-rules` — Government benefits program rules (SNAP / Medicaid / UI / SSI)
+- `persona/benefits-adjudicator` — Government Benefits Adjudicator (SNAP / Medicaid / UI / SSI)
+- `pipeline/benefits-adjudication-review` — Government benefits adjudication review (SNAP / Medicaid / UI / SSI)
 - `processor/official-sources-checker` — Official-sources analyzer
+- `rubric/benefits-adjudication-quality-v1` — Benefits adjudication quality v1
+- `rule-pack/grep-benefits-eligibility-flags` — Benefits-eligibility red-flag detectors (SNAP / Medicaid / UI)
+- `tool/presidio-pii-detect` — Microsoft Presidio PII detection proxy
+
+### government.benefits
+
+- `dataset/gov-benefits-samples` — Synthetic SNAP application samples
+- `knowledge-pack/gov-benefits-rules` — Government benefits program rules (SNAP / Medicaid / UI / SSI)
+- `persona/benefits-adjudicator` — Government Benefits Adjudicator (SNAP / Medicaid / UI / SSI)
+- `pipeline/benefits-adjudication-review` — Government benefits adjudication review (SNAP / Medicaid / UI / SSI)
+- `rubric/benefits-adjudication-quality-v1` — Benefits adjudication quality v1
+- `rule-pack/grep-benefits-eligibility-flags` — Benefits-eligibility red-flag detectors (SNAP / Medicaid / UI)
 
 ### healthcare
 
@@ -884,6 +990,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rule-pack/grep-radiology-report-red-flags` — Radiology report quality + incidental-findings red flags
 - `rule-pack/phi-hipaa-en` — PHI (HIPAA 18-identifier) — English text
 - `tool/lookup-icd10` — ICD-10 lookup
+- `tool/presidio-pii-detect` — Microsoft Presidio PII detection proxy
 
 ### healthcare.clinical
 
@@ -921,6 +1028,34 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `knowledge-pack/iso-country-codes` — ISO 3166 country codes (sample)
 - `rubric/esg-social-v1` — ESG social (S) sub-rubric v1
 
+### insurance
+
+- `dataset/insurance-claim-samples` — Synthetic insurance claim samples
+- `knowledge-pack/insurance-fraud-typologies` — Insurance fraud typologies (NAIC + CAIF + ABI)
+- `persona/insurance-claims-adjuster` — Insurance Claims Adjuster (fraud-aware, NAIC-aligned)
+- `pipeline/insurance-claim-review` — Insurance claim review (NAIC fraud-aware)
+- `rubric/insurance-claim-quality-v1` — Insurance claim review quality v1
+- `rule-pack/grep-insurance-fraud-red-flags` — Insurance claim fraud red-flag detectors (NAIC + CAIF)
+- `tool/presidio-pii-detect` — Microsoft Presidio PII detection proxy
+
+### insurance.claims
+
+- `dataset/insurance-claim-samples` — Synthetic insurance claim samples
+- `knowledge-pack/insurance-fraud-typologies` — Insurance fraud typologies (NAIC + CAIF + ABI)
+- `persona/insurance-claims-adjuster` — Insurance Claims Adjuster (fraud-aware, NAIC-aligned)
+- `pipeline/insurance-claim-review` — Insurance claim review (NAIC fraud-aware)
+- `rubric/insurance-claim-quality-v1` — Insurance claim review quality v1
+- `rule-pack/grep-insurance-fraud-red-flags` — Insurance claim fraud red-flag detectors (NAIC + CAIF)
+
+### insurance.fraud
+
+- `dataset/insurance-claim-samples` — Synthetic insurance claim samples
+- `knowledge-pack/insurance-fraud-typologies` — Insurance fraud typologies (NAIC + CAIF + ABI)
+- `persona/insurance-claims-adjuster` — Insurance Claims Adjuster (fraud-aware, NAIC-aligned)
+- `pipeline/insurance-claim-review` — Insurance claim review (NAIC fraud-aware)
+- `rubric/insurance-claim-quality-v1` — Insurance claim review quality v1
+- `rule-pack/grep-insurance-fraud-red-flags` — Insurance claim fraud red-flag detectors (NAIC + CAIF)
+
 ### legal
 
 - `dataset/contract-samples` — Synthetic commercial contract samples (3 cases)
@@ -956,6 +1091,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 ### media
 
+- `pattern/chain-of-density` — Chain-of-Density (iterative dense summarization)
 - `pipeline/tfidf-lightgbm-text-classification` — TF-IDF + LightGBM text classification
 - `persona/fact-checker` — Fact Checker
 - `pipeline/deep-research-supervisor-workers` — Deep research: supervisor + parallel workers
@@ -1016,6 +1152,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `harness/appsec-code-audit` — AppSec Code Audit harness
 - `knowledge-pack/mitre-attack-sample` — MITRE ATT&CK techniques (sample)
 - `knowledge-pack/owasp-top-10-llm` — OWASP Top 10 for LLM Applications (2025)
+- `pattern/diamond-model-attribution` — Diamond Model attribution (CTI threat-actor analysis)
 - `pattern/k-anonymity-aggregation` — K-anonymity + HMACed-key cross-organization aggregation
 - `persona/security-engineer-cite-first` — Security Engineer (CWE-cite-first AppSec reviewer)
 - `persona/threat-intel-analyst` — Threat Intelligence Analyst (MITRE ATT&CK + STIX/TAXII + IOC)
@@ -1034,6 +1171,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rule-pack/grep-private-key-blocks` — Private key block detectors
 - `rule-pack/grep-prompt-injection-heuristics` — Prompt-injection heuristic detectors
 - `rule-pack/grep-vcs-platform-pats` — VCS platform PATs (GitHub, GitLab, Bitbucket, Atlassian)
+- `tool/mitre-attack-mapper` — MITRE ATT&CK technique mapper
+- `tool/semgrep-sast-proxy` — Semgrep SAST proxy (CWE-tagged code findings)
 
 ### security.appsec
 
@@ -1044,6 +1183,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pipeline/security-incident-grading` — Security incident write-up grading (CTI + AppSec chained)
 - `rubric/code-security-review-v1` — Code security review v1
 - `rule-pack/grep-code-vulnerabilities` — Code vulnerability + secret-detection GREP pack
+- `tool/semgrep-sast-proxy` — Semgrep SAST proxy (CWE-tagged code findings)
 
 ### software
 
@@ -1061,6 +1201,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rubric/code-security-review-v1` — Code security review v1
 - `rule-pack/grep-code-vulnerabilities` — Code vulnerability + secret-detection GREP pack
 - `rule-pack/grep-vcs-platform-pats` — VCS platform PATs (GitHub, GitLab, Bitbucket, Atlassian)
+- `tool/semgrep-sast-proxy` — Semgrep SAST proxy (CWE-tagged code findings)
 
 ### software.codereview
 
@@ -1099,11 +1240,13 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### threat_intelligence
 
 - `dataset/threat-intel-samples` — Synthetic threat-intelligence report samples
+- `pattern/diamond-model-attribution` — Diamond Model attribution (CTI threat-actor analysis)
 - `persona/threat-intel-analyst` — Threat Intelligence Analyst (MITRE ATT&CK + STIX/TAXII + IOC)
 - `pipeline/security-incident-grading` — Security incident write-up grading (CTI + AppSec chained)
 - `pipeline/threat-intel-ioc-review` — Threat-intel IOC + TTP review (MITRE ATT&CK aligned)
 - `rubric/threat-intel-quality-v1` — Threat intelligence report quality v1
 - `rule-pack/grep-ioc-extraction` — IOC extraction GREP pack (file hashes / domains / IPs / URLs)
+- `tool/mitre-attack-mapper` — MITRE ATT&CK technique mapper
 
 ### threat_intelligence.ioc
 
@@ -1112,3 +1255,4 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### threat_intelligence.ttp
 
 - `persona/threat-intel-analyst` — Threat Intelligence Analyst (MITRE ATT&CK + STIX/TAXII + IOC)
+- `tool/mitre-attack-mapper` — MITRE ATT&CK technique mapper
