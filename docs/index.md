@@ -1,29 +1,29 @@
 # Open Harness Hub — single-page catalog index
 
-Auto-generated from `scripts/build_index_page.py` against 339 live artifacts. Run that script to refresh after any catalog change.
+Auto-generated from `scripts/build_index_page.py` against 363 live artifacts. Run that script to refresh after any catalog change.
 
 Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency tree of any entry below.
 
 ## Stats
 
-- **Total artifacts:** 339
+- **Total artifacts:** 363
 - **Artifact types:** 12
-- **Industries:** 73
+- **Industries:** 82
 
 ## Table of contents
 
 - [harness (13)](#harness)
-- [pipeline (62)](#pipeline)
+- [pipeline (77)](#pipeline)
 - [benchmark (1)](#benchmark)
-- [rule-pack (39)](#rule-pack)
-- [knowledge-pack (37)](#knowledge-pack)
+- [rule-pack (40)](#rule-pack)
+- [knowledge-pack (38)](#knowledge-pack)
 - [tool (14)](#tool)
-- [persona (33)](#persona)
-- [adapter (9)](#adapter)
-- [rubric (29)](#rubric)
-- [dataset (21)](#dataset)
+- [persona (34)](#persona)
+- [adapter (10)](#adapter)
+- [rubric (30)](#rubric)
+- [dataset (22)](#dataset)
 - [processor (54)](#processor)
-- [pattern (27)](#pattern)
+- [pattern (30)](#pattern)
 
 ## harness
 
@@ -60,12 +60,20 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _education, education.higher, compliance_ • Ninth vertical. Same chain — only persona / GREP / KB / rubric change.
 - **`pipeline/anonymized-illicit-recruitment-pattern-sharing`** — Anonymized cross-org pattern sharing for illicit recruitment corridors  
   _esg, supply_chain, compliance_ • Mechanism for cross-industry knowledge sharing of systemic bad actors (rogue labor brokers, repeat-offender contractors, illicit recruitment corridors) WITHOUT leaking corporate-co…
+- **`pipeline/audio-mel-spec-cnn-classifier`** — Audio classification via mel-spectrogram + CNN (KerasCV / EfficientNet)  
+  _ai, scientific_research, scientific_research.bio_ • Convert audio to mel-spectrograms (librosa or torchaudio), treat as images, train a CNN backbone (EfficientNet / ResNet via KerasCV or timm). Standard Kaggle approach for bird-call…
 - **`pipeline/aviation-safety-review`** — Aviation safety incident review  
   _aviation, aviation.safety_ • Sixteenth vertical.
 - **`pipeline/awq-quantized-inference`** — AWQ-quantized LLM inference (alternative to bitsandbytes nf4)  
   _ai_ • Serve a 4-bit AWQ (Activation-aware Weight Quantization) checkpoint for inference. AWQ preserves activation statistics, generally delivering lower perplexity drop than naive nf4. T…
 - **`pipeline/benefits-adjudication-review`** — Government benefits adjudication review (SNAP / Medicaid / UI / SSI)  
   _government, government.benefits, compliance_ • Tenth vertical. Same 6-step chain — persona / GREP / KB / rubric swap for benefits-eligibility adjudication.
+- **`pipeline/bidirectional-lstm-sequence-prediction`** — Bidirectional LSTM for sequence prediction (time-series / text)  
+  _ai, healthcare_ • Stacked Bidirectional LSTM for sequence-to-sequence or sequence- to-label prediction. Standard Kaggle approach for: ventilator pressure prediction, classic NLP toxic comment classi…
+- **`pipeline/bill-info-extract-fraud-detect-recommend`** — Bill_info AI — photo-to-action bureaucracy translator with Verbraucherzentrale-grounded fraud detection  
+  _bureaucracy_translation, bureaucracy_translation.payment_letters, bureaucracy_translation.fraud_screening, humanitarian_ • Photograph → structured-field extraction (Gemma 4 26B vision) → deterministic business-rule validation → Gemma 4 26B fraud-detect call against Verbraucherzentrale 10-indicator taxo…
+- **`pipeline/blip-clip-image-to-prompt`** — BLIP + CLIP Interrogator image-to-prompt  
+  _ai, creative, creative.image_ • Generate a prompt that would re-create a given image. Combines: (1) BLIP captioning model for high-level description, (2) CLIP Interrogator for matching against curated artist / st…
 - **`pipeline/brand-safe-product-photo`** — Brand-Safe Product Photo  
   _creative, retail_ • Image-generation pipeline that composes a cinematic-photography persona, style-reference RAG, lens-physics RAG, GREP guard rules, a tool call to a text-to-image model, and an outpu…
 - **`pipeline/chat-with-pdf-citations`** — Chat with PDF (with citations)  
@@ -84,6 +92,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _legal, legal.contract, legal.compliance_ • Review a commercial contract against `rubric/contract-review-quality- v1`. Reuses the SAME primitives as the ESG + radiology grading pipelines: structured-to-prose → PII redact → G…
 - **`pipeline/customer-record-enrichment`** — Customer record enrichment (deterministic, cross-vertical)  
   _cross_industry, retail, finance, compliance_ • Normalize + enrich a raw customer / vendor record. Chains the format-convert processors (address / phone / name / country / date) followed by deduplication via entity-resolution-li…
+- **`pipeline/deberta-lgbm-hybrid-scorer`** — DeBERTa-v3 + LightGBM hybrid scorer (with spell autocorrect)  
+  _ai, education_ • Hybrid two-stage pipeline: (1) DeBERTa-v3 to embed text, (2) LightGBM head trained on (DeBERTa embedding + hand-crafted text features + autocorrected text). Spell autocorrect (SymS…
 - **`pipeline/deep-research-supervisor-workers`** — Deep research: supervisor + parallel workers  
   _ai, media, cross_industry_ • LangChain's open_deep_research pattern. A supervisor LLM decomposes the user query into research briefs and dispatches N parallel researcher subagents (each gets its own context + …
 - **`pipeline/deep-research-with-citations`** — Deep research with citations  
@@ -92,8 +102,12 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, supply_chain, compliance_ • Multi-step audit pipeline that walks a supplier graph from tier-1 (direct supplier) down to tier-3 and tier-4+ (raw-material origin / sub-sub-contractors). At each tier:  1. Resolv…
 - **`pipeline/deepseek-r1-code-interpreter-math`** — DeepSeek-R1 / QwQ + Python code-interpreter for math reasoning  
   _ai, scientific_research, education_ • The winning AIMO-2 shape: a reasoning-distilled LLM (DeepSeek-R1- Distill-Qwen-7B / QwQ-32B) generates Python code that solves a math problem, the code runs in a Jupyter / sandbox …
+- **`pipeline/dicom-medical-image-preprocessing`** — DICOM medical image preprocessing (CT / MRI / X-ray)  
+  _healthcare, healthcare.radiology, ai_ • Parse DICOM headers (pydicom), normalize Hounsfield units (HU), window/level adjustment, resample to consistent voxel spacing, optional lung-segmentation crop, convert to PNG / Num…
 - **`pipeline/differential-diagnosis`** — Differential Diagnosis  
   _healthcare, healthcare.clinical_ • Educational decision-support pipeline. Given (presentation, history, exam) text, returns a ranked differential diagnosis with cited guideline sections, ICD-10 code candidates, and …
+- **`pipeline/efficientnet-medical-imaging`** — EfficientNet for medical imaging classification + segmentation  
+  _healthcare, healthcare.radiology, ai_ • EfficientNet-B0 / B3 backbone + custom head for medical-imaging competitions: skin lesion (ISIC), brain activity (EEG-as-image), histopathology (HuBMAP), spine MRI (RSNA Lumbar). U…
 - **`pipeline/email-triage-and-draft`** — Email triage + reply draft  
   _retail, retail.support, cross_industry_ • Customer-support email workflow. Layered chain:   redact PII →   grep (prompt-injection guard on email body — emails often carry attack     content from untrusted senders) →   clas…
 - **`pipeline/email-triage-pipeline`** — Email triage pipeline (preference-loaded, tone-matched, leakage-checked)  
@@ -116,12 +130,18 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _ai, cross_industry_ • Microsoft GraphRAG pattern. Extract entities + relationships from documents into a graph; build community summaries via Leiden clustering; query via local (ego-network), global (ma…
 - **`pipeline/large-model-faiss-rag`** — Large-model FAISS RAG (Platypus2-70b style)  
   _ai, scientific_research, education_ • Use a large (70B-class) instruction-tuned model with FAISS-indexed Wikipedia retrieval. The "go big or go home" Kaggle pattern that wins multi-choice-with-context competitions.
+- **`pipeline/lgb-xgb-catboost-ensemble`** — LightGBM + XGBoost + CatBoost ensemble (tabular ML)  
+  _ai, finance, finance.lending, finance.fraud_ • The dominant Kaggle tabular-ML shape: train LightGBM + XGBoost + CatBoost separately on the same features, blend predictions (weighted-mean / rank-mean / stacking). K-fold CV (typi…
 - **`pipeline/llm-judge-essay-grading`** — LLM-judge essay grading (with adversarial prompt prefix)  
   _ai, education_ • Run a frontier LLM as judge on candidate essays, using a few-shot prompt with adversarial prefix patterns to discourage gaming. The "you can't please them all" pattern: grade stric…
+- **`pipeline/longformer-bigbird-ner`** — Long-document NER with LongFormer / BigBird  
+  _ai, education, media_ • Token-classification NER on documents longer than the 512-token BERT limit. Uses LongFormer (sliding-window attention) or BigBird (sparse attention) to handle 4096-16384 token inpu…
 - **`pipeline/ma-dd-review`** — M&A due-diligence review (6-stream)  
   _m_and_a, m_and_a.due_diligence, legal, finance_ • Fifteenth vertical.
 - **`pipeline/maritime-safety-review`** — Maritime safety review (IMO SOLAS / MARPOL / ISM / STCW)  
   _maritime, maritime.safety_ • Vertical 20.
+- **`pipeline/mask-rcnn-coco-transfer`** — Mask-RCNN with COCO transfer learning (instance segmentation + detection)  
+  _healthcare, healthcare.radiology, ai_ • Mask-RCNN with ResNet-50-FPN backbone, COCO-pretrained weights as starting checkpoint, fine-tuned on domain-specific instance segmentation / detection task. Classic transfer-learni…
 - **`pipeline/mixed-criteria-demo`** — Mixed success-criteria demo (regex + semantic + deterministic + LLM + composite)  
   _cross_industry, compliance, legal_ • Demonstrates `pattern/composable-success-criteria`. The pipeline runs the contract-clause-review chain, then evaluates its output against EVERY criterion kind:
 - **`pipeline/multi-agent-debate-with-judge`** — Multi-agent debate with judge  
@@ -132,6 +152,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _ai_ • Run inference across N different LLMs (e.g. Mixtral / Mistral-7B / Gemma-7B / Llama-3-8B), score each model's prediction with a perplexity baseline, then majority-vote or weighted-…
 - **`pipeline/nerc-cip-compliance-review`** — NERC CIP compliance review (Bulk Electric System cyber)  
   _energy, energy.grid, security_ • Vertical 19.
+- **`pipeline/optuna-tabular-tuning`** — Optuna hyperparameter tuning for tabular models  
+  _ai, finance, scientific_research_ • Optuna-driven hyperparameter optimization for LGB / XGB / CatBoost. TPESampler over typical search space (lr, num_leaves/max_depth, n_estimators, subsample, colsample, reg_alpha, r…
 - **`pipeline/perplexity-baseline-scoring`** — Perplexity-baseline scoring  
   _ai_ • Score candidate answers by their perplexity under a reference LLM. Lower perplexity = better fit. Used as a baseline for prompt-recovery, AI-text-detection, and any task where "flu…
 - **`pipeline/personal-chat-pipeline`** — Personal chat pipeline (preference + memory + tool-aware)  
@@ -150,10 +172,16 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _real_estate, real_estate.due_diligence_ • Fourteenth vertical.
 - **`pipeline/research-entity`** — Research Entity  
   _cross_industry_ • Given an entity name + entity kind (company / person / place / product), produce a sourced one-page profile. Verifiable, cited, redacted.
+- **`pipeline/sd-prompt-embedding-cosine`** — Stable-Diffusion prompt embedding + cosine evaluation  
+  _ai, creative, creative.image_ • Embed Stable-Diffusion prompts using sentence-transformers, compare candidate prompts against gold prompts via cosine similarity. The standard scoring approach for prompt-recovery …
 - **`pipeline/security-incident-grading`** — Security incident write-up grading (CTI + AppSec chained)  
   _security, threat_intelligence, security.appsec_ • Chains threat-intel IOC review + AppSec code review on incident write-ups: extracts IOCs/TTPs from the report AND grades any attached code-of-concern for known vulnerabilities.
 - **`pipeline/self-rag-grade-and-revise`** — Self-RAG: grade-and-revise (concrete implementation)  
   _ai, cross_industry_ • Concrete pipeline implementing `pattern/self-rag`. Retrieve → per-doc relevance grader → rewrite-query loop on irrelevant retrieval → generate with grounding → answer-support grade…
+- **`pipeline/sensor-fusion-imu-blending`** — Multi-sensor fusion (IMU + thermal + ToF) with model blending  
+  _healthcare, ai, manufacturing_ • Multi-modal sensor-fusion pipeline for behavior / activity classification: IMU (inertial measurement unit — accelerometer + gyroscope), THM (thermal), ToF (time-of-flight depth). T…
+- **`pipeline/sentence-transformer-finetune-retrieval`** — Sentence-transformer fine-tune for retrieval / ranking  
+  _ai, education, scientific_research_ • Fine-tune a sentence-transformer (Sentence-BERT family) on (query, positive, negative) triplets using MultipleNegativesRankingLoss or CosineSimilarityLoss. Embeds documents into a …
 - **`pipeline/storm-persona-curation-article`** — STORM: persona-curation + outline-fanout article  
   _ai, media, education_ • Stanford OVAL's STORM pattern. Generate N personas with different perspectives → run simulated dialogue per persona to curate knowledge → outline → parallel-expand each outline sec…
 - **`pipeline/supplier-policy-grading`** — Supplier policy & disclosure grading (CSDDD-aligned)  
@@ -176,6 +204,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _ai, education_ • An agent that plays 20 Questions — asks yes/no questions to narrow down a hidden concept. Uses a candidate set + binary-search-style question generation. The classic agent-game pat…
 - **`pipeline/two-time-retrieve-rerank`** — Two-time retrieval + cross-encoder rerank  
   _ai, education, scientific_research_ • Generic two-pass retrieval pipeline distilled from the EEDI-AWQ shape. First-pass: retrieve top-K with the raw query. Refine the query using LLM summary of pass-1. Second-pass: ret…
+- **`pipeline/unet-segmentation-tta`** — U-Net medical segmentation with albumentations + TTA  
+  _healthcare, healthcare.radiology, ai_ • U-Net (often with EfficientNet/ResNet/SEResNeXt encoder via segmentation_ models_pytorch) for medical image segmentation. Standard Kaggle shape: 5-fold CV + albumentations augmenta…
 - **`pipeline/verify-claim-against-corpus`** — Verify Claim Against Corpus  
   _cross_industry, media_ • Given a claim and a corpus, return supports / contradicts / no-evidence with cited passages and a confidence score.
 - **`pipeline/vllm-batch-llm-inference`** — vLLM batch LLM inference (with logits-processor-zoo)  
@@ -218,6 +248,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, supply_chain, compliance_ • Heuristic regex detectors for the 11 ILO forced-labor indicators + child labor + recruitment-fee abuse + tier-3/4 supply-chain transparency gaps + 12 high-risk corridors. Designed …
 - **`rule-pack/grep-esg-governance-red-flags`** — ESG governance red-flag detectors (the 'G' of ESG)  
   _esg, compliance, finance_ • GREP detectors for the governance dimension: beneficial-ownership opacity, anti-bribery / corruption signals, whistleblower-channel weaknesses, conflict-of-interest, board-independ…
+- **`rule-pack/grep-fake-inkasso-fraud-flags`** — Fake-Inkasso fraud-detection GREP pack (Verbraucherzentrale 10-indicator taxonomy)  
+  _bureaucracy_translation, bureaucracy_translation.fraud_screening, humanitarian, humanitarian.refugee_ • GREP detectors for the 10 Verbraucherzentrale Fake-Inkasso indicators. Used by `pipeline/bill-info-extract-fraud-detect-recommend` as a deterministic FIRST PASS before the LLM-base…
 - **`rule-pack/grep-food-safety-flags`** — Food safety / FSMA / HACCP red-flag detectors  
   _food_safety, food_safety.fsma, food_safety.haccp, compliance_ • Detectors for FSMA + HACCP non-compliance.
 - **`rule-pack/grep-gdpr-dsar-red-flags`** — GDPR DSAR red-flag detectors  
@@ -343,6 +375,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _trade, trade.hts, trade.eccn, trade.itar_ • Composite educational reference: HTSUS chapters/headings, EAR Commerce Control List (Cat 0-9), ITAR USML (Categories I-XXI), OFAC sanctions programs, BIS Entity List + Unverified L…
 - **`knowledge-pack/user-preference-schema`** — User preference schema (canonical shape for personal assistants)  
   _personal_productivity, cross_industry_ • Canonical schema for storing user preferences that personal- assistant harnesses load before taking action. Covers:  - Communication tone preferences (formal / casual / terse / war…
+- **`knowledge-pack/verbraucherzentrale-fake-inkasso-indicators`** — Verbraucherzentrale Fake-Inkasso indicators (10-criterion taxonomy)  
+  _bureaucracy_translation, bureaucracy_translation.fraud_screening, humanitarian, humanitarian.refugee_ • Composite educational reference of the Verbraucherzentrale's published Fake-Inkasso indicators. Used by Sviatoslav Grabovsky's Bill_info AI to classify German payment demands as le…
 
 ## tool
 
@@ -385,6 +419,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _aviation, aviation.safety, compliance_ • Aviation-safety persona reviewing incident / accident reports against ICAO SMS (Safety Management System) framework, NTSB accident-investigation taxonomy, FAA AC 120-92 (SMS for Pa…
 - **`persona/benefits-adjudicator`** — Government Benefits Adjudicator (SNAP / Medicaid / UI / SSI)  
   _government, government.benefits, compliance_ • Government benefits eligibility adjudicator. Applies the programmatic rules (SNAP / Medicaid / Unemployment Insurance / SSI / SSDI / TANF) to a beneficiary application, decides eli…
+- **`persona/bureaucracy-translator-cite-first`** — Bureaucracy Translator (cite-first, action-oriented, vulnerable-user safe)  
+  _bureaucracy_translation, bureaucracy_translation.payment_letters, bureaucracy_translation.fraud_screening, humanitarian_ • Persona for translating bureaucratic documents (payment demands, benefits letters, court notices, immigration forms) for users with language barriers + time pressure + stress. Opti…
 - **`persona/cinematic-product-photographer`** — Cinematic Product Photographer  
   _creative, retail_ • A persona for image-gen prompt-shaping. Writes prompts in the voice of a working commercial photographer: specific lens, lighting, aperture, color palette, composition. Refuses cel…
 - **`persona/climate-risk-analyst`** — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)  
@@ -452,6 +488,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _ai, cross_industry_ • Frontier-class generation + tool-use adapter using Anthropic's Claude Sonnet (4.x family) via the official Anthropic API. Use as the strongest generation arm in benchmarks, the "fr…
 - **`adapter/bge-embeddings-local`** — BGE embeddings (local)  
   _cross_industry, ai_ • Local BGE (BAAI General Embeddings) via sentence-transformers. The small variant is 384-dim and runs on CPU; the large variant is 1024-dim and benefits from GPU. Strong English + m…
+- **`adapter/gemma-4-26b-vision`** — Google Gemma 4 26B-A4B-IT (multimodal vision + native multilingual)  
+  _ai, cross_industry, bureaucracy_translation, humanitarian_ • Adapter for Google Gemma 4 26B Instruction-Tuned — multimodal vision (256K context), native multilingual (Ukrainian + German + many others without dedicated fine-tune), structured …
 - **`adapter/google-gemini`** — Google Gemini (multimodal frontier)  
   _ai, cross_industry_ • Google Gemini frontier-class adapter — strongest of the three big-three frontier vendors on multimodal (vision + audio + video) tasks. Use when the pipeline needs to process images…
 - **`adapter/ollama-default`** — Ollama (local default)  
@@ -477,6 +515,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _government, government.benefits, compliance_ • Eight-dimension rubric for grading a benefits-eligibility adjudication.
 - **`rubric/brand-safe-image-v1`** — Brand-safe image v1  
   _creative, retail_ • Five-dimension rubric for brand-safe image generation. Used by `pipeline/brand-safe-product-photo`.
+- **`rubric/bureaucracy-translation-quality-v1`** — Bureaucracy translation + fraud-screen quality v1  
+  _bureaucracy_translation, humanitarian, compliance_ • Ten-dimension rubric for grading a bureaucracy-translation pipeline output (e.g. Bill_info AI). Anchored in the Bill_info AI eval set (28 documents, 96% extraction, 100% redacted-f…
 - **`rubric/climate-disclosure-quality-v1`** — Climate disclosure quality v1 (TCFD/ISSB/ESRS aligned)  
   _climate, esg, finance, compliance_ • Ten-dimension rubric for grading a corporate climate disclosure against TCFD recommendations, ISSB IFRS S2 paragraphs, and ESRS E1 disclosure requirements.
 - **`rubric/clinical-grounded-response-v1`** — Clinical grounded response v1  
@@ -532,6 +572,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _education, education.higher, compliance_ • Two synthetic student-essay submissions:  - sample-essay-clean.json — proper Aristotle / Kant / Mill /    Hursthouse citations, no AI artefacts, AI-disclosure present.  - sample-es…
 - **`dataset/aviation-safety-samples`** — Aviation safety samples  
   _aviation, aviation.safety_ • 2 synthetic incident reports
+- **`dataset/bill-info-test-documents`** — Bill_info AI evaluation set (28 documents)  
+  _bureaucracy_translation, humanitarian, humanitarian.refugee_ • The 28-document evaluation set used in Sviatoslav Grabovsky's Bill_info AI (Gemma 4 Good Hackathon — Impact Track). Mixes:  - Reddit-sourced real German Inkasso / Mahnung letters (…
 - **`dataset/climate-disclosure-samples`** — Synthetic climate disclosure samples (2 cases)  
   _climate, esg, finance_ • Two synthetic corporate climate disclosures for testing `pipeline/climate-disclosure-review`:  - sample-disclosure-good.json — Acme Corp, manufacturing, board    oversight quarterl…
 - **`dataset/code-review-samples`** — Synthetic code-review samples (3 cases)  
@@ -692,6 +734,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry, ai, compliance_ • Treat success criteria as first-class composable artifacts rather than a single rubric+threshold check. Six concrete criterion kinds combine via AND / OR / NOT into arbitrary boole…
 - **`pattern/corrective-rag`** — Corrective RAG (CRAG)  
   _ai, cross_industry_ • RAG with a three-state retrieval evaluator. After initial retrieval, an evaluator classifies the retrieval as {correct, incorrect, ambiguous}. Correct → strip-and-recompose; incorr…
+- **`pattern/critical-tier-output-override`** — Critical-tier output override (one dominant message on critical finding)  
+  _ai, cross_industry, bureaucracy_translation, humanitarian_ • When a classifier / judge step finds a critical-tier issue, every user-facing output component is FORCED into one consistent message rather than mixing the issue with the original …
 - **`pattern/diamond-model-attribution`** — Diamond Model attribution (CTI threat-actor analysis)  
   _security, threat_intelligence_ • Classical CTI threat-actor attribution framework. An incident is analyzed across 4 vertices: Adversary (who) + Capability (how) + Infrastructure (with what) + Victim (against whom)…
 - **`pattern/evaluator-optimizer`** — Evaluator-Optimizer  
@@ -718,6 +762,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _ai, cross_industry_ • Interleave reasoning steps with tool calls. At each step the model emits one of: Thought (free-form reasoning), Action (tool call), Observation (tool result fed back). Loop until t…
 - **`pattern/reflexion`** — Reflexion  
   _ai_ • Add a verbal self-reflection step after each failed attempt. The reflection is appended to memory and shown to the model on the next attempt. Bounded by `max_iters`. Captures the "…
+- **`pattern/refuse-on-redacted`** — Refuse-on-redacted (null over hallucination on missing fields)  
+  _ai, cross_industry, bureaucracy_translation, healthcare_ • When an input field is missing, redacted, or unreadable, return `null` (or its user-language equivalent — 'unknown' / 'невідомо' / 'unbekannt') rather than hallucinating a plausibl…
 - **`pattern/routing`** — Routing  
   _ai, cross_industry_ • Classify the input and dispatch to the appropriate specialized sub-pipeline. A classifier (LLM, embedder + threshold, or rule pack) picks a route; the chosen sub-pipeline handles t…
 - **`pattern/self-rag`** — Self-RAG  
@@ -730,6 +776,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _ai_ • Before answering, the model is prompted to derive a MORE ABSTRACT question that captures the essence of the user's question. Retrieval and reasoning then happen against the abstrac…
 - **`pattern/tree-of-thoughts`** — Tree of Thoughts (ToT)  
   _ai_ • At each reasoning step, propose N candidate "thoughts", value/vote each, and expand the best ones via BFS or DFS. Backtrack on dead-ends. Generalizes chain-of-thought from a single…
+- **`pattern/two-stage-extract-then-judge`** — Two-stage extract-then-judge (separate calls for extraction + classification)  
+  _ai, cross_industry, bureaucracy_translation, humanitarian_ • Use two separate LLM calls instead of one combined call: the first extracts every relevant structured field, the second classifies / judges given the extracted context. Costs more …
 - **`pattern/two-stage-retrieve-rerank`** — Two-stage retrieve + constrained rerank  
   _ai, education, scientific_research_ • Retrieve K candidates with a cheap embedder (BM25 / dense), then rerank with a stronger but slower model. The reranker can be: a cross-encoder, or an LLM CONSTRAINED to emit only o…
 - **`pipeline/deberta-finetune-classification`** — DeBERTa-v3-large fine-tune for closed-set classification  
@@ -746,6 +794,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `adapter/anthropic-claude-opus` — Anthropic Claude Opus (deep-reasoning frontier-class)
 - `adapter/anthropic-claude-sonnet` — Anthropic Claude Sonnet (frontier-class chat + tool-use)
 - `adapter/bge-embeddings-local` — BGE embeddings (local)
+- `adapter/gemma-4-26b-vision` — Google Gemma 4 26B-A4B-IT (multimodal vision + native multilingual)
 - `adapter/google-gemini` — Google Gemini (multimodal frontier)
 - `adapter/openai-embeddings` — OpenAI embeddings (text-embedding-3-small/large)
 - `adapter/openai-gpt-frontier` — OpenAI frontier-class chat + tool-use
@@ -756,6 +805,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pattern/chain-of-verification` — Chain-of-Verification (CoVe)
 - `pattern/composable-success-criteria` — Composable success criteria (regex + semantic + LLM-judge + deterministic + tool + composite)
 - `pattern/corrective-rag` — Corrective RAG (CRAG)
+- `pattern/critical-tier-output-override` — Critical-tier output override (one dominant message on critical finding)
 - `pattern/evaluator-optimizer` — Evaluator-Optimizer
 - `pattern/hyde` — HyDE (Hypothetical Document Embeddings)
 - `pattern/multi-agent-debate` — Multi-Agent Debate
@@ -767,34 +817,50 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pattern/rag-fusion` — RAG-Fusion
 - `pattern/react` — ReAct (Reason + Act)
 - `pattern/reflexion` — Reflexion
+- `pattern/refuse-on-redacted` — Refuse-on-redacted (null over hallucination on missing fields)
 - `pattern/routing` — Routing
 - `pattern/self-rag` — Self-RAG
 - `pattern/self-refine` — Self-Refine
 - `pattern/skeleton-of-thought` — Skeleton of Thought (SoT)
 - `pattern/step-back-prompting` — Step-Back Prompting
 - `pattern/tree-of-thoughts` — Tree of Thoughts (ToT)
+- `pattern/two-stage-extract-then-judge` — Two-stage extract-then-judge (separate calls for extraction + classification)
 - `pattern/two-stage-retrieve-rerank` — Two-stage retrieve + constrained rerank
 - `pipeline/deberta-finetune-classification` — DeBERTa-v3-large fine-tune for closed-set classification
 - `pipeline/lora-qlora-pairwise-pref-finetune` — LoRA + QLoRA pairwise-preference fine-tune (Gemma-2-9b 4-bit)
 - `pipeline/tfidf-lightgbm-text-classification` — TF-IDF + LightGBM text classification
+- `pipeline/audio-mel-spec-cnn-classifier` — Audio classification via mel-spectrogram + CNN (KerasCV / EfficientNet)
 - `pipeline/awq-quantized-inference` — AWQ-quantized LLM inference (alternative to bitsandbytes nf4)
+- `pipeline/bidirectional-lstm-sequence-prediction` — Bidirectional LSTM for sequence prediction (time-series / text)
+- `pipeline/blip-clip-image-to-prompt` — BLIP + CLIP Interrogator image-to-prompt
 - `pipeline/code-act-jupyter-loop` — Code-act Jupyter loop
+- `pipeline/deberta-lgbm-hybrid-scorer` — DeBERTa-v3 + LightGBM hybrid scorer (with spell autocorrect)
 - `pipeline/deep-research-supervisor-workers` — Deep research: supervisor + parallel workers
 - `pipeline/deepseek-r1-code-interpreter-math` — DeepSeek-R1 / QwQ + Python code-interpreter for math reasoning
+- `pipeline/dicom-medical-image-preprocessing` — DICOM medical image preprocessing (CT / MRI / X-ray)
+- `pipeline/efficientnet-medical-imaging` — EfficientNet for medical imaging classification + segmentation
 - `pipeline/knowledge-graph-from-corpus` — GraphRAG: knowledge-graph from corpus + global/local query
 - `pipeline/large-model-faiss-rag` — Large-model FAISS RAG (Platypus2-70b style)
+- `pipeline/lgb-xgb-catboost-ensemble` — LightGBM + XGBoost + CatBoost ensemble (tabular ML)
 - `pipeline/llm-judge-essay-grading` — LLM-judge essay grading (with adversarial prompt prefix)
+- `pipeline/longformer-bigbird-ner` — Long-document NER with LongFormer / BigBird
+- `pipeline/mask-rcnn-coco-transfer` — Mask-RCNN with COCO transfer learning (instance segmentation + detection)
 - `pipeline/multi-agent-debate-with-judge` — Multi-agent debate with judge
 - `pipeline/multi-model-judging-ensemble` — Multi-model judging ensemble
+- `pipeline/optuna-tabular-tuning` — Optuna hyperparameter tuning for tabular models
 - `pipeline/perplexity-baseline-scoring` — Perplexity-baseline scoring
 - `pipeline/quantized-llm-inference` — Quantized LLM inference (4-bit BitsAndBytes)
 - `pipeline/qwen-vllm-rerank-eedi` — Qwen-32B vLLM retrieval-rerank with logits-processor constraints
+- `pipeline/sd-prompt-embedding-cosine` — Stable-Diffusion prompt embedding + cosine evaluation
 - `pipeline/self-rag-grade-and-revise` — Self-RAG: grade-and-revise (concrete implementation)
+- `pipeline/sensor-fusion-imu-blending` — Multi-sensor fusion (IMU + thermal + ToF) with model blending
+- `pipeline/sentence-transformer-finetune-retrieval` — Sentence-transformer fine-tune for retrieval / ranking
 - `pipeline/storm-persona-curation-article` — STORM: persona-curation + outline-fanout article
 - `pipeline/swe-patch-sample-and-review` — SWE-agent: sample N patches + reviewer judges
 - `pipeline/synthetic-data-gen-with-teacher-llm` — Synthetic-data generation with teacher LLM
 - `pipeline/twenty-questions-agent` — 20-questions agent (Akinator-style)
 - `pipeline/two-time-retrieve-rerank` — Two-time retrieval + cross-encoder rerank
+- `pipeline/unet-segmentation-tta` — U-Net medical segmentation with albumentations + TTA
 - `pipeline/vllm-batch-llm-inference` — vLLM batch LLM inference (with logits-processor-zoo)
 - `processor/action-sampler-multi-rollout` — Action sampler — N parallel rollouts
 - `processor/community-summary-mapreduce` — Community-summary map-reduce (GraphRAG global)
@@ -830,6 +896,31 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rubric/aviation-safety-quality-v1` — Aviation safety report quality v1
 - `rule-pack/grep-aviation-safety-flags` — Aviation safety incident flags (NTSB / FAA / HFACS)
 
+### bureaucracy_translation
+
+- `adapter/gemma-4-26b-vision` — Google Gemma 4 26B-A4B-IT (multimodal vision + native multilingual)
+- `dataset/bill-info-test-documents` — Bill_info AI evaluation set (28 documents)
+- `knowledge-pack/verbraucherzentrale-fake-inkasso-indicators` — Verbraucherzentrale Fake-Inkasso indicators (10-criterion taxonomy)
+- `pattern/critical-tier-output-override` — Critical-tier output override (one dominant message on critical finding)
+- `pattern/refuse-on-redacted` — Refuse-on-redacted (null over hallucination on missing fields)
+- `pattern/two-stage-extract-then-judge` — Two-stage extract-then-judge (separate calls for extraction + classification)
+- `persona/bureaucracy-translator-cite-first` — Bureaucracy Translator (cite-first, action-oriented, vulnerable-user safe)
+- `pipeline/bill-info-extract-fraud-detect-recommend` — Bill_info AI — photo-to-action bureaucracy translator with Verbraucherzentrale-grounded fraud detection
+- `rubric/bureaucracy-translation-quality-v1` — Bureaucracy translation + fraud-screen quality v1
+- `rule-pack/grep-fake-inkasso-fraud-flags` — Fake-Inkasso fraud-detection GREP pack (Verbraucherzentrale 10-indicator taxonomy)
+
+### bureaucracy_translation.fraud_screening
+
+- `knowledge-pack/verbraucherzentrale-fake-inkasso-indicators` — Verbraucherzentrale Fake-Inkasso indicators (10-criterion taxonomy)
+- `persona/bureaucracy-translator-cite-first` — Bureaucracy Translator (cite-first, action-oriented, vulnerable-user safe)
+- `pipeline/bill-info-extract-fraud-detect-recommend` — Bill_info AI — photo-to-action bureaucracy translator with Verbraucherzentrale-grounded fraud detection
+- `rule-pack/grep-fake-inkasso-fraud-flags` — Fake-Inkasso fraud-detection GREP pack (Verbraucherzentrale 10-indicator taxonomy)
+
+### bureaucracy_translation.payment_letters
+
+- `persona/bureaucracy-translator-cite-first` — Bureaucracy Translator (cite-first, action-oriented, vulnerable-user safe)
+- `pipeline/bill-info-extract-fraud-detect-recommend` — Bill_info AI — photo-to-action bureaucracy translator with Verbraucherzentrale-grounded fraud detection
+
 ### climate
 
 - `dataset/climate-disclosure-samples` — Synthetic climate disclosure samples (2 cases)
@@ -862,6 +953,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `knowledge-pack/lead-company-code-stub` — Lead-company code-of-conduct stub (placeholder)
 - `knowledge-pack/trade-export-control-frameworks` — Trade & export control frameworks (HTS / EAR / ITAR / OFAC)
 - `pattern/composable-success-criteria` — Composable success criteria (regex + semantic + LLM-judge + deterministic + tool + composite)
+- `pattern/critical-tier-output-override` — Critical-tier output override (one dominant message on critical finding)
 - `pattern/k-anonymity-aggregation` — K-anonymity + HMACed-key cross-organization aggregation
 - `persona/academic-integrity-officer` — Academic Integrity Officer (plagiarism / AI-generated / citation fabrication)
 - `persona/aviation-safety-investigator` — Aviation Safety Investigator (NTSB / FAA / ICAO / SMS / ASAP)
@@ -895,6 +987,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `processor/structured-to-prose` — Structured JSON → prose normalizer (for GREP-style rule packs)
 - `rubric/academic-integrity-quality-v1` — Academic integrity review quality v1
 - `rubric/benefits-adjudication-quality-v1` — Benefits adjudication quality v1
+- `rubric/bureaucracy-translation-quality-v1` — Bureaucracy translation + fraud-screen quality v1
 - `rubric/climate-disclosure-quality-v1` — Climate disclosure quality v1 (TCFD/ISSB/ESRS aligned)
 - `rubric/esg-env-v1` — ESG environmental (E) sub-rubric v1
 - `rubric/esg-gov-v1` — ESG governance (G) sub-rubric v1
@@ -944,18 +1037,26 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `knowledge-pack/style-references-cinematic` — Cinematic style references
 - `persona/cinematic-product-photographer` — Cinematic Product Photographer
 - `persona/translator-improver` — Translator + improver
+- `pipeline/blip-clip-image-to-prompt` — BLIP + CLIP Interrogator image-to-prompt
 - `pipeline/brand-safe-product-photo` — Brand-Safe Product Photo
+- `pipeline/sd-prompt-embedding-cosine` — Stable-Diffusion prompt embedding + cosine evaluation
 - `processor/nsfw-image-classifier` — NSFW image classifier
 - `rubric/brand-safe-image-v1` — Brand-safe image v1
 - `rule-pack/grep-output-safety-image` — Image-output safety checks
 - `rule-pack/grep-prohibited-terms` — Prohibited Terms (image-gen guard rails)
 - `tool/txt2img-sdxl` — Text-to-Image (SDXL)
 
+### creative.image
+
+- `pipeline/blip-clip-image-to-prompt` — BLIP + CLIP Interrogator image-to-prompt
+- `pipeline/sd-prompt-embedding-cosine` — Stable-Diffusion prompt embedding + cosine evaluation
+
 ### cross_industry
 
 - `adapter/anthropic-claude-opus` — Anthropic Claude Opus (deep-reasoning frontier-class)
 - `adapter/anthropic-claude-sonnet` — Anthropic Claude Sonnet (frontier-class chat + tool-use)
 - `adapter/bge-embeddings-local` — BGE embeddings (local)
+- `adapter/gemma-4-26b-vision` — Google Gemma 4 26B-A4B-IT (multimodal vision + native multilingual)
 - `adapter/google-gemini` — Google Gemini (multimodal frontier)
 - `adapter/ollama-default` — Ollama (local default)
 - `adapter/openai-embeddings` — OpenAI embeddings (text-embedding-3-small/large)
@@ -978,6 +1079,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pattern/chain-of-verification` — Chain-of-Verification (CoVe)
 - `pattern/composable-success-criteria` — Composable success criteria (regex + semantic + LLM-judge + deterministic + tool + composite)
 - `pattern/corrective-rag` — Corrective RAG (CRAG)
+- `pattern/critical-tier-output-override` — Critical-tier output override (one dominant message on critical finding)
 - `pattern/evaluator-optimizer` — Evaluator-Optimizer
 - `pattern/hyde` — HyDE (Hypothetical Document Embeddings)
 - `pattern/k-anonymity-aggregation` — K-anonymity + HMACed-key cross-organization aggregation
@@ -988,9 +1090,11 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pattern/raft-retrieval-aug-finetune` — RAFT (Retrieval-Augmented Fine-Tuning)
 - `pattern/rag-fusion` — RAG-Fusion
 - `pattern/react` — ReAct (Reason + Act)
+- `pattern/refuse-on-redacted` — Refuse-on-redacted (null over hallucination on missing fields)
 - `pattern/routing` — Routing
 - `pattern/self-rag` — Self-RAG
 - `pattern/self-refine` — Self-Refine
+- `pattern/two-stage-extract-then-judge` — Two-stage extract-then-judge (separate calls for extraction + classification)
 - `pipeline/deberta-finetune-classification` — DeBERTa-v3-large fine-tune for closed-set classification
 - `pipeline/lora-qlora-pairwise-pref-finetune` — LoRA + QLoRA pairwise-preference fine-tune (Gemma-2-9b 4-bit)
 - `pipeline/tfidf-lightgbm-text-classification` — TF-IDF + LightGBM text classification
@@ -1088,10 +1192,13 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `persona/academic-integrity-officer` — Academic Integrity Officer (plagiarism / AI-generated / citation fabrication)
 - `persona/math-tutor` — Math tutor
 - `pipeline/academic-integrity-review` — Academic integrity review (plagiarism / AI / citation fabrication)
+- `pipeline/deberta-lgbm-hybrid-scorer` — DeBERTa-v3 + LightGBM hybrid scorer (with spell autocorrect)
 - `pipeline/deepseek-r1-code-interpreter-math` — DeepSeek-R1 / QwQ + Python code-interpreter for math reasoning
 - `pipeline/large-model-faiss-rag` — Large-model FAISS RAG (Platypus2-70b style)
 - `pipeline/llm-judge-essay-grading` — LLM-judge essay grading (with adversarial prompt prefix)
+- `pipeline/longformer-bigbird-ner` — Long-document NER with LongFormer / BigBird
 - `pipeline/qwen-vllm-rerank-eedi` — Qwen-32B vLLM retrieval-rerank with logits-processor constraints
+- `pipeline/sentence-transformer-finetune-retrieval` — Sentence-transformer fine-tune for retrieval / ranking
 - `pipeline/storm-persona-curation-article` — STORM: persona-curation + outline-fanout article
 - `pipeline/twenty-questions-agent` — 20-questions agent (Akinator-style)
 - `pipeline/two-time-retrieve-rerank` — Two-time retrieval + cross-encoder rerank
@@ -1196,6 +1303,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `knowledge-pack/oecd-tp-and-beps` — OECD TP Guidelines + BEPS + Pillar Two + §482
 - `knowledge-pack/sanctions-list-shape` — Sanctions list (shape, with placeholder entries)
 - `pattern/k-anonymity-aggregation` — K-anonymity + HMACed-key cross-organization aggregation
+- `pattern/refuse-on-redacted` — Refuse-on-redacted (null over hallucination on missing fields)
 - `persona/aml-analyst` — AML Analyst
 - `persona/climate-risk-analyst` — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)
 - `persona/insurance-claims-adjuster` — Insurance Claims Adjuster (fraud-aware, NAIC-aligned)
@@ -1204,7 +1312,9 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pipeline/climate-disclosure-review` — Climate disclosure review (TCFD + ISSB IFRS S2 + ESRS E1)
 - `pipeline/customer-record-enrichment` — Customer record enrichment (deterministic, cross-vertical)
 - `pipeline/insurance-claim-review` — Insurance claim review (NAIC fraud-aware)
+- `pipeline/lgb-xgb-catboost-ensemble` — LightGBM + XGBoost + CatBoost ensemble (tabular ML)
 - `pipeline/ma-dd-review` — M&A due-diligence review (6-stream)
+- `pipeline/optuna-tabular-tuning` — Optuna hyperparameter tuning for tabular models
 - `pipeline/suspicious-transaction-review` — Suspicious Transaction Review
 - `pipeline/sustainability-report-full-review` — Sustainability report full review (Climate + ESG-S + ESG-G chained)
 - `pipeline/transfer-pricing-review` — Transfer pricing review (OECD TPG / BEPS / §482 / Pillar Two)
@@ -1247,6 +1357,10 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `tool/swift-bic-validator` — SWIFT BIC validator + BIC → bank metadata
 - `tool/transaction-graph-query` — Transaction graph query
 
+### finance.fraud
+
+- `pipeline/lgb-xgb-catboost-ensemble` — LightGBM + XGBoost + CatBoost ensemble (tabular ML)
+
 ### finance.kyc
 
 - `knowledge-pack/aml-red-flags-extended` — AML red flags (extended)
@@ -1255,6 +1369,10 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `tool/opencorporates-lookup` — OpenCorporates company lookup
 - `tool/sanctions-check` — Sanctions list check
 - `tool/swift-bic-validator` — SWIFT BIC validator + BIC → bank metadata
+
+### finance.lending
+
+- `pipeline/lgb-xgb-catboost-ensemble` — LightGBM + XGBoost + CatBoost ensemble (tabular ML)
 
 ### food_safety
 
@@ -1316,10 +1434,17 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `knowledge-pack/drug-interactions-sample` — Drug-drug interactions (sample, educational)
 - `knowledge-pack/icd10-sample` — ICD-10 sample
 - `knowledge-pack/radiology-acrac-fleischner` — ACR Appropriateness Criteria + Fleischner + ACR RADS rubrics
+- `pattern/refuse-on-redacted` — Refuse-on-redacted (null over hallucination on missing fields)
 - `persona/clinical-reasoner` — Clinical Reasoner
 - `persona/radiologist-cite-first` — Radiologist (citation-first, specialty radiology)
+- `pipeline/bidirectional-lstm-sequence-prediction` — Bidirectional LSTM for sequence prediction (time-series / text)
+- `pipeline/dicom-medical-image-preprocessing` — DICOM medical image preprocessing (CT / MRI / X-ray)
 - `pipeline/differential-diagnosis` — Differential Diagnosis
+- `pipeline/efficientnet-medical-imaging` — EfficientNet for medical imaging classification + segmentation
+- `pipeline/mask-rcnn-coco-transfer` — Mask-RCNN with COCO transfer learning (instance segmentation + detection)
 - `pipeline/radiology-report-grading` — Radiology report grading (RADS-aware, Fleischner-aware)
+- `pipeline/sensor-fusion-imu-blending` — Multi-sensor fusion (IMU + thermal + ToF) with model blending
+- `pipeline/unet-segmentation-tta` — U-Net medical segmentation with albumentations + TTA
 - `processor/entity-resolution-link` — Entity resolution: cluster records into entities
 - `processor/official-sources-checker` — Official-sources analyzer
 - `processor/redact-pii-text` — Redact PII from text (English-centric, MS Presidio-compatible)
@@ -1357,7 +1482,11 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `harness/radiology-report-review` — Radiology Report Review harness
 - `knowledge-pack/radiology-acrac-fleischner` — ACR Appropriateness Criteria + Fleischner + ACR RADS rubrics
 - `persona/radiologist-cite-first` — Radiologist (citation-first, specialty radiology)
+- `pipeline/dicom-medical-image-preprocessing` — DICOM medical image preprocessing (CT / MRI / X-ray)
+- `pipeline/efficientnet-medical-imaging` — EfficientNet for medical imaging classification + segmentation
+- `pipeline/mask-rcnn-coco-transfer` — Mask-RCNN with COCO transfer learning (instance segmentation + detection)
 - `pipeline/radiology-report-grading` — Radiology report grading (RADS-aware, Fleischner-aware)
+- `pipeline/unet-segmentation-tta` — U-Net medical segmentation with albumentations + TTA
 - `rubric/radiology-report-quality-v1` — Radiology report quality v1
 - `rule-pack/grep-radiology-report-red-flags` — Radiology report quality + incidental-findings red flags
 
@@ -1381,9 +1510,26 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 ### humanitarian
 
+- `adapter/gemma-4-26b-vision` — Google Gemma 4 26B-A4B-IT (multimodal vision + native multilingual)
+- `dataset/bill-info-test-documents` — Bill_info AI evaluation set (28 documents)
 - `knowledge-pack/high-risk-corridors-and-sectors` — High-risk corridors & sector-specific labor / environmental risks
 - `knowledge-pack/iso-country-codes` — ISO 3166 country codes (sample)
+- `knowledge-pack/verbraucherzentrale-fake-inkasso-indicators` — Verbraucherzentrale Fake-Inkasso indicators (10-criterion taxonomy)
+- `pattern/critical-tier-output-override` — Critical-tier output override (one dominant message on critical finding)
+- `pattern/two-stage-extract-then-judge` — Two-stage extract-then-judge (separate calls for extraction + classification)
+- `persona/bureaucracy-translator-cite-first` — Bureaucracy Translator (cite-first, action-oriented, vulnerable-user safe)
+- `pipeline/bill-info-extract-fraud-detect-recommend` — Bill_info AI — photo-to-action bureaucracy translator with Verbraucherzentrale-grounded fraud detection
+- `rubric/bureaucracy-translation-quality-v1` — Bureaucracy translation + fraud-screen quality v1
 - `rubric/esg-social-v1` — ESG social (S) sub-rubric v1
+- `rule-pack/grep-fake-inkasso-fraud-flags` — Fake-Inkasso fraud-detection GREP pack (Verbraucherzentrale 10-indicator taxonomy)
+
+### humanitarian.refugee
+
+- `dataset/bill-info-test-documents` — Bill_info AI evaluation set (28 documents)
+- `knowledge-pack/verbraucherzentrale-fake-inkasso-indicators` — Verbraucherzentrale Fake-Inkasso indicators (10-criterion taxonomy)
+- `persona/bureaucracy-translator-cite-first` — Bureaucracy Translator (cite-first, action-oriented, vulnerable-user safe)
+- `pipeline/bill-info-extract-fraud-detect-recommend` — Bill_info AI — photo-to-action bureaucracy translator with Verbraucherzentrale-grounded fraud detection
+- `rule-pack/grep-fake-inkasso-fraud-flags` — Fake-Inkasso fraud-detection GREP pack (Verbraucherzentrale 10-indicator taxonomy)
 
 ### insurance
 
@@ -1471,6 +1617,10 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rubric/ma-dd-quality-v1` — M&A DD review quality v1
 - `rule-pack/grep-ma-dd-red-flags` — M&A DD red-flag detectors (6 streams)
 
+### manufacturing
+
+- `pipeline/sensor-fusion-imu-blending` — Multi-sensor fusion (IMU + thermal + ToF) with model blending
+
 ### maritime
 
 - `dataset/maritime-safety-samples` — Maritime safety samples
@@ -1496,6 +1646,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `persona/fact-checker` — Fact Checker
 - `pipeline/deep-research-supervisor-workers` — Deep research: supervisor + parallel workers
 - `pipeline/deep-research-with-citations` — Deep research with citations
+- `pipeline/longformer-bigbird-ner` — Long-document NER with LongFormer / BigBird
 - `pipeline/storm-persona-curation-article` — STORM: persona-curation + outline-fanout article
 - `pipeline/verify-claim-against-corpus` — Verify Claim Against Corpus
 - `processor/nsfw-image-classifier` — NSFW image classifier
@@ -1611,9 +1762,16 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 - `harness/code-act-jupyter` — Code-Act Jupyter (tool-augmented reasoning via sandboxed Python)
 - `pattern/two-stage-retrieve-rerank` — Two-stage retrieve + constrained rerank
+- `pipeline/audio-mel-spec-cnn-classifier` — Audio classification via mel-spectrogram + CNN (KerasCV / EfficientNet)
 - `pipeline/deepseek-r1-code-interpreter-math` — DeepSeek-R1 / QwQ + Python code-interpreter for math reasoning
 - `pipeline/large-model-faiss-rag` — Large-model FAISS RAG (Platypus2-70b style)
+- `pipeline/optuna-tabular-tuning` — Optuna hyperparameter tuning for tabular models
+- `pipeline/sentence-transformer-finetune-retrieval` — Sentence-transformer fine-tune for retrieval / ranking
 - `pipeline/two-time-retrieve-rerank` — Two-time retrieval + cross-encoder rerank
+
+### scientific_research.bio
+
+- `pipeline/audio-mel-spec-cnn-classifier` — Audio classification via mel-spectrogram + CNN (KerasCV / EfficientNet)
 
 ### security
 

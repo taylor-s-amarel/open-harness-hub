@@ -257,6 +257,15 @@ industries:
     label: Hospitality & travel
   - id: nonprofit
     label: Nonprofit & civic
+  - id: bureaucracy_translation
+    label: Bureaucracy translation for vulnerable populations
+    sub:
+      - id: bureaucracy_translation.payment_letters
+        label: Payment letter / Inkasso / Mahnung translation
+      - id: bureaucracy_translation.benefits_forms
+        label: Benefits-form translation & advice
+      - id: bureaucracy_translation.fraud_screening
+        label: Document fraud screening (e.g. fake Inkasso)
   - id: humanitarian
     label: Humanitarian & migrant protection
     sub:
