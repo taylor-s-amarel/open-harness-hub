@@ -1,27 +1,27 @@
 # Open Harness Hub — single-page catalog index
 
-Auto-generated from `scripts/build_index_page.py` against 315 live artifacts. Run that script to refresh after any catalog change.
+Auto-generated from `scripts/build_index_page.py` against 339 live artifacts. Run that script to refresh after any catalog change.
 
 Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency tree of any entry below.
 
 ## Stats
 
-- **Total artifacts:** 315
+- **Total artifacts:** 339
 - **Artifact types:** 12
-- **Industries:** 65
+- **Industries:** 73
 
 ## Table of contents
 
 - [harness (13)](#harness)
-- [pipeline (58)](#pipeline)
+- [pipeline (62)](#pipeline)
 - [benchmark (1)](#benchmark)
-- [rule-pack (35)](#rule-pack)
-- [knowledge-pack (33)](#knowledge-pack)
+- [rule-pack (39)](#rule-pack)
+- [knowledge-pack (37)](#knowledge-pack)
 - [tool (14)](#tool)
-- [persona (29)](#persona)
+- [persona (33)](#persona)
 - [adapter (9)](#adapter)
-- [rubric (25)](#rubric)
-- [dataset (17)](#dataset)
+- [rubric (29)](#rubric)
+- [dataset (21)](#dataset)
 - [processor (54)](#processor)
 - [pattern (27)](#pattern)
 
@@ -78,6 +78,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _software, software.codereview, security_ • Full layered code-review pipeline. Composes:   persona (senior engineer) →   grep (secret-leak guards on the diff) →   classifier (clinical-style red-flag screen for OWASP categori…
 - **`pipeline/code-security-review`** — Code security review (CWE-cite-first AppSec audit)  
   _security, security.appsec, software, software.codereview_ • Review source code against `rubric/code-security-review-v1`. Uses the SAME chain shape as ESG / radiology / contract review: structured-to-prose → secrets-redact → GREP (vuln + sec…
+- **`pipeline/construction-safety-review`** — Construction safety review (OSHA 1926 / Focus Four)  
+  _construction, construction.safety_ • Vertical 18.
 - **`pipeline/contract-clause-review`** — Commercial contract clause review (cite-first redlining)  
   _legal, legal.contract, legal.compliance_ • Review a commercial contract against `rubric/contract-review-quality- v1`. Reuses the SAME primitives as the ESG + radiology grading pipelines: structured-to-prose → PII redact → G…
 - **`pipeline/customer-record-enrichment`** — Customer record enrichment (deterministic, cross-vertical)  
@@ -118,6 +120,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _ai, education_ • Run a frontier LLM as judge on candidate essays, using a few-shot prompt with adversarial prefix patterns to discourage gaming. The "you can't please them all" pattern: grade stric…
 - **`pipeline/ma-dd-review`** — M&A due-diligence review (6-stream)  
   _m_and_a, m_and_a.due_diligence, legal, finance_ • Fifteenth vertical.
+- **`pipeline/maritime-safety-review`** — Maritime safety review (IMO SOLAS / MARPOL / ISM / STCW)  
+  _maritime, maritime.safety_ • Vertical 20.
 - **`pipeline/mixed-criteria-demo`** — Mixed success-criteria demo (regex + semantic + deterministic + LLM + composite)  
   _cross_industry, compliance, legal_ • Demonstrates `pattern/composable-success-criteria`. The pipeline runs the contract-clause-review chain, then evaluates its output against EVERY criterion kind:
 - **`pipeline/multi-agent-debate-with-judge`** — Multi-agent debate with judge  
@@ -126,6 +130,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry_ • LlamaIndex's SubQuestionQueryEngine pattern in pipeline form. The user asks a compound question; an LLM decomposes it into sub-questions; each sub-question runs its own retrieval; …
 - **`pipeline/multi-model-judging-ensemble`** — Multi-model judging ensemble  
   _ai_ • Run inference across N different LLMs (e.g. Mixtral / Mistral-7B / Gemma-7B / Llama-3-8B), score each model's prediction with a perplexity baseline, then majority-vote or weighted-…
+- **`pipeline/nerc-cip-compliance-review`** — NERC CIP compliance review (Bulk Electric System cyber)  
+  _energy, energy.grid, security_ • Vertical 19.
 - **`pipeline/perplexity-baseline-scoring`** — Perplexity-baseline scoring  
   _ai_ • Score candidate answers by their perplexity under a reference LLM. Lower perplexity = better fit. Used as a baseline for prompt-recovery, AI-text-detection, and any task where "flu…
 - **`pipeline/personal-chat-pipeline`** — Personal chat pipeline (preference + memory + tool-aware)  
@@ -164,6 +170,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _security, threat_intelligence_ • Ingest a CTI report or incident write-up, extract IOCs + TTPs, validate against MITRE ATT&CK, rate confidence, surface attribution risk. Seventh vertical proving industry-agnostici…
 - **`pipeline/trade-compliance-review`** — Trade compliance review (HTS / EAR / ITAR / OFAC)  
   _trade, trade.eccn, trade.itar, trade.sanctions_ • Thirteenth vertical.
+- **`pipeline/transfer-pricing-review`** — Transfer pricing review (OECD TPG / BEPS / §482 / Pillar Two)  
+  _tax, tax.transfer_pricing, finance_ • Vertical 21.
 - **`pipeline/twenty-questions-agent`** — 20-questions agent (Akinator-style)  
   _ai, education_ • An agent that plays 20 Questions — asks yes/no questions to narrow down a hidden concept. Uses a candidate set + binary-search-style question generation. The classic agent-game pat…
 - **`pipeline/two-time-retrieve-rerank`** — Two-time retrieval + cross-encoder rerank  
@@ -200,6 +208,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _security, cross_industry, ai_ • Detection patterns for cloud-provider access keys and service-account credentials — AWS, GCP, Azure, DigitalOcean, OCI. Converged from gitleaks (`config/gitleaks.toml`), trufflehog…
 - **`rule-pack/grep-code-vulnerabilities`** — Code vulnerability + secret-detection GREP pack  
   _security, security.appsec, software_ • GREP detectors for the highest-leverage source-code vulnerabilities + hardcoded secrets + dangerous-function calls. Pair with `pipeline/code-security-review`. Cite each rule with i…
+- **`rule-pack/grep-construction-safety-flags`** — Construction safety red-flag detectors (OSHA 1926)  
+  _construction, construction.safety_ • Detectors for OSHA Focus Four + scaffolding + excavation + PPE.
 - **`rule-pack/grep-contract-red-flags`** — Commercial contract red-flag detectors  
   _legal, legal.contract, legal.compliance_ • GREP detectors for the 10 highest-leverage contract red-flag patterns: uncapped indemnity, unlimited liability, pre-existing IP assignment, unilateral termination, asymmetric caps,…
 - **`rule-pack/grep-esg-environmental-red-flags`** — ESG environmental red-flag detectors (the 'E' of ESG)  
@@ -222,6 +232,10 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _security, threat_intelligence_ • Extracts indicators-of-compromise from threat-intel reports, incident write-ups, sandbox outputs. Output IOCs feed into `pipeline/threat-intel-ioc-review` for verification + ATT&CK…
 - **`rule-pack/grep-ma-dd-red-flags`** — M&A DD red-flag detectors (6 streams)  
   _m_and_a, m_and_a.due_diligence, legal, finance_ • GREP detectors for financial/legal/IP/customer/HR/tax DD.
+- **`rule-pack/grep-maritime-safety-flags`** — Maritime safety red-flag detectors (SOLAS / MARPOL / ISM)  
+  _maritime, maritime.safety_ • Detectors for vessel + crew + management deficiencies.
+- **`rule-pack/grep-nerc-cip-flags`** — NERC CIP compliance red-flag detectors  
+  _energy, energy.grid, security, compliance_ • Detectors for NERC CIP gaps.
 - **`rule-pack/grep-output-safety-image`** — Image-output safety checks  
   _creative, media_ • Post-generation safety check pack for image outputs. Pairs of (detector-call, threshold) plus a watermark presence check. Designed to be called by an image-gen pipeline AFTER the t…
 - **`rule-pack/grep-personal-info-leakage`** — Personal-info leakage detectors (assistant drafts → wrong audience)  
@@ -238,6 +252,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _real_estate, real_estate.due_diligence_ • GREP detectors for title/ESA/structural/zoning issues.
 - **`rule-pack/grep-trade-compliance-flags`** — Trade compliance red-flag detectors (HTS / ECCN / ITAR / OFAC)  
   _trade, trade.eccn, trade.itar, trade.sanctions_ • GREP detectors for export-control red flags: dual-use technology to embargoed destinations, missing end-user diligence, ITAR technical data outside licensed scope, deemed-export si…
+- **`rule-pack/grep-transfer-pricing-flags`** — Transfer-pricing red-flag detectors (OECD / §482 / BEPS)  
+  _tax, tax.transfer_pricing, finance_ • Detectors for transfer-pricing risk.
 - **`rule-pack/grep-vcs-platform-pats`** — VCS platform PATs (GitHub, GitLab, Bitbucket, Atlassian)  
   _security, software_ • Detection patterns for Personal Access Tokens issued by code-hosting platforms. Each vendor uses a stable prefix (`ghp_`, `gho_`, `ghu_`, `ghs_`, `ghr_` for GitHub; `glpat-` for Gi…
 - **`rule-pack/hybrid-retrieval-policy`** — Hybrid retrieval policy (BM25 + dense + RRF)  
@@ -289,6 +305,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, supply_chain, compliance, humanitarian_ • Composite reference of high-risk geographic corridors and product sectors with documented patterns of forced labor, child labor, environmental harm, or governance opacity. Used by …
 - **`knowledge-pack/icd10-sample`** — ICD-10 sample  
   _healthcare, healthcare.clinical_ • Sampled subset of ICD-10 diagnosis codes for catalog-demo purposes. Use the public, full ICD-10 release for any production deployment; this pack exists to anchor the data shape, no…
+- **`knowledge-pack/imo-conventions`** — IMO conventions (SOLAS / MARPOL / ISM / STCW / ISPS / MLC)  
+  _maritime, maritime.safety_ • Composite of IMO maritime safety + pollution + crew conventions.
 - **`knowledge-pack/insurance-fraud-typologies`** — Insurance fraud typologies (NAIC + CAIF + ABI)  
   _insurance, insurance.claims, insurance.fraud, finance_ • Composite reference of insurance-fraud typologies and red-flag indicators across personal auto, property, workers-comp, and health insurance. Sourced from NAIC Fraud Section + Coal…
 - **`knowledge-pack/iso-country-codes`** — ISO 3166 country codes (sample)  
@@ -303,6 +321,12 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _m_and_a, m_and_a.due_diligence, legal, finance_ • Composite educational reference: standard M&A DD checklist + R&W insurance scope + IRC §382 NOL limits + WARN Act + standard IP-assignment + open-source license compatibility matri…
 - **`knowledge-pack/mitre-attack-sample`** — MITRE ATT&CK techniques (sample)  
   _security_ • Sample of MITRE ATT&CK Enterprise tactics + techniques. Each row carries the technique ID, name, tactic, and a one-paragraph description. Use the canonical MITRE source at attack.m…
+- **`knowledge-pack/nerc-cip-standards`** — NERC CIP standards (CIP-002 to CIP-014)  
+  _energy, energy.grid, security_ • Composite of NERC CIP standards for Bulk Electric System cyber compliance.
+- **`knowledge-pack/oecd-tp-and-beps`** — OECD TP Guidelines + BEPS + Pillar Two + §482  
+  _tax, tax.transfer_pricing, finance_ • Composite of OECD TP Guidelines + BEPS actions + GloBE rules + US §482.
+- **`knowledge-pack/osha-construction-1926`** — OSHA 29 CFR 1926 (Construction) + ANSI Z10 + Focus Four  
+  _construction, construction.safety_ • Composite extracts of OSHA 1926 subparts + Focus Four + competent-person + ANSI Z10.
 - **`knowledge-pack/owasp-top-10-llm`** — OWASP Top 10 for LLM Applications (2025)  
   _security, ai_ • OWASP Top 10 risks for LLM-based applications — prompt injection, insecure output handling, training-data poisoning, model DoS, supply chain, sensitive disclosure, plugin design, e…
 - **`knowledge-pack/radiology-acrac-fleischner`** — ACR Appropriateness Criteria + Fleischner + ACR RADS rubrics  
@@ -369,6 +393,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _healthcare, healthcare.clinical_ • A clinical-reasoning persona for decision-support assistants. Cites guideline sections, flags red-flag symptoms, distinguishes differential diagnoses, and refuses to give definitiv…
 - **`persona/code-consultant`** — Code consultant  
   _software, software.codereview_ • Senior-engineer persona for code review and architecture discussion. Converged from the Anthropic prompt library "Code Consultant", awesome-chatgpt-prompts "Cyber Security Speciali…
+- **`persona/construction-safety-officer`** — Construction Safety Officer (OSHA 1926 / ANSI Z10 / Focus Four)  
+  _construction, construction.safety, compliance_ • Construction-site safety persona reviewing daily JHA / pre-task plans, toolbox talks, near-miss reports, and OSHA 1926 compliance against the Focus Four hazards (falls, struck-by, …
 - **`persona/contract-reviewer-cite-first`** — Contract Reviewer (citation-first, senior in-house counsel)  
   _legal, legal.contract, legal.compliance_ • Senior in-house counsel persona for reviewing commercial contracts: NDAs, MSAs, SOWs, vendor agreements, employment contracts, license agreements. Citation-first: every red-flag re…
 - **`persona/eeoc-hiring-officer`** — EEOC Hiring Officer (Title VII / ADA / ADEA / OFCCP)  
@@ -389,8 +415,12 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry, software_ • The single most-cloned community persona — model behaves like a Linux terminal, returning only the would-be terminal output. Doubles as a deterministic-IO eval (the same command sh…
 - **`persona/ma-dd-counsel`** — M&A Due Diligence Counsel (financial / legal / IP / customer / HR / tax)  
   _m_and_a, m_and_a.due_diligence, legal, finance_ • Senior M&A counsel persona reviewing target company DD across 6 classic streams: financial (audited financials, working capital, EBITDA adjustments), legal (litigation, regulatory,…
+- **`persona/maritime-safety-officer`** — Maritime Safety Officer (IMO SOLAS / MARPOL / ISM / STCW)  
+  _maritime, maritime.safety, compliance_ • Maritime-safety persona reviewing vessel inspection reports, port- state control records, ISM Code SMS audits, MARPOL compliance, ISPS port security, and STCW crew certifications. …
 - **`persona/math-tutor`** — Math tutor  
   _education, education.tutoring_ • Patient math-tutor persona that uses Socratic prompts and step-by-step reasoning. Diagnoses what the student understands before introducing new material. Useful baseline for `pipel…
+- **`persona/nerc-cip-analyst`** — NERC CIP Compliance Analyst (Bulk Electric System cyber)  
+  _energy, energy.grid, compliance, security_ • Critical-infrastructure cybersecurity persona reviewing Bulk Electric System (BES) cyber assets against NERC CIP-002 through CIP-014 standards: asset categorization, security manag…
 - **`persona/personal-assistant`** — Personal Assistant (preference-aware, privacy-first)  
   _personal_productivity, cross_industry_ • Personal AI assistant persona that reads user preferences BEFORE taking action, never reveals private info to wrong audiences, cites the user's stated rule when declining a request…
 - **`persona/privacy-officer-gdpr`** — Privacy Officer (GDPR / CCPA / DSAR fulfillment)  
@@ -409,6 +439,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _security, threat_intelligence, threat_intelligence.ioc, threat_intelligence.ttp_ • CTI analyst persona for IOC verification, TTP mapping to MITRE ATT&CK techniques, and threat-actor attribution analysis. Citation-first: every assertion cites the ATT&CK technique …
 - **`persona/trade-compliance-officer`** — Trade Compliance Officer (HTS / ECCN / ITAR / OFAC)  
   _trade, trade.hts, trade.eccn, trade.itar_ • International-trade compliance persona reviewing product / technology exports for: HTS classification (Harmonized Tariff Schedule), ECCN classification (Export Control Classificati…
+- **`persona/transfer-pricing-counsel`** — Transfer Pricing Counsel (OECD BEPS / IRC §482 / Pillar Two)  
+  _tax, tax.transfer_pricing, finance, compliance_ • International tax / transfer-pricing persona reviewing intercompany transactions for arm's-length compliance against OECD Transfer Pricing Guidelines, IRC §482, BEPS Action items (…
 - **`persona/translator-improver`** — Translator + improver  
   _cross_industry, creative_ • The second-most-cloned community persona. Translates input into fluent English (or any target language) AND improves the original for clarity, idiom, and register. Pairs naturally …
 
@@ -451,6 +483,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _healthcare, healthcare.clinical_ • Six-dimension rubric for clinical-decision-support outputs. Used by `pipeline/differential-diagnosis`.
 - **`rubric/code-security-review-v1`** — Code security review v1  
   _security, security.appsec, software_ • Seven-dimension rubric for grading an AppSec code review.
+- **`rubric/construction-safety-quality-v1`** — Construction safety review quality v1  
+  _construction, construction.safety_ • 7-dim rubric — Focus Four + competent-person + corrective action
 - **`rubric/contract-review-quality-v1`** — Contract review quality v1  
   _legal, legal.contract, legal.compliance_ • Eight-dimension rubric for grading a commercial-contract review. Used by `pipeline/contract-clause-review`.
 - **`rubric/esg-env-v1`** — ESG environmental (E) sub-rubric v1  
@@ -473,6 +507,10 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _insurance, insurance.claims, insurance.fraud, finance_ • Seven-dimension rubric for grading an insurance claim review.
 - **`rubric/ma-dd-quality-v1`** — M&A DD review quality v1  
   _m_and_a, m_and_a.due_diligence, legal, finance_ • 8-dim rubric across the 6 DD streams + materiality + disposition
+- **`rubric/maritime-safety-quality-v1`** — Maritime safety review quality v1  
+  _maritime, maritime.safety_ • 7-dim rubric
+- **`rubric/nerc-cip-quality-v1`** — NERC CIP compliance review quality v1  
+  _energy, energy.grid, security_ • 7-dim rubric
 - **`rubric/radiology-report-quality-v1`** — Radiology report quality v1  
   _healthcare, healthcare.radiology_ • Seven-dimension rubric for grading a radiology report. Used by `pipeline/radiology-report-grading`.
 - **`rubric/real-estate-dd-quality-v1`** — Real-estate DD review quality v1  
@@ -483,6 +521,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _security, threat_intelligence_ • Six-dimension rubric for grading a CTI report against the diamond-model + ATT&CK navigator + Admiralty-confidence scheme.
 - **`rubric/trade-compliance-quality-v1`** — Trade compliance review quality v1  
   _trade, trade.eccn, trade.itar, trade.sanctions_ • 8-dim rubric for grading export-control reviews.
+- **`rubric/transfer-pricing-quality-v1`** — Transfer-pricing review quality v1  
+  _tax, tax.transfer_pricing, finance_ • 8-dim rubric
 - **`rubric/verification-v1`** — Verification v1  
   _cross_industry, media_ • Four-dimension rubric for fact-verification outputs. Used by `pipeline/verify-claim-against-corpus`.
 
@@ -496,6 +536,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _climate, esg, finance_ • Two synthetic corporate climate disclosures for testing `pipeline/climate-disclosure-review`:  - sample-disclosure-good.json — Acme Corp, manufacturing, board    oversight quarterl…
 - **`dataset/code-review-samples`** — Synthetic code-review samples (3 cases)  
   _security, security.appsec, software_ • Three synthetic code bundles for testing `pipeline/code-security-review`. Fully synthetic — values that look like AWS keys / JWT / Slack tokens follow the format documented in AWS …
+- **`dataset/construction-safety-samples`** — Construction safety samples  
+  _construction, construction.safety_ • 2 synthetic site packets
 - **`dataset/contract-samples`** — Synthetic commercial contract samples (3 cases)  
   _legal, legal.contract, legal.compliance_ • Three synthetic commercial contracts for testing `pipeline/contract-clause-review`. Fully synthetic — no real contract data.
 - **`dataset/foodsafety-samples`** — Food safety samples  
@@ -512,6 +554,10 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _insurance, insurance.claims, insurance.fraud, finance_ • Two synthetic insurance claims:  - sample-claim-clean.json — straightforward rear-end auto claim    with police report, witness, repair estimate. Expected ~0 hits.  - sample-claim-…
 - **`dataset/ma-dd-samples`** — M&A DD samples  
   _m_and_a, m_and_a.due_diligence, legal, finance_ • 2 synthetic M&A target DD packets
+- **`dataset/maritime-safety-samples`** — Maritime safety samples  
+  _maritime, maritime.safety_ • 2 synthetic vessel packets
+- **`dataset/nerc-cip-samples`** — NERC CIP BES samples  
+  _energy, energy.grid, security_ • 2 synthetic BES Cyber System packets
 - **`dataset/radiology-report-samples`** — Synthetic radiology report samples (3 cases, fully synthetic)  
   _healthcare, healthcare.radiology_ • Three synthetic radiology reports for testing `pipeline/radiology-report-grading`. Fully synthetic — no real patient data.
 - **`dataset/realestate-dd-samples`** — Real-estate DD samples  
@@ -522,6 +568,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _security, threat_intelligence_ • Synthetic CTI report samples for testing `pipeline/threat-intel-ioc-review`. Includes IOCs (file hashes, IPs, domains, URLs, mutexes, CVEs, ATT&CK technique IDs, BTC addresses) dra…
 - **`dataset/trade-export-samples`** — Synthetic trade-export transaction samples  
   _trade, trade.eccn, trade.itar, trade.sanctions_ • Two synthetic exports:  - clean: standard laptops to Singapore, EAR99, B-list destination,    no Entity-list hits, no license required. Expected 0 hits.  - flagged: Iran destinatio…
+- **`dataset/transfer-pricing-samples`** — Transfer pricing samples  
+  _tax, tax.transfer_pricing, finance_ • 2 synthetic MNE TP packets
 
 ## processor
 
@@ -819,12 +867,16 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `persona/aviation-safety-investigator` — Aviation Safety Investigator (NTSB / FAA / ICAO / SMS / ASAP)
 - `persona/benefits-adjudicator` — Government Benefits Adjudicator (SNAP / Medicaid / UI / SSI)
 - `persona/climate-risk-analyst` — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)
+- `persona/construction-safety-officer` — Construction Safety Officer (OSHA 1926 / ANSI Z10 / Focus Four)
 - `persona/eeoc-hiring-officer` — EEOC Hiring Officer (Title VII / ADA / ADEA / OFCCP)
 - `persona/esg-auditor` — ESG / Supply Chain Due Diligence Auditor (E + S + G)
 - `persona/food-safety-officer` — Food Safety Officer (FDA FSMA / HACCP / GFSI)
 - `persona/gxp-auditor` — GxP Auditor (21-CFR-11 / EU GMP Annex 11 / ICH / ALCOA+)
+- `persona/maritime-safety-officer` — Maritime Safety Officer (IMO SOLAS / MARPOL / ISM / STCW)
+- `persona/nerc-cip-analyst` — NERC CIP Compliance Analyst (Bulk Electric System cyber)
 - `persona/privacy-officer-gdpr` — Privacy Officer (GDPR / CCPA / DSAR fulfillment)
 - `persona/trade-compliance-officer` — Trade Compliance Officer (HTS / ECCN / ITAR / OFAC)
+- `persona/transfer-pricing-counsel` — Transfer Pricing Counsel (OECD BEPS / IRC §482 / Pillar Two)
 - `pipeline/academic-integrity-review` — Academic integrity review (plagiarism / AI / citation fabrication)
 - `pipeline/anonymized-illicit-recruitment-pattern-sharing` — Anonymized cross-org pattern sharing for illicit recruitment corridors
 - `pipeline/benefits-adjudication-review` — Government benefits adjudication review (SNAP / Medicaid / UI / SSI)
@@ -862,9 +914,28 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rule-pack/grep-gdpr-dsar-red-flags` — GDPR DSAR red-flag detectors
 - `rule-pack/grep-gxp-data-integrity-red-flags` — GxP data-integrity red-flag detectors (21-CFR-11 / ALCOA+)
 - `rule-pack/grep-hr-hiring-bias-flags` — HR hiring bias detectors (Title VII / ADA / ADEA / EEOC)
+- `rule-pack/grep-nerc-cip-flags` — NERC CIP compliance red-flag detectors
 - `rule-pack/grep-trade-compliance-flags` — Trade compliance red-flag detectors (HTS / ECCN / ITAR / OFAC)
 - `tool/cbp-wro-lookup` — US CBP Withhold Release Order + UFLPA Entity List lookup
 - `tool/opencorporates-lookup` — OpenCorporates company lookup
+
+### construction
+
+- `dataset/construction-safety-samples` — Construction safety samples
+- `knowledge-pack/osha-construction-1926` — OSHA 29 CFR 1926 (Construction) + ANSI Z10 + Focus Four
+- `persona/construction-safety-officer` — Construction Safety Officer (OSHA 1926 / ANSI Z10 / Focus Four)
+- `pipeline/construction-safety-review` — Construction safety review (OSHA 1926 / Focus Four)
+- `rubric/construction-safety-quality-v1` — Construction safety review quality v1
+- `rule-pack/grep-construction-safety-flags` — Construction safety red-flag detectors (OSHA 1926)
+
+### construction.safety
+
+- `dataset/construction-safety-samples` — Construction safety samples
+- `knowledge-pack/osha-construction-1926` — OSHA 29 CFR 1926 (Construction) + ANSI Z10 + Focus Four
+- `persona/construction-safety-officer` — Construction Safety Officer (OSHA 1926 / ANSI Z10 / Focus Four)
+- `pipeline/construction-safety-review` — Construction safety review (OSHA 1926 / Focus Four)
+- `rubric/construction-safety-quality-v1` — Construction safety review quality v1
+- `rule-pack/grep-construction-safety-flags` — Construction safety red-flag detectors (OSHA 1926)
 
 ### creative
 
@@ -1044,6 +1115,24 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 - `persona/math-tutor` — Math tutor
 
+### energy
+
+- `dataset/nerc-cip-samples` — NERC CIP BES samples
+- `knowledge-pack/nerc-cip-standards` — NERC CIP standards (CIP-002 to CIP-014)
+- `persona/nerc-cip-analyst` — NERC CIP Compliance Analyst (Bulk Electric System cyber)
+- `pipeline/nerc-cip-compliance-review` — NERC CIP compliance review (Bulk Electric System cyber)
+- `rubric/nerc-cip-quality-v1` — NERC CIP compliance review quality v1
+- `rule-pack/grep-nerc-cip-flags` — NERC CIP compliance red-flag detectors
+
+### energy.grid
+
+- `dataset/nerc-cip-samples` — NERC CIP BES samples
+- `knowledge-pack/nerc-cip-standards` — NERC CIP standards (CIP-002 to CIP-014)
+- `persona/nerc-cip-analyst` — NERC CIP Compliance Analyst (Bulk Electric System cyber)
+- `pipeline/nerc-cip-compliance-review` — NERC CIP compliance review (Bulk Electric System cyber)
+- `rubric/nerc-cip-quality-v1` — NERC CIP compliance review quality v1
+- `rule-pack/grep-nerc-cip-flags` — NERC CIP compliance red-flag detectors
+
 ### esg
 
 - `benchmark/esg-supplier-grading-bench` — ESG supplier-grading benchmark v1
@@ -1094,6 +1183,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `dataset/climate-disclosure-samples` — Synthetic climate disclosure samples (2 cases)
 - `dataset/insurance-claim-samples` — Synthetic insurance claim samples
 - `dataset/ma-dd-samples` — M&A DD samples
+- `dataset/transfer-pricing-samples` — Transfer pricing samples
 - `harness/aml-investigation` — AML Investigation
 - `harness/data-cleaning-and-enrichment` — Data cleaning + entity enrichment harness
 - `knowledge-pack/aml-red-flags-extended` — AML red flags (extended)
@@ -1103,18 +1193,21 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `knowledge-pack/iso-country-codes` — ISO 3166 country codes (sample)
 - `knowledge-pack/iso-currency-codes` — ISO 4217 currency codes
 - `knowledge-pack/ma-dd-frameworks` — M&A DD frameworks (legal / financial / IP / customer / HR / tax)
+- `knowledge-pack/oecd-tp-and-beps` — OECD TP Guidelines + BEPS + Pillar Two + §482
 - `knowledge-pack/sanctions-list-shape` — Sanctions list (shape, with placeholder entries)
 - `pattern/k-anonymity-aggregation` — K-anonymity + HMACed-key cross-organization aggregation
 - `persona/aml-analyst` — AML Analyst
 - `persona/climate-risk-analyst` — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)
 - `persona/insurance-claims-adjuster` — Insurance Claims Adjuster (fraud-aware, NAIC-aligned)
 - `persona/ma-dd-counsel` — M&A Due Diligence Counsel (financial / legal / IP / customer / HR / tax)
+- `persona/transfer-pricing-counsel` — Transfer Pricing Counsel (OECD BEPS / IRC §482 / Pillar Two)
 - `pipeline/climate-disclosure-review` — Climate disclosure review (TCFD + ISSB IFRS S2 + ESRS E1)
 - `pipeline/customer-record-enrichment` — Customer record enrichment (deterministic, cross-vertical)
 - `pipeline/insurance-claim-review` — Insurance claim review (NAIC fraud-aware)
 - `pipeline/ma-dd-review` — M&A due-diligence review (6-stream)
 - `pipeline/suspicious-transaction-review` — Suspicious Transaction Review
 - `pipeline/sustainability-report-full-review` — Sustainability report full review (Climate + ESG-S + ESG-G chained)
+- `pipeline/transfer-pricing-review` — Transfer pricing review (OECD TPG / BEPS / §482 / Pillar Two)
 - `processor/entity-resolution-link` — Entity resolution: cluster records into entities
 - `processor/official-sources-checker` — Official-sources analyzer
 - `processor/redact-pii-text` — Redact PII from text (English-centric, MS Presidio-compatible)
@@ -1123,12 +1216,14 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rubric/esg-gov-v1` — ESG governance (G) sub-rubric v1
 - `rubric/insurance-claim-quality-v1` — Insurance claim review quality v1
 - `rubric/ma-dd-quality-v1` — M&A DD review quality v1
+- `rubric/transfer-pricing-quality-v1` — Transfer-pricing review quality v1
 - `rule-pack/aml-typologies-fatf` — FATF AML typologies (sampled)
 - `rule-pack/financial-pii-en` — Financial PII (English)
 - `rule-pack/grep-climate-disclosure-gaps` — Climate disclosure gap detectors (TCFD / ISSB / ESRS E1)
 - `rule-pack/grep-esg-governance-red-flags` — ESG governance red-flag detectors (the 'G' of ESG)
 - `rule-pack/grep-insurance-fraud-red-flags` — Insurance claim fraud red-flag detectors (NAIC + CAIF)
 - `rule-pack/grep-ma-dd-red-flags` — M&A DD red-flag detectors (6 streams)
+- `rule-pack/grep-transfer-pricing-flags` — Transfer-pricing red-flag detectors (OECD / §482 / BEPS)
 - `rule-pack/sanctions-screening` — Sanctions screening (deterministic)
 - `tool/opencorporates-lookup` — OpenCorporates company lookup
 - `tool/presidio-pii-detect` — Microsoft Presidio PII detection proxy
@@ -1376,6 +1471,24 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rubric/ma-dd-quality-v1` — M&A DD review quality v1
 - `rule-pack/grep-ma-dd-red-flags` — M&A DD red-flag detectors (6 streams)
 
+### maritime
+
+- `dataset/maritime-safety-samples` — Maritime safety samples
+- `knowledge-pack/imo-conventions` — IMO conventions (SOLAS / MARPOL / ISM / STCW / ISPS / MLC)
+- `persona/maritime-safety-officer` — Maritime Safety Officer (IMO SOLAS / MARPOL / ISM / STCW)
+- `pipeline/maritime-safety-review` — Maritime safety review (IMO SOLAS / MARPOL / ISM / STCW)
+- `rubric/maritime-safety-quality-v1` — Maritime safety review quality v1
+- `rule-pack/grep-maritime-safety-flags` — Maritime safety red-flag detectors (SOLAS / MARPOL / ISM)
+
+### maritime.safety
+
+- `dataset/maritime-safety-samples` — Maritime safety samples
+- `knowledge-pack/imo-conventions` — IMO conventions (SOLAS / MARPOL / ISM / STCW / ISPS / MLC)
+- `persona/maritime-safety-officer` — Maritime Safety Officer (IMO SOLAS / MARPOL / ISM / STCW)
+- `pipeline/maritime-safety-review` — Maritime safety review (IMO SOLAS / MARPOL / ISM / STCW)
+- `rubric/maritime-safety-quality-v1` — Maritime safety review quality v1
+- `rule-pack/grep-maritime-safety-flags` — Maritime safety red-flag detectors (SOLAS / MARPOL / ISM)
+
 ### media
 
 - `pattern/chain-of-density` — Chain-of-Density (iterative dense summarization)
@@ -1505,26 +1618,32 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### security
 
 - `dataset/code-review-samples` — Synthetic code-review samples (3 cases)
+- `dataset/nerc-cip-samples` — NERC CIP BES samples
 - `dataset/threat-intel-samples` — Synthetic threat-intelligence report samples
 - `harness/appsec-code-audit` — AppSec Code Audit harness
 - `knowledge-pack/mitre-attack-sample` — MITRE ATT&CK techniques (sample)
+- `knowledge-pack/nerc-cip-standards` — NERC CIP standards (CIP-002 to CIP-014)
 - `knowledge-pack/owasp-top-10-llm` — OWASP Top 10 for LLM Applications (2025)
 - `pattern/diamond-model-attribution` — Diamond Model attribution (CTI threat-actor analysis)
 - `pattern/k-anonymity-aggregation` — K-anonymity + HMACed-key cross-organization aggregation
+- `persona/nerc-cip-analyst` — NERC CIP Compliance Analyst (Bulk Electric System cyber)
 - `persona/security-engineer-cite-first` — Security Engineer (CWE-cite-first AppSec reviewer)
 - `persona/threat-intel-analyst` — Threat Intelligence Analyst (MITRE ATT&CK + STIX/TAXII + IOC)
 - `pipeline/code-review-with-risk-score` — Code review with risk score
 - `pipeline/code-security-review` — Code security review (CWE-cite-first AppSec audit)
 - `pipeline/full-vendor-due-diligence` — Full vendor due-diligence (ESG + AppSec + Legal — kitchen-sink)
+- `pipeline/nerc-cip-compliance-review` — NERC CIP compliance review (Bulk Electric System cyber)
 - `pipeline/security-incident-grading` — Security incident write-up grading (CTI + AppSec chained)
 - `pipeline/threat-intel-ioc-review` — Threat-intel IOC + TTP review (MITRE ATT&CK aligned)
 - `processor/prompt-injection-detector` — Prompt-injection detector
 - `rubric/code-security-review-v1` — Code security review v1
+- `rubric/nerc-cip-quality-v1` — NERC CIP compliance review quality v1
 - `rubric/threat-intel-quality-v1` — Threat intelligence report quality v1
 - `rule-pack/grep-ai-vendor-keys` — AI vendor API key detectors
 - `rule-pack/grep-cloud-secrets` — Cloud provider secret detectors
 - `rule-pack/grep-code-vulnerabilities` — Code vulnerability + secret-detection GREP pack
 - `rule-pack/grep-ioc-extraction` — IOC extraction GREP pack (file hashes / domains / IPs / URLs)
+- `rule-pack/grep-nerc-cip-flags` — NERC CIP compliance red-flag detectors
 - `rule-pack/grep-private-key-blocks` — Private key block detectors
 - `rule-pack/grep-prompt-injection-heuristics` — Prompt-injection heuristic detectors
 - `rule-pack/grep-vcs-platform-pats` — VCS platform PATs (GitHub, GitLab, Bitbucket, Atlassian)
@@ -1594,6 +1713,24 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 - `persona/esg-auditor` — ESG / Supply Chain Due Diligence Auditor (E + S + G)
 - `rule-pack/grep-esg-environmental-red-flags` — ESG environmental red-flag detectors (the 'E' of ESG)
+
+### tax
+
+- `dataset/transfer-pricing-samples` — Transfer pricing samples
+- `knowledge-pack/oecd-tp-and-beps` — OECD TP Guidelines + BEPS + Pillar Two + §482
+- `persona/transfer-pricing-counsel` — Transfer Pricing Counsel (OECD BEPS / IRC §482 / Pillar Two)
+- `pipeline/transfer-pricing-review` — Transfer pricing review (OECD TPG / BEPS / §482 / Pillar Two)
+- `rubric/transfer-pricing-quality-v1` — Transfer-pricing review quality v1
+- `rule-pack/grep-transfer-pricing-flags` — Transfer-pricing red-flag detectors (OECD / §482 / BEPS)
+
+### tax.transfer_pricing
+
+- `dataset/transfer-pricing-samples` — Transfer pricing samples
+- `knowledge-pack/oecd-tp-and-beps` — OECD TP Guidelines + BEPS + Pillar Two + §482
+- `persona/transfer-pricing-counsel` — Transfer Pricing Counsel (OECD BEPS / IRC §482 / Pillar Two)
+- `pipeline/transfer-pricing-review` — Transfer pricing review (OECD TPG / BEPS / §482 / Pillar Two)
+- `rubric/transfer-pricing-quality-v1` — Transfer-pricing review quality v1
+- `rule-pack/grep-transfer-pricing-flags` — Transfer-pricing red-flag detectors (OECD / §482 / BEPS)
 
 ### threat_intelligence
 

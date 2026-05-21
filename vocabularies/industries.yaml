@@ -193,6 +193,34 @@ industries:
     label: Agriculture & food systems
   - id: energy
     label: Energy
+    sub:
+      - id: energy.grid
+        label: Electric grid integrity (NERC CIP)
+      - id: energy.oil_gas
+        label: Oil & gas (pipeline / refinery)
+  - id: construction
+    label: Construction safety & permits
+    sub:
+      - id: construction.safety
+        label: Construction safety (OSHA / ANSI Z10)
+      - id: construction.permitting
+        label: Permitting & code compliance
+  - id: maritime
+    label: Maritime & shipping
+    sub:
+      - id: maritime.safety
+        label: Maritime safety (IMO / SOLAS / MARPOL / ISM)
+      - id: maritime.port_security
+        label: Port security (ISPS Code)
+  - id: tax
+    label: Tax compliance
+    sub:
+      - id: tax.transfer_pricing
+        label: Transfer pricing (OECD BEPS / Section 482)
+      - id: tax.indirect
+        label: Indirect tax (VAT / GST / sales+use)
+      - id: tax.crypto
+        label: Crypto asset tax reporting
   - id: transportation
     label: Transportation & logistics
   - id: real_estate
