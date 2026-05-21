@@ -1,28 +1,28 @@
 # Open Harness Hub — single-page catalog index
 
-Auto-generated from `scripts/build_index_page.py` against 248 live artifacts. Run that script to refresh after any catalog change.
+Auto-generated from `scripts/build_index_page.py` against 260 live artifacts. Run that script to refresh after any catalog change.
 
 Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency tree of any entry below.
 
 ## Stats
 
-- **Total artifacts:** 248
+- **Total artifacts:** 260
 - **Artifact types:** 12
-- **Industries:** 43
+- **Industries:** 45
 
 ## Table of contents
 
-- [harness (9)](#harness)
-- [pipeline (47)](#pipeline)
+- [harness (10)](#harness)
+- [pipeline (48)](#pipeline)
 - [benchmark (1)](#benchmark)
 - [rule-pack (27)](#rule-pack)
 - [knowledge-pack (25)](#knowledge-pack)
-- [tool (10)](#tool)
+- [tool (14)](#tool)
 - [persona (20)](#persona)
 - [adapter (9)](#adapter)
 - [rubric (18)](#rubric)
 - [dataset (10)](#dataset)
-- [processor (45)](#processor)
+- [processor (51)](#processor)
 - [pattern (27)](#pattern)
 
 ## harness
@@ -37,6 +37,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _ai, scientific_research, education_ • Harness that wraps a model call with a Python execution loop. The model emits `<code>...</code>` blocks; the harness runs them in a sandboxed Jupyter kernel; stdout / stderr / repr…
 - **`harness/contract-redline`** — Contract Clause Redlining harness  
   _legal, legal.contract, legal.compliance_ • Playbook-cite-first harness for commercial contract review. Surfaces red-flag clauses + proposes concrete redline language + cites the playbook clause family for every finding.
+- **`harness/data-cleaning-and-enrichment`** — Data cleaning + entity enrichment harness  
+  _cross_industry, retail, finance, healthcare_ • Cross-vertical harness that normalizes a raw customer / vendor / applicant record: addresses → USPS standardized + geocoded; phones → E.164; names → canonical with given/family spl…
 - **`harness/esg-disclosure-grading`** — ESG Disclosure Grading harness  
   _esg, supply_chain, compliance_ • Wraps the ESG supplier-policy-grading flow as a reusable harness with persona + GREP + RAG + tools layers. Targets local-Ollama or Anthropic/OpenAI for the judge model arm; emits c…
 - **`harness/radiology-report-review`** — Radiology Report Review harness  
@@ -70,6 +72,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _security, security.appsec, software, software.codereview_ • Review source code against `rubric/code-security-review-v1`. Uses the SAME chain shape as ESG / radiology / contract review: structured-to-prose → secrets-redact → GREP (vuln + sec…
 - **`pipeline/contract-clause-review`** — Commercial contract clause review (cite-first redlining)  
   _legal, legal.contract, legal.compliance_ • Review a commercial contract against `rubric/contract-review-quality- v1`. Reuses the SAME primitives as the ESG + radiology grading pipelines: structured-to-prose → PII redact → G…
+- **`pipeline/customer-record-enrichment`** — Customer record enrichment (deterministic, cross-vertical)  
+  _cross_industry, retail, finance, compliance_ • Normalize + enrich a raw customer / vendor record. Chains the format-convert processors (address / phone / name / country / date) followed by deduplication via entity-resolution-li…
 - **`pipeline/deep-research-supervisor-workers`** — Deep research: supervisor + parallel workers  
   _ai, media, cross_industry_ • LangChain's open_deep_research pattern. A supervisor LLM decomposes the user query into research briefs and dispatches N parallel researcher subagents (each gets its own context + …
 - **`pipeline/deep-research-with-citations`** — Deep research with citations  
@@ -262,22 +266,30 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 - **`tool/cbp-wro-lookup`** — US CBP Withhold Release Order + UFLPA Entity List lookup  
   _esg, supply_chain, compliance_ • Check a supplier name + geography against:  - US CBP Withhold Release Orders (active)  - US CBP Findings list (escalated WROs that became confirmed    forced-labor determinations) …
+- **`tool/google-geocode`** — Google Maps Geocoding (address → lat/lng)  
+  _cross_industry, retail, real_estate, transportation_ • Forward and reverse geocoding via Google Maps Geocoding API. Returns lat/lng + place_id + formatted_address + address_components (street_number / route / locality / admin_area_leve…
 - **`tool/json-schema-validator`** — JSON Schema 2020-12 validator  
   _cross_industry_ • Validates a candidate JSON object against a JSON Schema 2020-12 document. Used by `processor/verify-tool-validate-criterion` to enforce structural acceptance bars on pipeline outpu…
 - **`tool/lookup-icd10`** — ICD-10 lookup  
   _healthcare, healthcare.clinical_ • Lookup an ICD-10 diagnosis code by code or label substring. Returns code + label + category. Backend-agnostic; intended to bind to a local copy of the WHO ICD-10 release or to an i…
 - **`tool/mitre-attack-mapper`** — MITRE ATT&CK technique mapper  
   _security, threat_intelligence, threat_intelligence.ttp_ • Map free-text TTPs to MITRE ATT&CK technique IDs (T1234.xxx). Returns the matched technique + tactic + sub-techniques + KEV status if any associated CVE is on the CISA Known Exploi…
+- **`tool/opencorporates-lookup`** — OpenCorporates company lookup  
+  _finance, finance.kyc, compliance, esg_ • Look up a company in the OpenCorporates global registry (220M+ legal entities). Returns: jurisdiction code, incorporation date, company status, registered address, officers, benefi…
 - **`tool/presidio-pii-detect`** — Microsoft Presidio PII detection proxy  
   _cross_industry, healthcare, finance, insurance_ • Proxy to Microsoft Presidio Analyzer for PII detection. Substantially more thorough than `processor/redact-pii-text` regex baseline — supports 30+ entity types across multiple lang…
 - **`tool/sanctions-check`** — Sanctions list check  
   _finance, finance.aml, finance.kyc_ • Check a normalized entity name against one or more sanctions lists (OFAC SDN, UN Consolidated, EU Consolidated, HMT, or institutional PEP). Returns matches above the configured fuz…
 - **`tool/semgrep-sast-proxy`** — Semgrep SAST proxy (CWE-tagged code findings)  
   _security, security.appsec, software_ • Proxy to Semgrep CLI for static-analysis code scanning. Used by `pipeline/code-security-review` to corroborate GREP findings with a real SAST tool that has community-maintained rul…
+- **`tool/swift-bic-validator`** — SWIFT BIC validator + BIC → bank metadata  
+  _finance, finance.kyc, finance.aml_ • Validate an 8 or 11-character SWIFT BIC (Bank Identifier Code) and resolve it to the bank's name + country + city. Used by payment- processing + KYC + AML pipelines for counterpart…
 - **`tool/transaction-graph-query`** — Transaction graph query  
   _finance, finance.aml_ • Query a transaction-graph store for one-hop or multi-hop paths between accounts / entities. Used by AML harnesses to find shell layering, circular flows, and rapid-in-rapid-out pat…
 - **`tool/txt2img-sdxl`** — Text-to-Image (SDXL)  
   _creative_ • Generic SDXL text-to-image tool. Backend-agnostic — implementations include local Diffusers, Replicate, Hugging Face Inference, fal.ai, Together, or a custom OpenAPI endpoint.
+- **`tool/usps-address-validator`** — USPS address validation  
+  _cross_industry, retail, finance, government_ • Proxy to the USPS Address Information API. Given a US address, returns: standardized form, ZIP+4, deliverability, DPV (Delivery Point Validation) status, RDI (Residential Delivery …
 - **`tool/web-search`** — Web Search  
   _cross_industry_ • Generic web search tool. Backend-agnostic — implementations include Brave, Serper, DuckDuckGo, or a self-hosted SearXNG.
 
@@ -411,6 +423,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 - **`processor/action-sampler-multi-rollout`** — Action sampler — N parallel rollouts  
   _ai, software_ • Sample N independent action trajectories for an agent task; return the trajectories + final-state candidates for downstream judging. The N candidates can be reviewed by a separate …
+- **`processor/address-parse-standardize`** — Address parse + standardize (USPS Pub 28 / libpostal)  
+  _cross_industry_ • Parse a free-form postal address into components (street_number, street_name, suite, city, state, postal_code, country) and standardize them to USPS Pub 28 + libpostal conventions.…
 - **`processor/audio-to-text-whisper`** — Audio to text (Whisper)  
   _cross_industry_ • Speech-to-text via a Whisper-family model. Returns transcript + per-segment timestamps + detected language. Wraps `openai-whisper`, `faster-whisper`, or `distil-whisper` based on t…
 - **`processor/audit-trace-emitter`** — Audit trace emitter  
@@ -427,10 +441,14 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry_ • Emit per-call USD cost accounting given (adapter_ref, input_tokens, output_tokens, cached_tokens). Resolves the adapter's pricing card, multiplies, and writes a metering row to the…
 - **`processor/cross-encoder-reranker`** — Cross-encoder reranker  
   _cross_industry, ai_ • Re-rank a list of retrieved candidates with a cross-encoder model (BAAI/bge-reranker-base, Cohere rerank-v3, or similar). Takes top-N candidates from a hybrid retriever and returns…
+- **`processor/date-parse-multiformat`** — Date parse multi-format → ISO 8601  
+  _cross_industry_ • Parse any date string in 50+ common formats (MM/DD/YYYY, DD/MM/YYYY, YYYY-MM-DD, Mar 5 2025, 5-Mar-25, 1709589600 epoch, ISO 8601 fragments, RFC 2822) into a normalized ISO 8601 da…
 - **`processor/document-grader`** — Per-document relevance grader (Self-RAG)  
   _ai, cross_industry_ • Score each retrieved document for relevance to the user query. Emits per-doc grade ∈ {relevant, irrelevant, ambiguous} with a confidence score. Used by Self-RAG and CRAG to filter …
 - **`processor/embedder-minilm`** — Text embedder (MiniLM-L6-v2)  
   _cross_industry_ • Generate 384-dimensional text embeddings using `sentence-transformers/all-MiniLM-L6-v2`. Suitable for catalog semantic search, RAG retrieval, and de-duplication. Replace with a hig…
+- **`processor/entity-resolution-link`** — Entity resolution: cluster records into entities  
+  _cross_industry, finance, healthcare, government_ • Given N records, cluster those that refer to the same real-world entity (person, organization, address). Combines:  1. Blocking on canonical fields (zip, last name initial, alpha-2…
 - **`processor/escalate-human-review`** — Escalate to human reviewer  
   _cross_industry_ • Route an output (and its full trace + context) to a human reviewer queue. Used when a safety gate fires, a confidence threshold is not met, or a red-flag classifier triggers. Plugg…
 - **`processor/hallucination-scorer`** — Hallucination scorer (SelfCheckGPT-style)  
@@ -443,6 +461,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry, ai_ • Render a target JSON Schema (or Pydantic model) into the prompt as an instruction the model is asked to follow. Pairs with `processor/json-schema-repair` on the response side: if t…
 - **`processor/intent-dispatcher`** — Intent dispatcher  
   _cross_industry_ • Classify an incoming message into one of N intents and route to the appropriate downstream pipeline. Backend can be a classifier rule pack, a small local model, or a keyword router…
+- **`processor/iso-country-normalize`** — ISO country code normalize (alpha-2 / alpha-3 / numeric / name)  
+  _cross_industry_ • Resolve any country reference — alpha-2, alpha-3, numeric, English name, French name, common alias — to canonical ISO 3166-1 codes. Returns alpha-2, alpha-3, numeric, English short…
 - **`processor/iterative-revise-loop`** — Iterative revise loop  
   _cross_industry_ • The "send the response back to the LLM with accumulating context" primitive. Loops:   1. Run an inner harness call.   2. Run one or more verification processors on the response.   …
 - **`processor/json-schema-repair`** — JSON Schema repair + validate  
@@ -455,6 +475,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry_ • Read / write conversational memory keyed by (user_id, session_id). Stores the last N turns plus a compressed summary for older turns. Pluggable backend: SQLite (default), Redis, Po…
 - **`processor/multi-vector-fusion`** — Multi-vector / multi-query fusion (RRF + weighted)  
   _ai, cross_industry_ • Fuse N ranked candidate lists from independent retrievers (sparse + dense + graph + cross-encoder reranker output) via Reciprocal Rank Fusion or weighted score blending. Returns a …
+- **`processor/name-canonicalize`** — Person-name canonicalize (Western + East-Asian)  
+  _cross_industry_ • Canonicalize a person name string into structured components: given_name, family_name, middle_names, suffix, honorific. Handles the East-Asian convention where family name comes fi…
 - **`processor/nsfw-image-classifier`** — NSFW image classifier  
   _creative, media_ • Lightweight NSFW image classifier (CLIP-based zero-shot or a fine-tuned head). Returns probability of NSFW content; pipelines bind to a threshold via the calling rule pack.
 - **`processor/official-sources-checker`** — Official-sources analyzer  
@@ -463,6 +485,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry_ • Convert a PDF (extractable layer + optional OCR fallback) into plain text with page breaks preserved. Returns text plus per-page byte offsets so downstream chunkers can attribute c…
 - **`processor/persona-set-generator`** — Persona-set generator (STORM)  
   _ai, media, education_ • Spawn N personas with distinct perspectives on a topic. Used by STORM's multi-perspective curation and by multi-agent debate pipelines. Each persona carries a role, an angle, prior…
+- **`processor/phone-normalize-e164`** — Phone number normalize → E.164 (Google libphonenumber)  
+  _cross_industry_ • Parse free-form phone numbers into E.164 international format (+CCNNNNNNNNNNNN) using Google libphonenumber conventions. Returns the E.164 string + country code + number type (mobi…
 - **`processor/prompt-injection-detector`** — Prompt-injection detector  
   _cross_industry, security_ • Detect prompt-injection / jailbreak attempts in user input, retrieved documents, or tool results. Two-tier: a fast regex / classifier first pass plus an optional small-model classi…
 - **`processor/reasoning-framework-selector`** — Reasoning framework selector  
@@ -666,12 +690,14 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pipeline/anonymized-illicit-recruitment-pattern-sharing` — Anonymized cross-org pattern sharing for illicit recruitment corridors
 - `pipeline/benefits-adjudication-review` — Government benefits adjudication review (SNAP / Medicaid / UI / SSI)
 - `pipeline/climate-disclosure-review` — Climate disclosure review (TCFD + ISSB IFRS S2 + ESRS E1)
+- `pipeline/customer-record-enrichment` — Customer record enrichment (deterministic, cross-vertical)
 - `pipeline/deep-tier-supplier-audit` — Deep-tier (T1→T4+) supplier audit with traceability
 - `pipeline/full-vendor-due-diligence` — Full vendor due-diligence (ESG + AppSec + Legal — kitchen-sink)
 - `pipeline/gxp-validation-review` — GxP validation review (21-CFR-11 + Annex 11 + ALCOA+)
 - `pipeline/mixed-criteria-demo` — Mixed success-criteria demo (regex + semantic + deterministic + LLM + composite)
 - `pipeline/supplier-policy-grading` — Supplier policy & disclosure grading (CSDDD-aligned)
 - `pipeline/sustainability-report-full-review` — Sustainability report full review (Climate + ESG-S + ESG-G chained)
+- `processor/entity-resolution-link` — Entity resolution: cluster records into entities
 - `processor/structured-to-prose` — Structured JSON → prose normalizer (for GREP-style rule packs)
 - `rubric/academic-integrity-quality-v1` — Academic integrity review quality v1
 - `rubric/benefits-adjudication-quality-v1` — Benefits adjudication quality v1
@@ -689,6 +715,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rule-pack/grep-esg-governance-red-flags` — ESG governance red-flag detectors (the 'G' of ESG)
 - `rule-pack/grep-gxp-data-integrity-red-flags` — GxP data-integrity red-flag detectors (21-CFR-11 / ALCOA+)
 - `tool/cbp-wro-lookup` — US CBP Withhold Release Order + UFLPA Entity List lookup
+- `tool/opencorporates-lookup` — OpenCorporates company lookup
 
 ### creative
 
@@ -713,6 +740,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `adapter/ollama-default` — Ollama (local default)
 - `adapter/openai-embeddings` — OpenAI embeddings (text-embedding-3-small/large)
 - `adapter/openai-gpt-frontier` — OpenAI frontier-class chat + tool-use
+- `harness/data-cleaning-and-enrichment` — Data cleaning + entity enrichment harness
 - `harness/redact-pii-text` — Redact PII (text)
 - `harness/text-safety-review` — Text Safety Review
 - `knowledge-pack/common-abbreviations` — Common abbreviations (cross-industry sample)
@@ -748,6 +776,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `persona/support-agent` — Customer support agent
 - `persona/translator-improver` — Translator + improver
 - `pipeline/chat-with-pdf-citations` — Chat with PDF (with citations)
+- `pipeline/customer-record-enrichment` — Customer record enrichment (deterministic, cross-vertical)
 - `pipeline/deep-research-supervisor-workers` — Deep research: supervisor + parallel workers
 - `pipeline/deep-research-with-citations` — Deep research with citations
 - `pipeline/email-triage-and-draft` — Email triage + reply draft
@@ -761,6 +790,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pipeline/research-entity` — Research Entity
 - `pipeline/self-rag-grade-and-revise` — Self-RAG: grade-and-revise (concrete implementation)
 - `pipeline/verify-claim-against-corpus` — Verify Claim Against Corpus
+- `processor/address-parse-standardize` — Address parse + standardize (USPS Pub 28 / libpostal)
 - `processor/audio-to-text-whisper` — Audio to text (Whisper)
 - `processor/audit-trace-emitter` — Audit trace emitter
 - `processor/citation-coverage` — Citation coverage verifier
@@ -769,22 +799,27 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `processor/cost-ceiling-gate` — Cost ceiling gate
 - `processor/cost-meter` — Cost meter
 - `processor/cross-encoder-reranker` — Cross-encoder reranker
+- `processor/date-parse-multiformat` — Date parse multi-format → ISO 8601
 - `processor/document-grader` — Per-document relevance grader (Self-RAG)
 - `processor/embedder-minilm` — Text embedder (MiniLM-L6-v2)
+- `processor/entity-resolution-link` — Entity resolution: cluster records into entities
 - `processor/escalate-human-review` — Escalate to human reviewer
 - `processor/hallucination-scorer` — Hallucination scorer (SelfCheckGPT-style)
 - `processor/hyde-query-expander` — HyDE query expander
 - `processor/inject-datetime-locale` — Inject datetime + locale into prompt
 - `processor/inject-output-schema` — Inject output schema directive
 - `processor/intent-dispatcher` — Intent dispatcher
+- `processor/iso-country-normalize` — ISO country code normalize (alpha-2 / alpha-3 / numeric / name)
 - `processor/iterative-revise-loop` — Iterative revise loop
 - `processor/json-schema-repair` — JSON Schema repair + validate
 - `processor/llm-judge` — LLM-as-judge
 - `processor/llmlingua-context-compressor` — LLMLingua context compressor
 - `processor/memory-conversational-store` — Conversational memory store
 - `processor/multi-vector-fusion` — Multi-vector / multi-query fusion (RRF + weighted)
+- `processor/name-canonicalize` — Person-name canonicalize (Western + East-Asian)
 - `processor/official-sources-checker` — Official-sources analyzer
 - `processor/pdf-to-text` — PDF to text
+- `processor/phone-normalize-e164` — Phone number normalize → E.164 (Google libphonenumber)
 - `processor/prompt-injection-detector` — Prompt-injection detector
 - `processor/reasoning-framework-selector` — Reasoning framework selector
 - `processor/recursive-character-chunker` — Recursive character chunker
@@ -808,8 +843,10 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rule-pack/hybrid-retrieval-policy` — Hybrid retrieval policy (BM25 + dense + RRF)
 - `rule-pack/privacy-pii-text-en` — Privacy PII (English text)
 - `rule-pack/web-search-allowlist-default` — Web search allowlist (default)
+- `tool/google-geocode` — Google Maps Geocoding (address → lat/lng)
 - `tool/json-schema-validator` — JSON Schema 2020-12 validator
 - `tool/presidio-pii-detect` — Microsoft Presidio PII detection proxy
+- `tool/usps-address-validator` — USPS address validation
 - `tool/web-search` — Web Search
 
 ### education
@@ -878,6 +915,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rule-pack/grep-esg-forced-labor-red-flags` — ESG / forced-labor red-flag detectors (the 'S' of ESG)
 - `rule-pack/grep-esg-governance-red-flags` — ESG governance red-flag detectors (the 'G' of ESG)
 - `tool/cbp-wro-lookup` — US CBP Withhold Release Order + UFLPA Entity List lookup
+- `tool/opencorporates-lookup` — OpenCorporates company lookup
 
 ### esg.csddd
 
@@ -897,6 +935,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `dataset/climate-disclosure-samples` — Synthetic climate disclosure samples (2 cases)
 - `dataset/insurance-claim-samples` — Synthetic insurance claim samples
 - `harness/aml-investigation` — AML Investigation
+- `harness/data-cleaning-and-enrichment` — Data cleaning + entity enrichment harness
 - `knowledge-pack/aml-red-flags-extended` — AML red flags (extended)
 - `knowledge-pack/climate-disclosure-frameworks` — Climate disclosure frameworks (TCFD + ISSB IFRS S2 + CDP + ESRS E1)
 - `knowledge-pack/fatf-typologies-sample` — FATF typologies (sample chunks)
@@ -909,9 +948,11 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `persona/climate-risk-analyst` — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)
 - `persona/insurance-claims-adjuster` — Insurance Claims Adjuster (fraud-aware, NAIC-aligned)
 - `pipeline/climate-disclosure-review` — Climate disclosure review (TCFD + ISSB IFRS S2 + ESRS E1)
+- `pipeline/customer-record-enrichment` — Customer record enrichment (deterministic, cross-vertical)
 - `pipeline/insurance-claim-review` — Insurance claim review (NAIC fraud-aware)
 - `pipeline/suspicious-transaction-review` — Suspicious Transaction Review
 - `pipeline/sustainability-report-full-review` — Sustainability report full review (Climate + ESG-S + ESG-G chained)
+- `processor/entity-resolution-link` — Entity resolution: cluster records into entities
 - `processor/official-sources-checker` — Official-sources analyzer
 - `processor/redact-pii-text` — Redact PII from text (English-centric, MS Presidio-compatible)
 - `rubric/aml-investigation-v1` — AML investigation v1
@@ -924,9 +965,12 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rule-pack/grep-esg-governance-red-flags` — ESG governance red-flag detectors (the 'G' of ESG)
 - `rule-pack/grep-insurance-fraud-red-flags` — Insurance claim fraud red-flag detectors (NAIC + CAIF)
 - `rule-pack/sanctions-screening` — Sanctions screening (deterministic)
+- `tool/opencorporates-lookup` — OpenCorporates company lookup
 - `tool/presidio-pii-detect` — Microsoft Presidio PII detection proxy
 - `tool/sanctions-check` — Sanctions list check
+- `tool/swift-bic-validator` — SWIFT BIC validator + BIC → bank metadata
 - `tool/transaction-graph-query` — Transaction graph query
+- `tool/usps-address-validator` — USPS address validation
 
 ### finance.aml
 
@@ -940,6 +984,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rule-pack/aml-typologies-fatf` — FATF AML typologies (sampled)
 - `rule-pack/sanctions-screening` — Sanctions screening (deterministic)
 - `tool/sanctions-check` — Sanctions list check
+- `tool/swift-bic-validator` — SWIFT BIC validator + BIC → bank metadata
 - `tool/transaction-graph-query` — Transaction graph query
 
 ### finance.kyc
@@ -947,18 +992,23 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `knowledge-pack/aml-red-flags-extended` — AML red flags (extended)
 - `knowledge-pack/sanctions-list-shape` — Sanctions list (shape, with placeholder entries)
 - `rule-pack/sanctions-screening` — Sanctions screening (deterministic)
+- `tool/opencorporates-lookup` — OpenCorporates company lookup
 - `tool/sanctions-check` — Sanctions list check
+- `tool/swift-bic-validator` — SWIFT BIC validator + BIC → bank metadata
 
 ### government
 
 - `dataset/gov-benefits-samples` — Synthetic SNAP application samples
+- `harness/data-cleaning-and-enrichment` — Data cleaning + entity enrichment harness
 - `knowledge-pack/gov-benefits-rules` — Government benefits program rules (SNAP / Medicaid / UI / SSI)
 - `persona/benefits-adjudicator` — Government Benefits Adjudicator (SNAP / Medicaid / UI / SSI)
 - `pipeline/benefits-adjudication-review` — Government benefits adjudication review (SNAP / Medicaid / UI / SSI)
+- `processor/entity-resolution-link` — Entity resolution: cluster records into entities
 - `processor/official-sources-checker` — Official-sources analyzer
 - `rubric/benefits-adjudication-quality-v1` — Benefits adjudication quality v1
 - `rule-pack/grep-benefits-eligibility-flags` — Benefits-eligibility red-flag detectors (SNAP / Medicaid / UI)
 - `tool/presidio-pii-detect` — Microsoft Presidio PII detection proxy
+- `tool/usps-address-validator` — USPS address validation
 
 ### government.benefits
 
@@ -973,6 +1023,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 - `dataset/radiology-report-samples` — Synthetic radiology report samples (3 cases, fully synthetic)
 - `harness/clinical-decision-support` — Clinical Decision Support
+- `harness/data-cleaning-and-enrichment` — Data cleaning + entity enrichment harness
 - `harness/radiology-report-review` — Radiology Report Review harness
 - `knowledge-pack/clinical-guidelines-sample` — Clinical guidelines (sample chunks)
 - `knowledge-pack/drug-interactions-sample` — Drug-drug interactions (sample, educational)
@@ -982,6 +1033,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `persona/radiologist-cite-first` — Radiologist (citation-first, specialty radiology)
 - `pipeline/differential-diagnosis` — Differential Diagnosis
 - `pipeline/radiology-report-grading` — Radiology report grading (RADS-aware, Fleischner-aware)
+- `processor/entity-resolution-link` — Entity resolution: cluster records into entities
 - `processor/official-sources-checker` — Official-sources analyzer
 - `processor/redact-pii-text` — Redact PII from text (English-centric, MS Presidio-compatible)
 - `rubric/clinical-grounded-response-v1` — Clinical grounded response v1
@@ -1031,6 +1083,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### insurance
 
 - `dataset/insurance-claim-samples` — Synthetic insurance claim samples
+- `harness/data-cleaning-and-enrichment` — Data cleaning + entity enrichment harness
 - `knowledge-pack/insurance-fraud-typologies` — Insurance fraud typologies (NAIC + CAIF + ABI)
 - `persona/insurance-claims-adjuster` — Insurance Claims Adjuster (fraud-aware, NAIC-aligned)
 - `pipeline/insurance-claim-review` — Insurance claim review (NAIC fraud-aware)
@@ -1124,13 +1177,21 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rubric/gxp-validation-quality-v1` — GxP validation review quality v1
 - `rule-pack/grep-gxp-data-integrity-red-flags` — GxP data-integrity red-flag detectors (21-CFR-11 / ALCOA+)
 
+### real_estate
+
+- `tool/google-geocode` — Google Maps Geocoding (address → lat/lng)
+
 ### retail
 
+- `harness/data-cleaning-and-enrichment` — Data cleaning + entity enrichment harness
 - `persona/cinematic-product-photographer` — Cinematic Product Photographer
 - `persona/support-agent` — Customer support agent
 - `pipeline/brand-safe-product-photo` — Brand-Safe Product Photo
+- `pipeline/customer-record-enrichment` — Customer record enrichment (deterministic, cross-vertical)
 - `pipeline/email-triage-and-draft` — Email triage + reply draft
 - `rubric/brand-safe-image-v1` — Brand-safe image v1
+- `tool/google-geocode` — Google Maps Geocoding (address → lat/lng)
+- `tool/usps-address-validator` — USPS address validation
 
 ### retail.support
 
@@ -1231,6 +1292,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rule-pack/grep-esg-environmental-red-flags` — ESG environmental red-flag detectors (the 'E' of ESG)
 - `rule-pack/grep-esg-forced-labor-red-flags` — ESG / forced-labor red-flag detectors (the 'S' of ESG)
 - `tool/cbp-wro-lookup` — US CBP Withhold Release Order + UFLPA Entity List lookup
+- `tool/opencorporates-lookup` — OpenCorporates company lookup
 
 ### sustainability
 
@@ -1256,3 +1318,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 - `persona/threat-intel-analyst` — Threat Intelligence Analyst (MITRE ATT&CK + STIX/TAXII + IOC)
 - `tool/mitre-attack-mapper` — MITRE ATT&CK technique mapper
+
+### transportation
+
+- `tool/google-geocode` — Google Maps Geocoding (address → lat/lng)
