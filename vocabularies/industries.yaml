@@ -277,6 +277,31 @@ industries:
         label: Disaster response
   - id: defense
     label: Defense & intelligence
+    sub:
+      - id: defense.dfars
+        label: DFARS / DoD acquisition compliance
+      - id: defense.counterfeit_parts
+        label: Counterfeit parts detection (SAE AS5553)
+      - id: defense.cmmc
+        label: CMMC 2.0 cybersecurity maturity
+  - id: election_integrity
+    label: Election integrity & political process
+    sub:
+      - id: election_integrity.misinformation
+        label: Misinformation / disinformation detection
+      - id: election_integrity.deepfake
+        label: Deepfake / synthetic-media detection
+      - id: election_integrity.voter_registration
+        label: Voter-registration record validation
+  - id: water_utility
+    label: Water utility & drinking water safety
+    sub:
+      - id: water_utility.lcr
+        label: Lead and Copper Rule (LCR / LCRR)
+      - id: water_utility.sdwa
+        label: Safe Drinking Water Act compliance
+      - id: water_utility.scada
+        label: Water utility SCADA cybersecurity (AWIA)
   - id: scientific_research
     label: Scientific research
     sub:

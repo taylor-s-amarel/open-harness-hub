@@ -1,27 +1,27 @@
 # Open Harness Hub — single-page catalog index
 
-Auto-generated from `scripts/build_index_page.py` against 363 live artifacts. Run that script to refresh after any catalog change.
+Auto-generated from `scripts/build_index_page.py` against 381 live artifacts. Run that script to refresh after any catalog change.
 
 Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency tree of any entry below.
 
 ## Stats
 
-- **Total artifacts:** 363
+- **Total artifacts:** 381
 - **Artifact types:** 12
-- **Industries:** 82
+- **Industries:** 94
 
 ## Table of contents
 
 - [harness (13)](#harness)
-- [pipeline (77)](#pipeline)
+- [pipeline (80)](#pipeline)
 - [benchmark (1)](#benchmark)
-- [rule-pack (40)](#rule-pack)
-- [knowledge-pack (38)](#knowledge-pack)
+- [rule-pack (43)](#rule-pack)
+- [knowledge-pack (41)](#knowledge-pack)
 - [tool (14)](#tool)
-- [persona (34)](#persona)
+- [persona (37)](#persona)
 - [adapter (10)](#adapter)
-- [rubric (30)](#rubric)
-- [dataset (22)](#dataset)
+- [rubric (33)](#rubric)
+- [dataset (25)](#dataset)
 - [processor (54)](#processor)
 - [pattern (30)](#pattern)
 
@@ -102,12 +102,16 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, supply_chain, compliance_ • Multi-step audit pipeline that walks a supplier graph from tier-1 (direct supplier) down to tier-3 and tier-4+ (raw-material origin / sub-sub-contractors). At each tier:  1. Resolv…
 - **`pipeline/deepseek-r1-code-interpreter-math`** — DeepSeek-R1 / QwQ + Python code-interpreter for math reasoning  
   _ai, scientific_research, education_ • The winning AIMO-2 shape: a reasoning-distilled LLM (DeepSeek-R1- Distill-Qwen-7B / QwQ-32B) generates Python code that solves a math problem, the code runs in a Jupyter / sandbox …
+- **`pipeline/dfars-cmmc-compliance-review`** — DoD DFARS / CMMC compliance review  
+  _defense, defense.dfars, defense.cmmc, defense.counterfeit_parts_ • Vertical 22 — defense acquisition compliance.
 - **`pipeline/dicom-medical-image-preprocessing`** — DICOM medical image preprocessing (CT / MRI / X-ray)  
   _healthcare, healthcare.radiology, ai_ • Parse DICOM headers (pydicom), normalize Hounsfield units (HU), window/level adjustment, resample to consistent voxel spacing, optional lung-segmentation crop, convert to PNG / Num…
 - **`pipeline/differential-diagnosis`** — Differential Diagnosis  
   _healthcare, healthcare.clinical_ • Educational decision-support pipeline. Given (presentation, history, exam) text, returns a ranked differential diagnosis with cited guideline sections, ICD-10 code candidates, and …
 - **`pipeline/efficientnet-medical-imaging`** — EfficientNet for medical imaging classification + segmentation  
   _healthcare, healthcare.radiology, ai_ • EfficientNet-B0 / B3 backbone + custom head for medical-imaging competitions: skin lesion (ISIC), brain activity (EEG-as-image), histopathology (HuBMAP), spine MRI (RSNA Lumbar). U…
+- **`pipeline/election-misinformation-review`** — Election misinformation / disinformation / synthetic-media review  
+  _election_integrity, media, media.factcheck_ • Vertical 23 — election integrity. Same 6-step chain.
 - **`pipeline/email-triage-and-draft`** — Email triage + reply draft  
   _retail, retail.support, cross_industry_ • Customer-support email workflow. Layered chain:   redact PII →   grep (prompt-injection guard on email body — emails often carry attack     content from untrusted senders) →   clas…
 - **`pipeline/email-triage-pipeline`** — Email triage pipeline (preference-loaded, tone-matched, leakage-checked)  
@@ -210,6 +214,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry, media_ • Given a claim and a corpus, return supports / contradicts / no-evidence with cited passages and a confidence score.
 - **`pipeline/vllm-batch-llm-inference`** — vLLM batch LLM inference (with logits-processor-zoo)  
   _ai, education_ • Serve many prompts through a single vLLM engine with shared KV cache + prefix caching. Optional logits-processor-zoo entries (SuppressTokens / AllowedTokens / FixedTokenBias) const…
+- **`pipeline/water-utility-compliance-review`** — Water utility compliance review (SDWA / NPDWR / LCRR / AWIA)  
+  _water_utility, water_utility.sdwa, water_utility.lcr, water_utility.scada_ • Vertical 24 — drinking-water utility compliance + cyber.
 
 ## benchmark
 
@@ -242,6 +248,10 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _construction, construction.safety_ • Detectors for OSHA Focus Four + scaffolding + excavation + PPE.
 - **`rule-pack/grep-contract-red-flags`** — Commercial contract red-flag detectors  
   _legal, legal.contract, legal.compliance_ • GREP detectors for the 10 highest-leverage contract red-flag patterns: uncapped indemnity, unlimited liability, pre-existing IP assignment, unilateral termination, asymmetric caps,…
+- **`rule-pack/grep-defense-dfars-flags`** — Defense DFARS + CMMC + counterfeit-parts red-flag detectors  
+  _defense, defense.dfars, defense.counterfeit_parts, defense.cmmc_ • GREP detectors for DFARS / CMMC / SAE AS5553 / Section 889 / SAM exclusion.
+- **`rule-pack/grep-election-misinformation-flags`** — Election misinformation / disinformation / deepfake detectors  
+  _election_integrity, media, media.factcheck_ • Heuristic GREP detectors for common election-misinformation patterns.
 - **`rule-pack/grep-esg-environmental-red-flags`** — ESG environmental red-flag detectors (the 'E' of ESG)  
   _esg, supply_chain, compliance, climate_ • GREP detectors for the environmental dimension of supplier disclosures: deforestation, water pollution, hazardous-waste mismanagement, GHG underreporting, biodiversity harm, illega…
 - **`rule-pack/grep-esg-forced-labor-red-flags`** — ESG / forced-labor red-flag detectors (the 'S' of ESG)  
@@ -288,6 +298,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _tax, tax.transfer_pricing, finance_ • Detectors for transfer-pricing risk.
 - **`rule-pack/grep-vcs-platform-pats`** — VCS platform PATs (GitHub, GitLab, Bitbucket, Atlassian)  
   _security, software_ • Detection patterns for Personal Access Tokens issued by code-hosting platforms. Each vendor uses a stable prefix (`ghp_`, `gho_`, `ghu_`, `ghs_`, `ghr_` for GitHub; `glpat-` for Gi…
+- **`rule-pack/grep-water-utility-flags`** — Water utility SDWA / LCRR / AWIA red-flag detectors  
+  _water_utility, water_utility.lcr, water_utility.sdwa_ • GREP detectors for SDWA compliance gaps + acute risks.
 - **`rule-pack/hybrid-retrieval-policy`** — Hybrid retrieval policy (BM25 + dense + RRF)  
   _cross_industry_ • A RAG retrieval policy pack: BM25 sparse + dense vector + Reciprocal Rank Fusion + optional cross-encoder reranking + 1-hop citation graph expansion. Pipelines and harnesses refere…
 - **`rule-pack/phi-hipaa-en`** — PHI (HIPAA 18-identifier) — English text  
@@ -319,10 +331,14 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _legal, legal.contract, legal.compliance_ • Composite, educational reference of common commercial contract clauses with: standard market language, common red-flag variants, why each red flag matters, and a suggested redline.…
 - **`knowledge-pack/csddd-and-forced-labor-indicators`** — Global supply-chain due-diligence regulatory pack  
   _esg, supply_chain, compliance, cross_industry_ • Reference pack of (composite, educational) extracts from 12 jurisdictions + 4 international frameworks:
+- **`knowledge-pack/defense-dfars-frameworks`** — Defense compliance frameworks (DFARS / FAR / CMMC / NIST 800-171 / SAE AS5553 / Section 889)  
+  _defense, defense.dfars, defense.cmmc, defense.counterfeit_parts_ • Composite of US DoD acquisition + cyber + counterfeit-parts compliance.
 - **`knowledge-pack/drug-interactions-sample`** — Drug-drug interactions (sample, educational)  
   _healthcare, healthcare.pharmacy, healthcare.clinical_ • Composite paraphrases of well-known drug-drug interaction patterns for educational reference. NOT a substitute for an authoritative database (e.g. RxNorm + Lexicomp + Micromedex). …
 - **`knowledge-pack/eeoc-hiring-statutes`** — EEOC hiring statutes pack (Title VII / ADA / ADEA / GINA / PWFA)  
   _hr, hr.hiring, compliance_ • Composite educational reference of the federal anti-discrimination hiring statutes administered by the EEOC + OFCCP.
+- **`knowledge-pack/election-integrity-frameworks`** — Election integrity frameworks (EAC / CISA / DHS / C2PA)  
+  _election_integrity, media, media.factcheck_ • Composite — EAC election standards + CISA election infrastructure + DHS election cyber + C2PA Content Credentials + ACT methodology.
 - **`knowledge-pack/fatf-typologies-sample`** — FATF typologies (sample chunks)  
   _finance, finance.aml_ • Sample paraphrased typology chunks for catalog-demo purposes. Real deployments should ingest the latest FATF and FinCEN typology reports; this pack anchors the data shape and citat…
 - **`knowledge-pack/food-safety-fsma-haccp`** — FSMA + HACCP + GFSI food safety frameworks  
@@ -377,6 +393,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _personal_productivity, cross_industry_ • Canonical schema for storing user preferences that personal- assistant harnesses load before taking action. Covers:  - Communication tone preferences (formal / casual / terse / war…
 - **`knowledge-pack/verbraucherzentrale-fake-inkasso-indicators`** — Verbraucherzentrale Fake-Inkasso indicators (10-criterion taxonomy)  
   _bureaucracy_translation, bureaucracy_translation.fraud_screening, humanitarian, humanitarian.refugee_ • Composite educational reference of the Verbraucherzentrale's published Fake-Inkasso indicators. Used by Sviatoslav Grabovsky's Bill_info AI to classify German payment demands as le…
+- **`knowledge-pack/water-sdwa-lcrr-awia`** — Water utility regulatory pack (SDWA / NPDWR / LCRR / DBPR / AWIA)  
+  _water_utility, water_utility.lcr, water_utility.sdwa_ • Composite of EPA drinking water regulations + critical-infrastructure cyber.
 
 ## tool
 
@@ -433,8 +451,12 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _construction, construction.safety, compliance_ • Construction-site safety persona reviewing daily JHA / pre-task plans, toolbox talks, near-miss reports, and OSHA 1926 compliance against the Focus Four hazards (falls, struck-by, …
 - **`persona/contract-reviewer-cite-first`** — Contract Reviewer (citation-first, senior in-house counsel)  
   _legal, legal.contract, legal.compliance_ • Senior in-house counsel persona for reviewing commercial contracts: NDAs, MSAs, SOWs, vendor agreements, employment contracts, license agreements. Citation-first: every red-flag re…
+- **`persona/defense-acquisition-officer`** — Defense Acquisition Officer (DFARS / FAR / CMMC / counterfeit parts)  
+  _defense, defense.dfars, defense.counterfeit_parts, defense.cmmc_ • US DoD acquisition compliance persona for reviewing defense contracts + supplier flow-downs. Cite-first per DFARS clause / FAR section / CMMC level / NIST SP 800-171 control / SAE …
 - **`persona/eeoc-hiring-officer`** — EEOC Hiring Officer (Title VII / ADA / ADEA / OFCCP)  
   _hr, hr.hiring, compliance_ • Hiring-compliance persona reviewing job postings, screening questions, interview rubrics, and hiring decisions for protected-class bias and disparate impact. Aligned to: Title VII …
+- **`persona/election-integrity-analyst`** — Election Integrity Analyst (misinformation / deepfake / voter-roll)  
+  _election_integrity, election_integrity.misinformation, election_integrity.deepfake, media_ • Election-integrity analyst persona for reviewing election-related content for misinformation, AI-generated synthetic media (deepfakes), coordinated inauthentic behavior, and voter-…
 - **`persona/esg-auditor`** — ESG / Supply Chain Due Diligence Auditor (E + S + G)  
   _esg, esg.csddd, esg.modern_slavery, esg.csrd_ • ESG auditor persona covering the full E + S + G dimensions of supply-chain due diligence. Aligned to:
 - **`persona/fact-checker`** — Fact Checker  
@@ -479,6 +501,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _tax, tax.transfer_pricing, finance, compliance_ • International tax / transfer-pricing persona reviewing intercompany transactions for arm's-length compliance against OECD Transfer Pricing Guidelines, IRC §482, BEPS Action items (…
 - **`persona/translator-improver`** — Translator + improver  
   _cross_industry, creative_ • The second-most-cloned community persona. Translates input into fluent English (or any target language) AND improves the original for clarity, idiom, and register. Pairs naturally …
+- **`persona/water-utility-compliance-officer`** — Water Utility Compliance Officer (SDWA / LCRR / AWIA)  
+  _water_utility, water_utility.lcr, water_utility.sdwa, water_utility.scada_ • Drinking-water-utility compliance persona reviewing public-water- system records against EPA Safe Drinking Water Act (SDWA), Lead and Copper Rule Revisions (LCRR), Surface Water Tr…
 
 ## adapter
 
@@ -527,6 +551,10 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _construction, construction.safety_ • 7-dim rubric — Focus Four + competent-person + corrective action
 - **`rubric/contract-review-quality-v1`** — Contract review quality v1  
   _legal, legal.contract, legal.compliance_ • Eight-dimension rubric for grading a commercial-contract review. Used by `pipeline/contract-clause-review`.
+- **`rubric/defense-dfars-quality-v1`** — Defense DFARS/CMMC review quality v1  
+  _defense, defense.dfars, defense.cmmc_ • 7-dim rubric
+- **`rubric/election-integrity-quality-v1`** — Election integrity review quality v1  
+  _election_integrity, media_ • 7-dim rubric
 - **`rubric/esg-env-v1`** — ESG environmental (E) sub-rubric v1  
   _esg, supply_chain, compliance, climate_ • Five-dimension rubric for grading ONLY the environmental dimension of a supplier disclosure. Aligned to CSRD ESRS E1-E5, EUDR, and CSDDD Art. 13 (climate transition plan).
 - **`rubric/esg-gov-v1`** — ESG governance (G) sub-rubric v1  
@@ -565,6 +593,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _tax, tax.transfer_pricing, finance_ • 8-dim rubric
 - **`rubric/verification-v1`** — Verification v1  
   _cross_industry, media_ • Four-dimension rubric for fact-verification outputs. Used by `pipeline/verify-claim-against-corpus`.
+- **`rubric/water-utility-quality-v1`** — Water utility compliance review quality v1  
+  _water_utility, water_utility.sdwa, water_utility.lcr_ • 7-dim rubric
 
 ## dataset
 
@@ -582,6 +612,10 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _construction, construction.safety_ • 2 synthetic site packets
 - **`dataset/contract-samples`** — Synthetic commercial contract samples (3 cases)  
   _legal, legal.contract, legal.compliance_ • Three synthetic commercial contracts for testing `pipeline/contract-clause-review`. Fully synthetic — no real contract data.
+- **`dataset/defense-dfars-samples`** — Defense DFARS / CMMC samples  
+  _defense, defense.dfars, defense.cmmc_ • 2 synthetic DoD contract packets
+- **`dataset/election-integrity-samples`** — Election integrity samples  
+  _election_integrity, media_ • 2 synthetic election-content packets
 - **`dataset/foodsafety-samples`** — Food safety samples  
   _food_safety, food_safety.fsma, food_safety.haccp_ • 2 synthetic facility packets
 - **`dataset/gdpr-dsar-samples`** — Synthetic GDPR DSAR samples  
@@ -612,6 +646,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _trade, trade.eccn, trade.itar, trade.sanctions_ • Two synthetic exports:  - clean: standard laptops to Singapore, EAR99, B-list destination,    no Entity-list hits, no license required. Expected 0 hits.  - flagged: Iran destinatio…
 - **`dataset/transfer-pricing-samples`** — Transfer pricing samples  
   _tax, tax.transfer_pricing, finance_ • 2 synthetic MNE TP packets
+- **`dataset/water-utility-samples`** — Water utility compliance samples  
+  _water_utility, water_utility.sdwa, water_utility.lcr_ • 2 synthetic Public Water System packets
 
 ## processor
 
@@ -960,6 +996,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `persona/benefits-adjudicator` — Government Benefits Adjudicator (SNAP / Medicaid / UI / SSI)
 - `persona/climate-risk-analyst` — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)
 - `persona/construction-safety-officer` — Construction Safety Officer (OSHA 1926 / ANSI Z10 / Focus Four)
+- `persona/defense-acquisition-officer` — Defense Acquisition Officer (DFARS / FAR / CMMC / counterfeit parts)
 - `persona/eeoc-hiring-officer` — EEOC Hiring Officer (Title VII / ADA / ADEA / OFCCP)
 - `persona/esg-auditor` — ESG / Supply Chain Due Diligence Auditor (E + S + G)
 - `persona/food-safety-officer` — Food Safety Officer (FDA FSMA / HACCP / GFSI)
@@ -969,12 +1006,14 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `persona/privacy-officer-gdpr` — Privacy Officer (GDPR / CCPA / DSAR fulfillment)
 - `persona/trade-compliance-officer` — Trade Compliance Officer (HTS / ECCN / ITAR / OFAC)
 - `persona/transfer-pricing-counsel` — Transfer Pricing Counsel (OECD BEPS / IRC §482 / Pillar Two)
+- `persona/water-utility-compliance-officer` — Water Utility Compliance Officer (SDWA / LCRR / AWIA)
 - `pipeline/academic-integrity-review` — Academic integrity review (plagiarism / AI / citation fabrication)
 - `pipeline/anonymized-illicit-recruitment-pattern-sharing` — Anonymized cross-org pattern sharing for illicit recruitment corridors
 - `pipeline/benefits-adjudication-review` — Government benefits adjudication review (SNAP / Medicaid / UI / SSI)
 - `pipeline/climate-disclosure-review` — Climate disclosure review (TCFD + ISSB IFRS S2 + ESRS E1)
 - `pipeline/customer-record-enrichment` — Customer record enrichment (deterministic, cross-vertical)
 - `pipeline/deep-tier-supplier-audit` — Deep-tier (T1→T4+) supplier audit with traceability
+- `pipeline/dfars-cmmc-compliance-review` — DoD DFARS / CMMC compliance review
 - `pipeline/full-vendor-due-diligence` — Full vendor due-diligence (ESG + AppSec + Legal — kitchen-sink)
 - `pipeline/gdpr-dsar-review` — GDPR DSAR fulfillment review (CCPA-compatible)
 - `pipeline/gxp-validation-review` — GxP validation review (21-CFR-11 + Annex 11 + ALCOA+)
@@ -983,6 +1022,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pipeline/supplier-policy-grading` — Supplier policy & disclosure grading (CSDDD-aligned)
 - `pipeline/sustainability-report-full-review` — Sustainability report full review (Climate + ESG-S + ESG-G chained)
 - `pipeline/trade-compliance-review` — Trade compliance review (HTS / EAR / ITAR / OFAC)
+- `pipeline/water-utility-compliance-review` — Water utility compliance review (SDWA / NPDWR / LCRR / AWIA)
 - `processor/entity-resolution-link` — Entity resolution: cluster records into entities
 - `processor/structured-to-prose` — Structured JSON → prose normalizer (for GREP-style rule packs)
 - `rubric/academic-integrity-quality-v1` — Academic integrity review quality v1
@@ -1183,6 +1223,40 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `tool/usps-address-validator` — USPS address validation
 - `tool/web-search` — Web Search
 
+### defense
+
+- `dataset/defense-dfars-samples` — Defense DFARS / CMMC samples
+- `knowledge-pack/defense-dfars-frameworks` — Defense compliance frameworks (DFARS / FAR / CMMC / NIST 800-171 / SAE AS5553 / Section 889)
+- `persona/defense-acquisition-officer` — Defense Acquisition Officer (DFARS / FAR / CMMC / counterfeit parts)
+- `pipeline/dfars-cmmc-compliance-review` — DoD DFARS / CMMC compliance review
+- `rubric/defense-dfars-quality-v1` — Defense DFARS/CMMC review quality v1
+- `rule-pack/grep-defense-dfars-flags` — Defense DFARS + CMMC + counterfeit-parts red-flag detectors
+
+### defense.cmmc
+
+- `dataset/defense-dfars-samples` — Defense DFARS / CMMC samples
+- `knowledge-pack/defense-dfars-frameworks` — Defense compliance frameworks (DFARS / FAR / CMMC / NIST 800-171 / SAE AS5553 / Section 889)
+- `persona/defense-acquisition-officer` — Defense Acquisition Officer (DFARS / FAR / CMMC / counterfeit parts)
+- `pipeline/dfars-cmmc-compliance-review` — DoD DFARS / CMMC compliance review
+- `rubric/defense-dfars-quality-v1` — Defense DFARS/CMMC review quality v1
+- `rule-pack/grep-defense-dfars-flags` — Defense DFARS + CMMC + counterfeit-parts red-flag detectors
+
+### defense.counterfeit_parts
+
+- `knowledge-pack/defense-dfars-frameworks` — Defense compliance frameworks (DFARS / FAR / CMMC / NIST 800-171 / SAE AS5553 / Section 889)
+- `persona/defense-acquisition-officer` — Defense Acquisition Officer (DFARS / FAR / CMMC / counterfeit parts)
+- `pipeline/dfars-cmmc-compliance-review` — DoD DFARS / CMMC compliance review
+- `rule-pack/grep-defense-dfars-flags` — Defense DFARS + CMMC + counterfeit-parts red-flag detectors
+
+### defense.dfars
+
+- `dataset/defense-dfars-samples` — Defense DFARS / CMMC samples
+- `knowledge-pack/defense-dfars-frameworks` — Defense compliance frameworks (DFARS / FAR / CMMC / NIST 800-171 / SAE AS5553 / Section 889)
+- `persona/defense-acquisition-officer` — Defense Acquisition Officer (DFARS / FAR / CMMC / counterfeit parts)
+- `pipeline/dfars-cmmc-compliance-review` — DoD DFARS / CMMC compliance review
+- `rubric/defense-dfars-quality-v1` — Defense DFARS/CMMC review quality v1
+- `rule-pack/grep-defense-dfars-flags` — Defense DFARS + CMMC + counterfeit-parts red-flag detectors
+
 ### education
 
 - `dataset/academic-essay-samples` — Synthetic academic essay samples (integrity-review test set)
@@ -1221,6 +1295,23 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### education.tutoring
 
 - `persona/math-tutor` — Math tutor
+
+### election_integrity
+
+- `dataset/election-integrity-samples` — Election integrity samples
+- `knowledge-pack/election-integrity-frameworks` — Election integrity frameworks (EAC / CISA / DHS / C2PA)
+- `persona/election-integrity-analyst` — Election Integrity Analyst (misinformation / deepfake / voter-roll)
+- `pipeline/election-misinformation-review` — Election misinformation / disinformation / synthetic-media review
+- `rubric/election-integrity-quality-v1` — Election integrity review quality v1
+- `rule-pack/grep-election-misinformation-flags` — Election misinformation / disinformation / deepfake detectors
+
+### election_integrity.deepfake
+
+- `persona/election-integrity-analyst` — Election Integrity Analyst (misinformation / deepfake / voter-roll)
+
+### election_integrity.misinformation
+
+- `persona/election-integrity-analyst` — Election Integrity Analyst (misinformation / deepfake / voter-roll)
 
 ### energy
 
@@ -1641,11 +1732,15 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 ### media
 
+- `dataset/election-integrity-samples` — Election integrity samples
+- `knowledge-pack/election-integrity-frameworks` — Election integrity frameworks (EAC / CISA / DHS / C2PA)
 - `pattern/chain-of-density` — Chain-of-Density (iterative dense summarization)
 - `pipeline/tfidf-lightgbm-text-classification` — TF-IDF + LightGBM text classification
+- `persona/election-integrity-analyst` — Election Integrity Analyst (misinformation / deepfake / voter-roll)
 - `persona/fact-checker` — Fact Checker
 - `pipeline/deep-research-supervisor-workers` — Deep research: supervisor + parallel workers
 - `pipeline/deep-research-with-citations` — Deep research with citations
+- `pipeline/election-misinformation-review` — Election misinformation / disinformation / synthetic-media review
 - `pipeline/longformer-bigbird-ner` — Long-document NER with LongFormer / BigBird
 - `pipeline/storm-persona-curation-article` — STORM: persona-curation + outline-fanout article
 - `pipeline/verify-claim-against-corpus` — Verify Claim Against Corpus
@@ -1653,9 +1748,18 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `processor/official-sources-checker` — Official-sources analyzer
 - `processor/persona-set-generator` — Persona-set generator (STORM)
 - `processor/skeleton-outliner` — Skeleton outliner (Skeleton-of-Thought)
+- `rubric/election-integrity-quality-v1` — Election integrity review quality v1
 - `rubric/verification-v1` — Verification v1
+- `rule-pack/grep-election-misinformation-flags` — Election misinformation / disinformation / deepfake detectors
 - `rule-pack/grep-output-safety-image` — Image-output safety checks
 - `rule-pack/grep-prohibited-terms` — Prohibited Terms (image-gen guard rails)
+
+### media.factcheck
+
+- `knowledge-pack/election-integrity-frameworks` — Election integrity frameworks (EAC / CISA / DHS / C2PA)
+- `persona/election-integrity-analyst` — Election Integrity Analyst (misinformation / deepfake / voter-roll)
+- `pipeline/election-misinformation-review` — Election misinformation / disinformation / synthetic-media review
+- `rule-pack/grep-election-misinformation-flags` — Election misinformation / disinformation / deepfake detectors
 
 ### personal_productivity
 
@@ -1954,3 +2058,35 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### transportation
 
 - `tool/google-geocode` — Google Maps Geocoding (address → lat/lng)
+
+### water_utility
+
+- `dataset/water-utility-samples` — Water utility compliance samples
+- `knowledge-pack/water-sdwa-lcrr-awia` — Water utility regulatory pack (SDWA / NPDWR / LCRR / DBPR / AWIA)
+- `persona/water-utility-compliance-officer` — Water Utility Compliance Officer (SDWA / LCRR / AWIA)
+- `pipeline/water-utility-compliance-review` — Water utility compliance review (SDWA / NPDWR / LCRR / AWIA)
+- `rubric/water-utility-quality-v1` — Water utility compliance review quality v1
+- `rule-pack/grep-water-utility-flags` — Water utility SDWA / LCRR / AWIA red-flag detectors
+
+### water_utility.lcr
+
+- `dataset/water-utility-samples` — Water utility compliance samples
+- `knowledge-pack/water-sdwa-lcrr-awia` — Water utility regulatory pack (SDWA / NPDWR / LCRR / DBPR / AWIA)
+- `persona/water-utility-compliance-officer` — Water Utility Compliance Officer (SDWA / LCRR / AWIA)
+- `pipeline/water-utility-compliance-review` — Water utility compliance review (SDWA / NPDWR / LCRR / AWIA)
+- `rubric/water-utility-quality-v1` — Water utility compliance review quality v1
+- `rule-pack/grep-water-utility-flags` — Water utility SDWA / LCRR / AWIA red-flag detectors
+
+### water_utility.scada
+
+- `persona/water-utility-compliance-officer` — Water Utility Compliance Officer (SDWA / LCRR / AWIA)
+- `pipeline/water-utility-compliance-review` — Water utility compliance review (SDWA / NPDWR / LCRR / AWIA)
+
+### water_utility.sdwa
+
+- `dataset/water-utility-samples` — Water utility compliance samples
+- `knowledge-pack/water-sdwa-lcrr-awia` — Water utility regulatory pack (SDWA / NPDWR / LCRR / DBPR / AWIA)
+- `persona/water-utility-compliance-officer` — Water Utility Compliance Officer (SDWA / LCRR / AWIA)
+- `pipeline/water-utility-compliance-review` — Water utility compliance review (SDWA / NPDWR / LCRR / AWIA)
+- `rubric/water-utility-quality-v1` — Water utility compliance review quality v1
+- `rule-pack/grep-water-utility-flags` — Water utility SDWA / LCRR / AWIA red-flag detectors
