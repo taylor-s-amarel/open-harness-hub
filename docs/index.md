@@ -1,22 +1,22 @@
 # Open Harness Hub — single-page catalog index
 
-Auto-generated from `scripts/build_index_page.py` against 381 live artifacts. Run that script to refresh after any catalog change.
+Auto-generated from `scripts/build_index_page.py` against 383 live artifacts. Run that script to refresh after any catalog change.
 
 Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency tree of any entry below.
 
 ## Stats
 
-- **Total artifacts:** 381
+- **Total artifacts:** 383
 - **Artifact types:** 12
 - **Industries:** 94
 
 ## Table of contents
 
 - [harness (13)](#harness)
-- [pipeline (80)](#pipeline)
+- [pipeline (81)](#pipeline)
 - [benchmark (1)](#benchmark)
 - [rule-pack (43)](#rule-pack)
-- [knowledge-pack (41)](#knowledge-pack)
+- [knowledge-pack (42)](#knowledge-pack)
 - [tool (14)](#tool)
 - [persona (37)](#persona)
 - [adapter (10)](#adapter)
@@ -146,6 +146,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _maritime, maritime.safety_ • Vertical 20.
 - **`pipeline/mask-rcnn-coco-transfer`** — Mask-RCNN with COCO transfer learning (instance segmentation + detection)  
   _healthcare, healthcare.radiology, ai_ • Mask-RCNN with ResNet-50-FPN backbone, COCO-pretrained weights as starting checkpoint, fine-tuned on domain-specific instance segmentation / detection task. Classic transfer-learni…
+- **`pipeline/medlabel-photo-to-warning`** — MedLabel — photo-to-warning medicine safety pipeline  
+  _healthcare, healthcare.pharmacy, humanitarian, bureaucracy_translation_ • Photograph of a medicine label → Gemma 4 vision extract (active ingredients + dosage + strength + warnings) → drug-interaction check against the user's current medication list → mu…
 - **`pipeline/mixed-criteria-demo`** — Mixed success-criteria demo (regex + semantic + deterministic + LLM + composite)  
   _cross_industry, compliance, legal_ • Demonstrates `pattern/composable-success-criteria`. The pipeline runs the contract-clause-review chain, then evaluates its output against EVERY criterion kind:
 - **`pipeline/multi-agent-debate-with-judge`** — Multi-agent debate with judge  
@@ -333,6 +335,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, supply_chain, compliance, cross_industry_ • Reference pack of (composite, educational) extracts from 12 jurisdictions + 4 international frameworks:
 - **`knowledge-pack/defense-dfars-frameworks`** — Defense compliance frameworks (DFARS / FAR / CMMC / NIST 800-171 / SAE AS5553 / Section 889)  
   _defense, defense.dfars, defense.cmmc, defense.counterfeit_parts_ • Composite of US DoD acquisition + cyber + counterfeit-parts compliance.
+- **`knowledge-pack/drug-interaction-references`** — Drug-drug interaction references (DrugBank / RxNorm / FDA Orange Book / DailyMed)  
+  _healthcare, healthcare.pharmacy_ • Composite educational reference of drug-drug interaction sources for use by `pipeline/medlabel-photo-to-warning` and similar medicine-safety AI pipelines.
 - **`knowledge-pack/drug-interactions-sample`** — Drug-drug interactions (sample, educational)  
   _healthcare, healthcare.pharmacy, healthcare.clinical_ • Composite paraphrases of well-known drug-drug interaction patterns for educational reference. NOT a substitute for an authoritative database (e.g. RxNorm + Lexicomp + Micromedex). …
 - **`knowledge-pack/eeoc-hiring-statutes`** — EEOC hiring statutes pack (Title VII / ADA / ADEA / GINA / PWFA)  
@@ -942,6 +946,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pattern/two-stage-extract-then-judge` — Two-stage extract-then-judge (separate calls for extraction + classification)
 - `persona/bureaucracy-translator-cite-first` — Bureaucracy Translator (cite-first, action-oriented, vulnerable-user safe)
 - `pipeline/bill-info-extract-fraud-detect-recommend` — Bill_info AI — photo-to-action bureaucracy translator with Verbraucherzentrale-grounded fraud detection
+- `pipeline/medlabel-photo-to-warning` — MedLabel — photo-to-warning medicine safety pipeline
 - `rubric/bureaucracy-translation-quality-v1` — Bureaucracy translation + fraud-screen quality v1
 - `rule-pack/grep-fake-inkasso-fraud-flags` — Fake-Inkasso fraud-detection GREP pack (Verbraucherzentrale 10-indicator taxonomy)
 
@@ -1522,6 +1527,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `harness/data-cleaning-and-enrichment` — Data cleaning + entity enrichment harness
 - `harness/radiology-report-review` — Radiology Report Review harness
 - `knowledge-pack/clinical-guidelines-sample` — Clinical guidelines (sample chunks)
+- `knowledge-pack/drug-interaction-references` — Drug-drug interaction references (DrugBank / RxNorm / FDA Orange Book / DailyMed)
 - `knowledge-pack/drug-interactions-sample` — Drug-drug interactions (sample, educational)
 - `knowledge-pack/icd10-sample` — ICD-10 sample
 - `knowledge-pack/radiology-acrac-fleischner` — ACR Appropriateness Criteria + Fleischner + ACR RADS rubrics
@@ -1533,6 +1539,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pipeline/differential-diagnosis` — Differential Diagnosis
 - `pipeline/efficientnet-medical-imaging` — EfficientNet for medical imaging classification + segmentation
 - `pipeline/mask-rcnn-coco-transfer` — Mask-RCNN with COCO transfer learning (instance segmentation + detection)
+- `pipeline/medlabel-photo-to-warning` — MedLabel — photo-to-warning medicine safety pipeline
 - `pipeline/radiology-report-grading` — Radiology report grading (RADS-aware, Fleischner-aware)
 - `pipeline/sensor-fusion-imu-blending` — Multi-sensor fusion (IMU + thermal + ToF) with model blending
 - `pipeline/unet-segmentation-tta` — U-Net medical segmentation with albumentations + TTA
@@ -1563,9 +1570,11 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### healthcare.pharmacy
 
 - `dataset/gxp-validation-samples` — Synthetic GxP validation samples (3 cases)
+- `knowledge-pack/drug-interaction-references` — Drug-drug interaction references (DrugBank / RxNorm / FDA Orange Book / DailyMed)
 - `knowledge-pack/drug-interactions-sample` — Drug-drug interactions (sample, educational)
 - `knowledge-pack/gxp-21-cfr-11-guidelines` — 21-CFR-11 + EU GMP Annex 11 + ICH + ALCOA+ regulatory pack
 - `persona/gxp-auditor` — GxP Auditor (21-CFR-11 / EU GMP Annex 11 / ICH / ALCOA+)
+- `pipeline/medlabel-photo-to-warning` — MedLabel — photo-to-warning medicine safety pipeline
 
 ### healthcare.radiology
 
@@ -1610,6 +1619,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pattern/two-stage-extract-then-judge` — Two-stage extract-then-judge (separate calls for extraction + classification)
 - `persona/bureaucracy-translator-cite-first` — Bureaucracy Translator (cite-first, action-oriented, vulnerable-user safe)
 - `pipeline/bill-info-extract-fraud-detect-recommend` — Bill_info AI — photo-to-action bureaucracy translator with Verbraucherzentrale-grounded fraud detection
+- `pipeline/medlabel-photo-to-warning` — MedLabel — photo-to-warning medicine safety pipeline
 - `rubric/bureaucracy-translation-quality-v1` — Bureaucracy translation + fraud-screen quality v1
 - `rubric/esg-social-v1` — ESG social (S) sub-rubric v1
 - `rule-pack/grep-fake-inkasso-fraud-flags` — Fake-Inkasso fraud-detection GREP pack (Verbraucherzentrale 10-indicator taxonomy)
