@@ -197,6 +197,34 @@ industries:
     label: Transportation & logistics
   - id: real_estate
     label: Real estate & construction
+    sub:
+      - id: real_estate.due_diligence
+        label: Property due diligence (title / environmental / structural / zoning)
+      - id: real_estate.underwriting
+        label: Underwriting (commercial / residential)
+  - id: m_and_a
+    label: Mergers & Acquisitions
+    sub:
+      - id: m_and_a.due_diligence
+        label: M&A due diligence (financial / legal / IP / customer / HR / tax)
+      - id: m_and_a.integration
+        label: Post-merger integration
+  - id: aviation
+    label: Aviation
+    sub:
+      - id: aviation.safety
+        label: Aviation safety (NTSB / FAA / ICAO / SMS / ASAP)
+      - id: aviation.maintenance
+        label: Maintenance & airworthiness
+  - id: food_safety
+    label: Food safety & food supply chain
+    sub:
+      - id: food_safety.fsma
+        label: FDA FSMA (Food Safety Modernization Act)
+      - id: food_safety.haccp
+        label: HACCP (Hazard Analysis Critical Control Point)
+      - id: food_safety.recall
+        label: Recall management
   - id: hospitality
     label: Hospitality & travel
   - id: nonprofit
