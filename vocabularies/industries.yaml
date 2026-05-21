@@ -107,6 +107,35 @@ industries:
         label: Identity & fraud
   - id: climate
     label: Climate, energy & sustainability
+  - id: pharma
+    label: Pharmaceutical & life sciences
+    sub:
+      - id: pharma.gxp
+        label: GxP (GMP/GCP/GLP/GVP) electronic-records validation
+      - id: pharma.clinical
+        label: Clinical trials operations
+      - id: pharma.manufacturing
+        label: Drug manufacturing
+      - id: pharma.pv
+        label: Pharmacovigilance
+  - id: threat_intelligence
+    label: Cybersecurity threat intelligence
+    sub:
+      - id: threat_intelligence.ioc
+        label: Indicator-of-compromise verification
+      - id: threat_intelligence.ttp
+        label: TTP mapping (MITRE ATT&CK)
+      - id: threat_intelligence.attribution
+        label: Threat-actor attribution
+  - id: insurance
+    label: Insurance underwriting & claims
+    sub:
+      - id: insurance.claims
+        label: Claims processing
+      - id: insurance.fraud
+        label: Fraud detection
+      - id: insurance.underwriting
+        label: Underwriting
   - id: esg
     label: ESG, sustainability reporting & supply chain due diligence
     sub:

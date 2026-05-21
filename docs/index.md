@@ -1,27 +1,27 @@
 # Open Harness Hub — single-page catalog index
 
-Auto-generated from `scripts/build_index_page.py` against 200 live artifacts. Run that script to refresh after any catalog change.
+Auto-generated from `scripts/build_index_page.py` against 223 live artifacts. Run that script to refresh after any catalog change.
 
 Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency tree of any entry below.
 
 ## Stats
 
-- **Total artifacts:** 200
+- **Total artifacts:** 223
 - **Artifact types:** 12
-- **Industries:** 33
+- **Industries:** 38
 
 ## Table of contents
 
-- [harness (5)](#harness)
-- [pipeline (39)](#pipeline)
+- [harness (9)](#harness)
+- [pipeline (44)](#pipeline)
 - [benchmark (1)](#benchmark)
-- [rule-pack (21)](#rule-pack)
-- [knowledge-pack (20)](#knowledge-pack)
+- [rule-pack (24)](#rule-pack)
+- [knowledge-pack (22)](#knowledge-pack)
 - [tool (7)](#tool)
-- [persona (14)](#persona)
+- [persona (17)](#persona)
 - [adapter (9)](#adapter)
-- [rubric (12)](#rubric)
-- [dataset (4)](#dataset)
+- [rubric (15)](#rubric)
+- [dataset (7)](#dataset)
 - [processor (45)](#processor)
 - [pattern (23)](#pattern)
 
@@ -29,10 +29,18 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 - **`harness/aml-investigation`** — AML Investigation  
   _finance, finance.aml_ • Harness for AML suspicious-transaction review. Composes the AML-analyst persona, sanctions-screening heuristic, FATF-typology classifier, financial-PII privacy gate, FATF-typology …
+- **`harness/appsec-code-audit`** — AppSec Code Audit harness  
+  _security, security.appsec, software_ • CWE-cite-first AppSec audit harness for source-code review. Detects secrets-in-code + injection + crypto/auth weaknesses + describes attack vectors + proposes fixes.
 - **`harness/clinical-decision-support`** — Clinical Decision Support  
   _healthcare, healthcare.clinical_ • Healthcare-specific harness for differential-diagnosis reasoning. Composes the clinical-reasoner persona, red-flag classifier rules, HIPAA PHI privacy gate, clinical-guideline RAG,…
 - **`harness/code-act-jupyter`** — Code-Act Jupyter (tool-augmented reasoning via sandboxed Python)  
   _ai, scientific_research, education_ • Harness that wraps a model call with a Python execution loop. The model emits `<code>...</code>` blocks; the harness runs them in a sandboxed Jupyter kernel; stdout / stderr / repr…
+- **`harness/contract-redline`** — Contract Clause Redlining harness  
+  _legal, legal.contract, legal.compliance_ • Playbook-cite-first harness for commercial contract review. Surfaces red-flag clauses + proposes concrete redline language + cites the playbook clause family for every finding.
+- **`harness/esg-disclosure-grading`** — ESG Disclosure Grading harness  
+  _esg, supply_chain, compliance_ • Wraps the ESG supplier-policy-grading flow as a reusable harness with persona + GREP + RAG + tools layers. Targets local-Ollama or Anthropic/OpenAI for the judge model arm; emits c…
+- **`harness/radiology-report-review`** — Radiology Report Review harness  
+  _healthcare, healthcare.radiology_ • RADS-aware + Fleischner-aware harness for grading radiology reports with HIPAA-safe PHI redaction. Wraps `pipeline/radiology-report- grading` with reusable layers.
 - **`harness/redact-pii-text`** — Redact PII (text)  
   _cross_industry_ • Deterministic text PII redactor. Regex + NER patterns + a per-pattern replacement contract; emits an audit log of (sha256(original), action). No model call by default.
 - **`harness/text-safety-review`** — Text Safety Review  
@@ -48,6 +56,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _creative, retail_ • Image-generation pipeline that composes a cinematic-photography persona, style-reference RAG, lens-physics RAG, GREP guard rules, a tool call to a text-to-image model, and an outpu…
 - **`pipeline/chat-with-pdf-citations`** — Chat with PDF (with citations)  
   _cross_industry_ • The canonical "upload a PDF, ask questions, get cited answers" pipeline used by vercel/ai-chatbot, lobe-chat, codertom/chat-with-pdf, etc. Full layered chain:   pdf-to-text →   rec…
+- **`pipeline/climate-disclosure-review`** — Climate disclosure review (TCFD + ISSB IFRS S2 + ESRS E1)  
+  _climate, esg, finance, compliance_ • Grade a corporate climate disclosure against the rubric. Sixth vertical proving the architecture's industry-agnosticism. Same 6-step chain: prose → PII redact → GREP → RAG → judge …
 - **`pipeline/code-act-jupyter-loop`** — Code-act Jupyter loop  
   _ai, software_ • The OpenInterpreter pattern: model emits Python code in fenced blocks, runtime renders the message + executes the code in a Jupyter kernel, streams the observation back into the mo…
 - **`pipeline/code-review-with-risk-score`** — Code review with risk score  
@@ -72,6 +82,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry_ • A comprehensive research pipeline that demonstrates every layer the hub supports — 22 distinct passes from raw input through model call through iterative refinement to delivery.
 - **`pipeline/full-vendor-due-diligence`** — Full vendor due-diligence (ESG + AppSec + Legal — kitchen-sink)  
   _cross_industry, compliance, supply_chain, security_ • Cross-vertical kitchen-sink pipeline. Accepts a vendor onboarding packet containing (a) ESG/supply-chain disclosure, (b) representative code bundle, (c) draft MSA, and runs each th…
+- **`pipeline/gxp-validation-review`** — GxP validation review (21-CFR-11 + Annex 11 + ALCOA+)  
+  _pharma, pharma.gxp, compliance_ • Review a GxP-validated electronic-records system against the rubric. Same 6-step chain as ESG / radiology / legal / AppSec — fifth vertical proving the architecture's industry-agno…
 - **`pipeline/knowledge-graph-from-corpus`** — GraphRAG: knowledge-graph from corpus + global/local query  
   _ai, cross_industry_ • Microsoft GraphRAG pattern. Extract entities + relationships from documents into a graph; build community summaries via Leiden clustering; query via local (ego-network), global (ma…
 - **`pipeline/large-model-faiss-rag`** — Large-model FAISS RAG (Platypus2-70b style)  
@@ -98,6 +110,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _healthcare, healthcare.radiology_ • Grade a radiology report against `rubric/radiology-report-quality- v1`. The pipeline reuses the SAME primitives as the ESG grading pipeline:  1. `processor/structured-to-prose` — f…
 - **`pipeline/research-entity`** — Research Entity  
   _cross_industry_ • Given an entity name + entity kind (company / person / place / product), produce a sourced one-page profile. Verifiable, cited, redacted.
+- **`pipeline/security-incident-grading`** — Security incident write-up grading (CTI + AppSec chained)  
+  _security, threat_intelligence, security.appsec_ • Chains threat-intel IOC review + AppSec code review on incident write-ups: extracts IOCs/TTPs from the report AND grades any attached code-of-concern for known vulnerabilities.
 - **`pipeline/self-rag-grade-and-revise`** — Self-RAG: grade-and-revise (concrete implementation)  
   _ai, cross_industry_ • Concrete pipeline implementing `pattern/self-rag`. Retrieve → per-doc relevance grader → rewrite-query loop on irrelevant retrieval → generate with grounding → answer-support grade…
 - **`pipeline/storm-persona-curation-article`** — STORM: persona-curation + outline-fanout article  
@@ -106,10 +120,14 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, supply_chain, compliance_ • End-to-end pipeline for grading supplier-submitted policy texts and self-assessments against the EU CSDDD, ILO forced-labor indicators, and the lead company's code of conduct. The …
 - **`pipeline/suspicious-transaction-review`** — Suspicious Transaction Review  
   _finance, finance.aml_ • Given a transaction bundle (account, recent transactions, related entities), produce a sanctions-first risk review, FATF typology scoring, and a SAR-style narrative DRAFT (never a …
+- **`pipeline/sustainability-report-full-review`** — Sustainability report full review (Climate + ESG-S + ESG-G chained)  
+  _climate, esg, compliance, finance_ • Chains 3 sub-pipelines for a comprehensive sustainability-report audit: climate-disclosure-review + (a subset of) supplier-policy- grading focused on social + (a subset of) governa…
 - **`pipeline/swe-patch-sample-and-review`** — SWE-agent: sample N patches + reviewer judges  
   _ai, software, software.codereview_ • The princeton-nlp/SWE-agent pattern. Given a bug report + repo: sample N action-rollouts (each producing a candidate patch via file-edit + run- test loop), then a reviewer model ju…
 - **`pipeline/synthetic-data-gen-with-teacher-llm`** — Synthetic-data generation with teacher LLM  
   _ai_ • Use a teacher LLM to generate (input, output) training pairs for a downstream student fine-tune. Includes filtering for diversity + difficulty + safety. The pattern that won the pr…
+- **`pipeline/threat-intel-ioc-review`** — Threat-intel IOC + TTP review (MITRE ATT&CK aligned)  
+  _security, threat_intelligence_ • Ingest a CTI report or incident write-up, extract IOCs + TTPs, validate against MITRE ATT&CK, rate confidence, surface attribution risk. Seventh vertical proving industry-agnostici…
 - **`pipeline/twenty-questions-agent`** — 20-questions agent (Akinator-style)  
   _ai, education_ • An agent that plays 20 Questions — asks yes/no questions to narrow down a hidden concept. Uses a candidate set + binary-search-style question generation. The classic agent-game pat…
 - **`pipeline/two-time-retrieve-rerank`** — Two-time retrieval + cross-encoder rerank  
@@ -134,6 +152,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _finance_ • Detection patterns for common financial PII in English transaction narratives and KYC documents — account numbers, IBANs, SWIFT/BIC, card PANs (Luhn-likely), SSN/TIN. Designed to g…
 - **`rule-pack/grep-ai-vendor-keys`** — AI vendor API key detectors  
   _security, ai_ • Detection patterns for API keys issued by major LLM / AI vendors — Anthropic, OpenAI, Hugging Face, Cohere, Replicate, Mistral, Groq, Together, fal, Perplexity, Voyage, NVIDIA NIM.…
+- **`rule-pack/grep-climate-disclosure-gaps`** — Climate disclosure gap detectors (TCFD / ISSB / ESRS E1)  
+  _climate, esg, finance, compliance_ • GREP detectors for the highest-leverage climate-disclosure gaps: missing Scope-3 categories, missing transition plan, board- oversight silence, no 2C scenario analysis, no SBTi com…
 - **`rule-pack/grep-cloud-secrets`** — Cloud provider secret detectors  
   _security, cross_industry, ai_ • Detection patterns for cloud-provider access keys and service-account credentials — AWS, GCP, Azure, DigitalOcean, OCI. Converged from gitleaks (`config/gitleaks.toml`), trufflehog…
 - **`rule-pack/grep-code-vulnerabilities`** — Code vulnerability + secret-detection GREP pack  
@@ -146,6 +166,10 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, supply_chain, compliance_ • Heuristic regex detectors for the 11 ILO forced-labor indicators + child labor + recruitment-fee abuse + tier-3/4 supply-chain transparency gaps + 12 high-risk corridors. Designed …
 - **`rule-pack/grep-esg-governance-red-flags`** — ESG governance red-flag detectors (the 'G' of ESG)  
   _esg, compliance, finance_ • GREP detectors for the governance dimension: beneficial-ownership opacity, anti-bribery / corruption signals, whistleblower-channel weaknesses, conflict-of-interest, board-independ…
+- **`rule-pack/grep-gxp-data-integrity-red-flags`** — GxP data-integrity red-flag detectors (21-CFR-11 / ALCOA+)  
+  _pharma, pharma.gxp, compliance_ • GREP detectors for the highest-leverage 21-CFR-11 + ALCOA+ data- integrity violations: missing audit trails, shared accounts, post- hoc record alteration, validation gaps, missing …
+- **`rule-pack/grep-ioc-extraction`** — IOC extraction GREP pack (file hashes / domains / IPs / URLs)  
+  _security, threat_intelligence_ • Extracts indicators-of-compromise from threat-intel reports, incident write-ups, sandbox outputs. Output IOCs feed into `pipeline/threat-intel-ioc-review` for verification + ATT&CK…
 - **`rule-pack/grep-output-safety-image`** — Image-output safety checks  
   _creative, media_ • Post-generation safety check pack for image outputs. Pairs of (detector-call, threshold) plus a watermark presence check. Designed to be called by an image-gen pipeline AFTER the t…
 - **`rule-pack/grep-private-key-blocks`** — Private key block detectors  
@@ -173,6 +197,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 - **`knowledge-pack/aml-red-flags-extended`** — AML red flags (extended)  
   _finance, finance.aml, finance.kyc_ • Extended catalog of anti-money-laundering red flags drawn from FATF guidance, FinCEN advisories, and Wolfsberg principles. Complements `knowledge-pack/fatf-typologies-sample` with …
+- **`knowledge-pack/climate-disclosure-frameworks`** — Climate disclosure frameworks (TCFD + ISSB IFRS S2 + CDP + ESRS E1)  
+  _climate, esg, finance_ • Composite educational extracts of the major climate-disclosure frameworks:  - TCFD (Task Force on Climate-related Financial Disclosures)    recommendations across 4 pillars (Govern…
 - **`knowledge-pack/clinical-guidelines-sample`** — Clinical guidelines (sample chunks)  
   _healthcare, healthcare.clinical_ • Sample chunks of clinical-guideline language for catalog-demo purposes. Each chunk has a stable section reference so a citation-first persona can cite by section. Use authoritative…
 - **`knowledge-pack/common-abbreviations`** — Common abbreviations (cross-industry sample)  
@@ -187,6 +213,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _healthcare, healthcare.pharmacy, healthcare.clinical_ • Composite paraphrases of well-known drug-drug interaction patterns for educational reference. NOT a substitute for an authoritative database (e.g. RxNorm + Lexicomp + Micromedex). …
 - **`knowledge-pack/fatf-typologies-sample`** — FATF typologies (sample chunks)  
   _finance, finance.aml_ • Sample paraphrased typology chunks for catalog-demo purposes. Real deployments should ingest the latest FATF and FinCEN typology reports; this pack anchors the data shape and citat…
+- **`knowledge-pack/gxp-21-cfr-11-guidelines`** — 21-CFR-11 + EU GMP Annex 11 + ICH + ALCOA+ regulatory pack  
+  _pharma, pharma.gxp, healthcare.pharmacy, compliance_ • Composite educational extracts of GxP electronic-records / electronic-signatures / data-integrity guidance:  - US FDA 21 CFR Part 11 (Subpart B — Electronic Records;    Subpart C —…
 - **`knowledge-pack/high-risk-corridors-and-sectors`** — High-risk corridors & sector-specific labor / environmental risks  
   _esg, supply_chain, compliance, humanitarian_ • Composite reference of high-risk geographic corridors and product sectors with documented patterns of forced labor, child labor, environmental harm, or governance opacity. Used by …
 - **`knowledge-pack/icd10-sample`** — ICD-10 sample  
@@ -235,6 +263,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _finance, finance.aml_ • Anti-money-laundering analyst persona. Reasons about transaction patterns, FATF typologies, sanctions hits, and behavioral signals. Produces SAR-style narratives with cited typolog…
 - **`persona/cinematic-product-photographer`** — Cinematic Product Photographer  
   _creative, retail_ • A persona for image-gen prompt-shaping. Writes prompts in the voice of a working commercial photographer: specific lens, lighting, aperture, color palette, composition. Refuses cel…
+- **`persona/climate-risk-analyst`** — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)  
+  _climate, esg, esg.csrd, finance_ • Climate-risk analyst persona for reviewing corporate climate disclosures under TCFD recommendations, ISSB IFRS S2 standard, CDP questionnaires, and the EU CSRD ESRS E1 standard. Ci…
 - **`persona/clinical-reasoner`** — Clinical Reasoner  
   _healthcare, healthcare.clinical_ • A clinical-reasoning persona for decision-support assistants. Cites guideline sections, flags red-flag symptoms, distinguishes differential diagnoses, and refuses to give definitiv…
 - **`persona/code-consultant`** — Code consultant  
@@ -245,6 +275,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, esg.csddd, esg.modern_slavery, esg.csrd_ • ESG auditor persona covering the full E + S + G dimensions of supply-chain due diligence. Aligned to:
 - **`persona/fact-checker`** — Fact Checker  
   _cross_industry, media_ • A careful fact-checker persona. Reasons about claims, evidence, and the gap between them. Prefers primary sources and refuses to confirm controversial claims without independent co…
+- **`persona/gxp-auditor`** — GxP Auditor (21-CFR-11 / EU GMP Annex 11 / ICH / ALCOA+)  
+  _pharma, pharma.gxp, healthcare.pharmacy, compliance_ • Pharmaceutical/biotech GxP auditor reviewing electronic records, audit trails, and validated systems against 21-CFR-11, EU GMP Annex 11, ICH Q9/Q10, ALCOA+ data-integrity principle…
 - **`persona/linux-terminal`** — Linux terminal  
   _cross_industry, software_ • The single most-cloned community persona — model behaves like a Linux terminal, returning only the would-be terminal output. Doubles as a deterministic-IO eval (the same command sh…
 - **`persona/math-tutor`** — Math tutor  
@@ -257,6 +289,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _security, security.appsec, software, software.codereview_ • AppSec reviewer persona for source-code review. Citation-first: every red-flag refers to a CWE (Common Weakness Enumeration) entry, OWASP Top 10 category, or the specific MITRE ATT…
 - **`persona/support-agent`** — Customer support agent  
   _retail, retail.support, cross_industry_ • Customer-support agent persona. Acknowledges the user's situation, confirms the goal, proposes the next concrete step. Escalates to a human if the issue cannot be solved in two mes…
+- **`persona/threat-intel-analyst`** — Threat Intelligence Analyst (MITRE ATT&CK + STIX/TAXII + IOC)  
+  _security, threat_intelligence, threat_intelligence.ioc, threat_intelligence.ttp_ • CTI analyst persona for IOC verification, TTP mapping to MITRE ATT&CK techniques, and threat-actor attribution analysis. Citation-first: every assertion cites the ATT&CK technique …
 - **`persona/translator-improver`** — Translator + improver  
   _cross_industry, creative_ • The second-most-cloned community persona. Translates input into fluent English (or any target language) AND improves the original for clarity, idiom, and register. Pairs naturally …
 
@@ -287,6 +321,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _finance, finance.aml_ • Six-dimension rubric for AML-investigation outputs. Used by `pipeline/suspicious-transaction-review`.
 - **`rubric/brand-safe-image-v1`** — Brand-safe image v1  
   _creative, retail_ • Five-dimension rubric for brand-safe image generation. Used by `pipeline/brand-safe-product-photo`.
+- **`rubric/climate-disclosure-quality-v1`** — Climate disclosure quality v1 (TCFD/ISSB/ESRS aligned)  
+  _climate, esg, finance, compliance_ • Ten-dimension rubric for grading a corporate climate disclosure against TCFD recommendations, ISSB IFRS S2 paragraphs, and ESRS E1 disclosure requirements.
 - **`rubric/clinical-grounded-response-v1`** — Clinical grounded response v1  
   _healthcare, healthcare.clinical_ • Six-dimension rubric for clinical-decision-support outputs. Used by `pipeline/differential-diagnosis`.
 - **`rubric/code-security-review-v1`** — Code security review v1  
@@ -301,23 +337,33 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, supply_chain, compliance, humanitarian_ • Six-dimension rubric for grading ONLY the social dimension of a supplier disclosure. Aligned to ILO 11 forced-labor indicators, CSRD ESRS S1 (own workforce) + S2 (value-chain worke…
 - **`rubric/esg-supplier-compliance-v1`** — ESG supplier compliance v1 (full E + S + G)  
   _esg, supply_chain, compliance_ • Twelve-dimension rubric for grading supplier-submitted policy texts, self-assessments, and grievance transcripts against the CSDDD, the ILO forced-labor indicators, the major natio…
+- **`rubric/gxp-validation-quality-v1`** — GxP validation review quality v1  
+  _pharma, pharma.gxp, compliance_ • Eight-dimension rubric for grading a GxP system validation review. Used by `pipeline/gxp-validation-review`.
 - **`rubric/radiology-report-quality-v1`** — Radiology report quality v1  
   _healthcare, healthcare.radiology_ • Seven-dimension rubric for grading a radiology report. Used by `pipeline/radiology-report-grading`.
 - **`rubric/research-entity-v1`** — Research Entity v1  
   _cross_industry_ • Six-dimension rubric for entity research outputs. Used by `pipeline/research-entity` as its success criterion.
+- **`rubric/threat-intel-quality-v1`** — Threat intelligence report quality v1  
+  _security, threat_intelligence_ • Six-dimension rubric for grading a CTI report against the diamond-model + ATT&CK navigator + Admiralty-confidence scheme.
 - **`rubric/verification-v1`** — Verification v1  
   _cross_industry, media_ • Four-dimension rubric for fact-verification outputs. Used by `pipeline/verify-claim-against-corpus`.
 
 ## dataset
 
+- **`dataset/climate-disclosure-samples`** — Synthetic climate disclosure samples (2 cases)  
+  _climate, esg, finance_ • Two synthetic corporate climate disclosures for testing `pipeline/climate-disclosure-review`:  - sample-disclosure-good.json — Acme Corp, manufacturing, board    oversight quarterl…
 - **`dataset/code-review-samples`** — Synthetic code-review samples (3 cases)  
   _security, security.appsec, software_ • Three synthetic code bundles for testing `pipeline/code-security-review`. Fully synthetic — values that look like AWS keys / JWT / Slack tokens follow the format documented in AWS …
 - **`dataset/contract-samples`** — Synthetic commercial contract samples (3 cases)  
   _legal, legal.contract, legal.compliance_ • Three synthetic commercial contracts for testing `pipeline/contract-clause-review`. Fully synthetic — no real contract data.
+- **`dataset/gxp-validation-samples`** — Synthetic GxP validation samples (3 cases)  
+  _pharma, pharma.gxp, healthcare.pharmacy, compliance_ • Three synthetic GxP-validated-system packets for testing `pipeline/gxp-validation-review`. Fully synthetic.
 - **`dataset/radiology-report-samples`** — Synthetic radiology report samples (3 cases, fully synthetic)  
   _healthcare, healthcare.radiology_ • Three synthetic radiology reports for testing `pipeline/radiology-report-grading`. Fully synthetic — no real patient data.
 - **`dataset/supplier-disclosure-pack-schema`** — Supplier disclosure pack schema (canonical input shape)  
   _esg, supply_chain, compliance_ • Canonical input shape that `pipeline/supplier-policy-grading` and `pipeline/deep-tier-supplier-audit` accept as the supplier disclosure pack. Records the JSON Schema of the supplie…
+- **`dataset/threat-intel-samples`** — Synthetic threat-intelligence report samples  
+  _security, threat_intelligence_ • Synthetic CTI report samples for testing `pipeline/threat-intel-ioc-review`. Includes IOCs (file hashes, IPs, domains, URLs, mutexes, CVEs, ATT&CK technique IDs, BTC addresses) dra…
 
 ## processor
 
@@ -533,32 +579,51 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 ### climate
 
+- `dataset/climate-disclosure-samples` — Synthetic climate disclosure samples (2 cases)
+- `knowledge-pack/climate-disclosure-frameworks` — Climate disclosure frameworks (TCFD + ISSB IFRS S2 + CDP + ESRS E1)
+- `persona/climate-risk-analyst` — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)
+- `pipeline/climate-disclosure-review` — Climate disclosure review (TCFD + ISSB IFRS S2 + ESRS E1)
+- `pipeline/sustainability-report-full-review` — Sustainability report full review (Climate + ESG-S + ESG-G chained)
+- `rubric/climate-disclosure-quality-v1` — Climate disclosure quality v1 (TCFD/ISSB/ESRS aligned)
 - `rubric/esg-env-v1` — ESG environmental (E) sub-rubric v1
+- `rule-pack/grep-climate-disclosure-gaps` — Climate disclosure gap detectors (TCFD / ISSB / ESRS E1)
 - `rule-pack/grep-esg-environmental-red-flags` — ESG environmental red-flag detectors (the 'E' of ESG)
 
 ### compliance
 
 - `benchmark/esg-supplier-grading-bench` — ESG supplier-grading benchmark v1
+- `dataset/gxp-validation-samples` — Synthetic GxP validation samples (3 cases)
 - `dataset/supplier-disclosure-pack-schema` — Supplier disclosure pack schema (canonical input shape)
+- `harness/esg-disclosure-grading` — ESG Disclosure Grading harness
 - `knowledge-pack/csddd-and-forced-labor-indicators` — Global supply-chain due-diligence regulatory pack
+- `knowledge-pack/gxp-21-cfr-11-guidelines` — 21-CFR-11 + EU GMP Annex 11 + ICH + ALCOA+ regulatory pack
 - `knowledge-pack/high-risk-corridors-and-sectors` — High-risk corridors & sector-specific labor / environmental risks
 - `knowledge-pack/lead-company-code-stub` — Lead-company code-of-conduct stub (placeholder)
 - `pattern/composable-success-criteria` — Composable success criteria (regex + semantic + LLM-judge + deterministic + tool + composite)
 - `pattern/k-anonymity-aggregation` — K-anonymity + HMACed-key cross-organization aggregation
+- `persona/climate-risk-analyst` — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)
 - `persona/esg-auditor` — ESG / Supply Chain Due Diligence Auditor (E + S + G)
+- `persona/gxp-auditor` — GxP Auditor (21-CFR-11 / EU GMP Annex 11 / ICH / ALCOA+)
 - `pipeline/anonymized-illicit-recruitment-pattern-sharing` — Anonymized cross-org pattern sharing for illicit recruitment corridors
+- `pipeline/climate-disclosure-review` — Climate disclosure review (TCFD + ISSB IFRS S2 + ESRS E1)
 - `pipeline/deep-tier-supplier-audit` — Deep-tier (T1→T4+) supplier audit with traceability
 - `pipeline/full-vendor-due-diligence` — Full vendor due-diligence (ESG + AppSec + Legal — kitchen-sink)
+- `pipeline/gxp-validation-review` — GxP validation review (21-CFR-11 + Annex 11 + ALCOA+)
 - `pipeline/mixed-criteria-demo` — Mixed success-criteria demo (regex + semantic + deterministic + LLM + composite)
 - `pipeline/supplier-policy-grading` — Supplier policy & disclosure grading (CSDDD-aligned)
+- `pipeline/sustainability-report-full-review` — Sustainability report full review (Climate + ESG-S + ESG-G chained)
 - `processor/structured-to-prose` — Structured JSON → prose normalizer (for GREP-style rule packs)
+- `rubric/climate-disclosure-quality-v1` — Climate disclosure quality v1 (TCFD/ISSB/ESRS aligned)
 - `rubric/esg-env-v1` — ESG environmental (E) sub-rubric v1
 - `rubric/esg-gov-v1` — ESG governance (G) sub-rubric v1
 - `rubric/esg-social-v1` — ESG social (S) sub-rubric v1
 - `rubric/esg-supplier-compliance-v1` — ESG supplier compliance v1 (full E + S + G)
+- `rubric/gxp-validation-quality-v1` — GxP validation review quality v1
+- `rule-pack/grep-climate-disclosure-gaps` — Climate disclosure gap detectors (TCFD / ISSB / ESRS E1)
 - `rule-pack/grep-esg-environmental-red-flags` — ESG environmental red-flag detectors (the 'E' of ESG)
 - `rule-pack/grep-esg-forced-labor-red-flags` — ESG / forced-labor red-flag detectors (the 'S' of ESG)
 - `rule-pack/grep-esg-governance-red-flags` — ESG governance red-flag detectors (the 'G' of ESG)
+- `rule-pack/grep-gxp-data-integrity-red-flags` — GxP data-integrity red-flag detectors (21-CFR-11 / ALCOA+)
 - `tool/cbp-wro-lookup` — US CBP Withhold Release Order + UFLPA Entity List lookup
 
 ### creative
@@ -703,21 +768,29 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### esg
 
 - `benchmark/esg-supplier-grading-bench` — ESG supplier-grading benchmark v1
+- `dataset/climate-disclosure-samples` — Synthetic climate disclosure samples (2 cases)
 - `dataset/supplier-disclosure-pack-schema` — Supplier disclosure pack schema (canonical input shape)
+- `harness/esg-disclosure-grading` — ESG Disclosure Grading harness
+- `knowledge-pack/climate-disclosure-frameworks` — Climate disclosure frameworks (TCFD + ISSB IFRS S2 + CDP + ESRS E1)
 - `knowledge-pack/csddd-and-forced-labor-indicators` — Global supply-chain due-diligence regulatory pack
 - `knowledge-pack/high-risk-corridors-and-sectors` — High-risk corridors & sector-specific labor / environmental risks
 - `knowledge-pack/lead-company-code-stub` — Lead-company code-of-conduct stub (placeholder)
 - `pattern/k-anonymity-aggregation` — K-anonymity + HMACed-key cross-organization aggregation
+- `persona/climate-risk-analyst` — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)
 - `persona/esg-auditor` — ESG / Supply Chain Due Diligence Auditor (E + S + G)
 - `pipeline/anonymized-illicit-recruitment-pattern-sharing` — Anonymized cross-org pattern sharing for illicit recruitment corridors
+- `pipeline/climate-disclosure-review` — Climate disclosure review (TCFD + ISSB IFRS S2 + ESRS E1)
 - `pipeline/deep-tier-supplier-audit` — Deep-tier (T1→T4+) supplier audit with traceability
 - `pipeline/supplier-policy-grading` — Supplier policy & disclosure grading (CSDDD-aligned)
+- `pipeline/sustainability-report-full-review` — Sustainability report full review (Climate + ESG-S + ESG-G chained)
 - `processor/redact-pii-text` — Redact PII from text (English-centric, MS Presidio-compatible)
 - `processor/structured-to-prose` — Structured JSON → prose normalizer (for GREP-style rule packs)
+- `rubric/climate-disclosure-quality-v1` — Climate disclosure quality v1 (TCFD/ISSB/ESRS aligned)
 - `rubric/esg-env-v1` — ESG environmental (E) sub-rubric v1
 - `rubric/esg-gov-v1` — ESG governance (G) sub-rubric v1
 - `rubric/esg-social-v1` — ESG social (S) sub-rubric v1
 - `rubric/esg-supplier-compliance-v1` — ESG supplier compliance v1 (full E + S + G)
+- `rule-pack/grep-climate-disclosure-gaps` — Climate disclosure gap detectors (TCFD / ISSB / ESRS E1)
 - `rule-pack/grep-esg-environmental-red-flags` — ESG environmental red-flag detectors (the 'E' of ESG)
 - `rule-pack/grep-esg-forced-labor-red-flags` — ESG / forced-labor red-flag detectors (the 'S' of ESG)
 - `rule-pack/grep-esg-governance-red-flags` — ESG governance red-flag detectors (the 'G' of ESG)
@@ -729,6 +802,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 ### esg.csrd
 
+- `persona/climate-risk-analyst` — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)
 - `persona/esg-auditor` — ESG / Supply Chain Due Diligence Auditor (E + S + G)
 
 ### esg.modern_slavery
@@ -737,21 +811,28 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 ### finance
 
+- `dataset/climate-disclosure-samples` — Synthetic climate disclosure samples (2 cases)
 - `harness/aml-investigation` — AML Investigation
 - `knowledge-pack/aml-red-flags-extended` — AML red flags (extended)
+- `knowledge-pack/climate-disclosure-frameworks` — Climate disclosure frameworks (TCFD + ISSB IFRS S2 + CDP + ESRS E1)
 - `knowledge-pack/fatf-typologies-sample` — FATF typologies (sample chunks)
 - `knowledge-pack/iso-country-codes` — ISO 3166 country codes (sample)
 - `knowledge-pack/iso-currency-codes` — ISO 4217 currency codes
 - `knowledge-pack/sanctions-list-shape` — Sanctions list (shape, with placeholder entries)
 - `pattern/k-anonymity-aggregation` — K-anonymity + HMACed-key cross-organization aggregation
 - `persona/aml-analyst` — AML Analyst
+- `persona/climate-risk-analyst` — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)
+- `pipeline/climate-disclosure-review` — Climate disclosure review (TCFD + ISSB IFRS S2 + ESRS E1)
 - `pipeline/suspicious-transaction-review` — Suspicious Transaction Review
+- `pipeline/sustainability-report-full-review` — Sustainability report full review (Climate + ESG-S + ESG-G chained)
 - `processor/official-sources-checker` — Official-sources analyzer
 - `processor/redact-pii-text` — Redact PII from text (English-centric, MS Presidio-compatible)
 - `rubric/aml-investigation-v1` — AML investigation v1
+- `rubric/climate-disclosure-quality-v1` — Climate disclosure quality v1 (TCFD/ISSB/ESRS aligned)
 - `rubric/esg-gov-v1` — ESG governance (G) sub-rubric v1
 - `rule-pack/aml-typologies-fatf` — FATF AML typologies (sampled)
 - `rule-pack/financial-pii-en` — Financial PII (English)
+- `rule-pack/grep-climate-disclosure-gaps` — Climate disclosure gap detectors (TCFD / ISSB / ESRS E1)
 - `rule-pack/grep-esg-governance-red-flags` — ESG governance red-flag detectors (the 'G' of ESG)
 - `rule-pack/sanctions-screening` — Sanctions screening (deterministic)
 - `tool/sanctions-check` — Sanctions list check
@@ -786,6 +867,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 - `dataset/radiology-report-samples` — Synthetic radiology report samples (3 cases, fully synthetic)
 - `harness/clinical-decision-support` — Clinical Decision Support
+- `harness/radiology-report-review` — Radiology Report Review harness
 - `knowledge-pack/clinical-guidelines-sample` — Clinical guidelines (sample chunks)
 - `knowledge-pack/drug-interactions-sample` — Drug-drug interactions (sample, educational)
 - `knowledge-pack/icd10-sample` — ICD-10 sample
@@ -818,11 +900,15 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 ### healthcare.pharmacy
 
+- `dataset/gxp-validation-samples` — Synthetic GxP validation samples (3 cases)
 - `knowledge-pack/drug-interactions-sample` — Drug-drug interactions (sample, educational)
+- `knowledge-pack/gxp-21-cfr-11-guidelines` — 21-CFR-11 + EU GMP Annex 11 + ICH + ALCOA+ regulatory pack
+- `persona/gxp-auditor` — GxP Auditor (21-CFR-11 / EU GMP Annex 11 / ICH / ALCOA+)
 
 ### healthcare.radiology
 
 - `dataset/radiology-report-samples` — Synthetic radiology report samples (3 cases, fully synthetic)
+- `harness/radiology-report-review` — Radiology Report Review harness
 - `knowledge-pack/radiology-acrac-fleischner` — ACR Appropriateness Criteria + Fleischner + ACR RADS rubrics
 - `persona/radiologist-cite-first` — Radiologist (citation-first, specialty radiology)
 - `pipeline/radiology-report-grading` — Radiology report grading (RADS-aware, Fleischner-aware)
@@ -838,6 +924,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### legal
 
 - `dataset/contract-samples` — Synthetic commercial contract samples (3 cases)
+- `harness/contract-redline` — Contract Clause Redlining harness
 - `knowledge-pack/contract-law-clauses` — Commercial contract clause library (composite educational)
 - `knowledge-pack/spdx-licenses-summary` — SPDX licenses (summary)
 - `persona/contract-reviewer-cite-first` — Contract Reviewer (citation-first, senior in-house counsel)
@@ -850,6 +937,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### legal.compliance
 
 - `dataset/contract-samples` — Synthetic commercial contract samples (3 cases)
+- `harness/contract-redline` — Contract Clause Redlining harness
 - `knowledge-pack/contract-law-clauses` — Commercial contract clause library (composite educational)
 - `persona/contract-reviewer-cite-first` — Contract Reviewer (citation-first, senior in-house counsel)
 - `pipeline/contract-clause-review` — Commercial contract clause review (cite-first redlining)
@@ -859,6 +947,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### legal.contract
 
 - `dataset/contract-samples` — Synthetic commercial contract samples (3 cases)
+- `harness/contract-redline` — Contract Clause Redlining harness
 - `knowledge-pack/contract-law-clauses` — Commercial contract clause library (composite educational)
 - `persona/contract-reviewer-cite-first` — Contract Reviewer (citation-first, senior in-house counsel)
 - `pipeline/contract-clause-review` — Commercial contract clause review (cite-first redlining)
@@ -880,6 +969,24 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rubric/verification-v1` — Verification v1
 - `rule-pack/grep-output-safety-image` — Image-output safety checks
 - `rule-pack/grep-prohibited-terms` — Prohibited Terms (image-gen guard rails)
+
+### pharma
+
+- `dataset/gxp-validation-samples` — Synthetic GxP validation samples (3 cases)
+- `knowledge-pack/gxp-21-cfr-11-guidelines` — 21-CFR-11 + EU GMP Annex 11 + ICH + ALCOA+ regulatory pack
+- `persona/gxp-auditor` — GxP Auditor (21-CFR-11 / EU GMP Annex 11 / ICH / ALCOA+)
+- `pipeline/gxp-validation-review` — GxP validation review (21-CFR-11 + Annex 11 + ALCOA+)
+- `rubric/gxp-validation-quality-v1` — GxP validation review quality v1
+- `rule-pack/grep-gxp-data-integrity-red-flags` — GxP data-integrity red-flag detectors (21-CFR-11 / ALCOA+)
+
+### pharma.gxp
+
+- `dataset/gxp-validation-samples` — Synthetic GxP validation samples (3 cases)
+- `knowledge-pack/gxp-21-cfr-11-guidelines` — 21-CFR-11 + EU GMP Annex 11 + ICH + ALCOA+ regulatory pack
+- `persona/gxp-auditor` — GxP Auditor (21-CFR-11 / EU GMP Annex 11 / ICH / ALCOA+)
+- `pipeline/gxp-validation-review` — GxP validation review (21-CFR-11 + Annex 11 + ALCOA+)
+- `rubric/gxp-validation-quality-v1` — GxP validation review quality v1
+- `rule-pack/grep-gxp-data-integrity-red-flags` — GxP data-integrity red-flag detectors (21-CFR-11 / ALCOA+)
 
 ### retail
 
@@ -905,18 +1012,25 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### security
 
 - `dataset/code-review-samples` — Synthetic code-review samples (3 cases)
+- `dataset/threat-intel-samples` — Synthetic threat-intelligence report samples
+- `harness/appsec-code-audit` — AppSec Code Audit harness
 - `knowledge-pack/mitre-attack-sample` — MITRE ATT&CK techniques (sample)
 - `knowledge-pack/owasp-top-10-llm` — OWASP Top 10 for LLM Applications (2025)
 - `pattern/k-anonymity-aggregation` — K-anonymity + HMACed-key cross-organization aggregation
 - `persona/security-engineer-cite-first` — Security Engineer (CWE-cite-first AppSec reviewer)
+- `persona/threat-intel-analyst` — Threat Intelligence Analyst (MITRE ATT&CK + STIX/TAXII + IOC)
 - `pipeline/code-review-with-risk-score` — Code review with risk score
 - `pipeline/code-security-review` — Code security review (CWE-cite-first AppSec audit)
 - `pipeline/full-vendor-due-diligence` — Full vendor due-diligence (ESG + AppSec + Legal — kitchen-sink)
+- `pipeline/security-incident-grading` — Security incident write-up grading (CTI + AppSec chained)
+- `pipeline/threat-intel-ioc-review` — Threat-intel IOC + TTP review (MITRE ATT&CK aligned)
 - `processor/prompt-injection-detector` — Prompt-injection detector
 - `rubric/code-security-review-v1` — Code security review v1
+- `rubric/threat-intel-quality-v1` — Threat intelligence report quality v1
 - `rule-pack/grep-ai-vendor-keys` — AI vendor API key detectors
 - `rule-pack/grep-cloud-secrets` — Cloud provider secret detectors
 - `rule-pack/grep-code-vulnerabilities` — Code vulnerability + secret-detection GREP pack
+- `rule-pack/grep-ioc-extraction` — IOC extraction GREP pack (file hashes / domains / IPs / URLs)
 - `rule-pack/grep-private-key-blocks` — Private key block detectors
 - `rule-pack/grep-prompt-injection-heuristics` — Prompt-injection heuristic detectors
 - `rule-pack/grep-vcs-platform-pats` — VCS platform PATs (GitHub, GitLab, Bitbucket, Atlassian)
@@ -924,14 +1038,17 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 ### security.appsec
 
 - `dataset/code-review-samples` — Synthetic code-review samples (3 cases)
+- `harness/appsec-code-audit` — AppSec Code Audit harness
 - `persona/security-engineer-cite-first` — Security Engineer (CWE-cite-first AppSec reviewer)
 - `pipeline/code-security-review` — Code security review (CWE-cite-first AppSec audit)
+- `pipeline/security-incident-grading` — Security incident write-up grading (CTI + AppSec chained)
 - `rubric/code-security-review-v1` — Code security review v1
 - `rule-pack/grep-code-vulnerabilities` — Code vulnerability + secret-detection GREP pack
 
 ### software
 
 - `dataset/code-review-samples` — Synthetic code-review samples (3 cases)
+- `harness/appsec-code-audit` — AppSec Code Audit harness
 - `knowledge-pack/spdx-licenses-summary` — SPDX licenses (summary)
 - `persona/code-consultant` — Code consultant
 - `persona/linux-terminal` — Linux terminal
@@ -957,6 +1074,7 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 - `benchmark/esg-supplier-grading-bench` — ESG supplier-grading benchmark v1
 - `dataset/supplier-disclosure-pack-schema` — Supplier disclosure pack schema (canonical input shape)
+- `harness/esg-disclosure-grading` — ESG Disclosure Grading harness
 - `knowledge-pack/csddd-and-forced-labor-indicators` — Global supply-chain due-diligence regulatory pack
 - `knowledge-pack/high-risk-corridors-and-sectors` — High-risk corridors & sector-specific labor / environmental risks
 - `knowledge-pack/lead-company-code-stub` — Lead-company code-of-conduct stub (placeholder)
@@ -977,3 +1095,20 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 - `persona/esg-auditor` — ESG / Supply Chain Due Diligence Auditor (E + S + G)
 - `rule-pack/grep-esg-environmental-red-flags` — ESG environmental red-flag detectors (the 'E' of ESG)
+
+### threat_intelligence
+
+- `dataset/threat-intel-samples` — Synthetic threat-intelligence report samples
+- `persona/threat-intel-analyst` — Threat Intelligence Analyst (MITRE ATT&CK + STIX/TAXII + IOC)
+- `pipeline/security-incident-grading` — Security incident write-up grading (CTI + AppSec chained)
+- `pipeline/threat-intel-ioc-review` — Threat-intel IOC + TTP review (MITRE ATT&CK aligned)
+- `rubric/threat-intel-quality-v1` — Threat intelligence report quality v1
+- `rule-pack/grep-ioc-extraction` — IOC extraction GREP pack (file hashes / domains / IPs / URLs)
+
+### threat_intelligence.ioc
+
+- `persona/threat-intel-analyst` — Threat Intelligence Analyst (MITRE ATT&CK + STIX/TAXII + IOC)
+
+### threat_intelligence.ttp
+
+- `persona/threat-intel-analyst` — Threat Intelligence Analyst (MITRE ATT&CK + STIX/TAXII + IOC)
