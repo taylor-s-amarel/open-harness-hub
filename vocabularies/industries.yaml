@@ -107,6 +107,37 @@ industries:
         label: Identity & fraud
   - id: climate
     label: Climate, energy & sustainability
+  - id: privacy
+    label: Privacy & data protection
+    sub:
+      - id: privacy.gdpr
+        label: EU GDPR
+      - id: privacy.ccpa
+        label: California CCPA / CPRA
+      - id: privacy.dsar
+        label: Data Subject Access Request fulfillment
+      - id: privacy.pia
+        label: Privacy Impact Assessment / DPIA
+  - id: hr
+    label: Human Resources & people operations
+    sub:
+      - id: hr.hiring
+        label: Hiring & recruiting (EEOC / ADA / Title VII)
+      - id: hr.performance
+        label: Performance reviews & disciplinary
+      - id: hr.compensation
+        label: Compensation & pay-equity
+  - id: trade
+    label: International trade & export control
+    sub:
+      - id: trade.hts
+        label: HTS classification (US Harmonized Tariff Schedule)
+      - id: trade.eccn
+        label: ECCN classification (Export Control Classification Number)
+      - id: trade.itar
+        label: ITAR (International Traffic in Arms Regulations)
+      - id: trade.sanctions
+        label: Sanctions screening (OFAC / EU / UN)
   - id: pharma
     label: Pharmaceutical & life sciences
     sub:

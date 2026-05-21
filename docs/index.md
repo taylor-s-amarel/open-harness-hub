@@ -1,27 +1,27 @@
 # Open Harness Hub — single-page catalog index
 
-Auto-generated from `scripts/build_index_page.py` against 273 live artifacts. Run that script to refresh after any catalog change.
+Auto-generated from `scripts/build_index_page.py` against 291 live artifacts. Run that script to refresh after any catalog change.
 
 Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency tree of any entry below.
 
 ## Stats
 
-- **Total artifacts:** 273
+- **Total artifacts:** 291
 - **Artifact types:** 12
-- **Industries:** 46
+- **Industries:** 57
 
 ## Table of contents
 
 - [harness (13)](#harness)
-- [pipeline (51)](#pipeline)
+- [pipeline (54)](#pipeline)
 - [benchmark (1)](#benchmark)
-- [rule-pack (28)](#rule-pack)
-- [knowledge-pack (26)](#knowledge-pack)
+- [rule-pack (31)](#rule-pack)
+- [knowledge-pack (29)](#knowledge-pack)
 - [tool (14)](#tool)
-- [persona (22)](#persona)
+- [persona (25)](#persona)
 - [adapter (9)](#adapter)
-- [rubric (18)](#rubric)
-- [dataset (10)](#dataset)
+- [rubric (21)](#rubric)
+- [dataset (13)](#dataset)
 - [processor (54)](#processor)
 - [pattern (27)](#pattern)
 
@@ -98,8 +98,12 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry_ • A comprehensive research pipeline that demonstrates every layer the hub supports — 22 distinct passes from raw input through model call through iterative refinement to delivery.
 - **`pipeline/full-vendor-due-diligence`** — Full vendor due-diligence (ESG + AppSec + Legal — kitchen-sink)  
   _cross_industry, compliance, supply_chain, security_ • Cross-vertical kitchen-sink pipeline. Accepts a vendor onboarding packet containing (a) ESG/supply-chain disclosure, (b) representative code bundle, (c) draft MSA, and runs each th…
+- **`pipeline/gdpr-dsar-review`** — GDPR DSAR fulfillment review (CCPA-compatible)  
+  _privacy, privacy.gdpr, privacy.dsar, compliance_ • Eleventh vertical.
 - **`pipeline/gxp-validation-review`** — GxP validation review (21-CFR-11 + Annex 11 + ALCOA+)  
   _pharma, pharma.gxp, compliance_ • Review a GxP-validated electronic-records system against the rubric. Same 6-step chain as ESG / radiology / legal / AppSec — fifth vertical proving the architecture's industry-agno…
+- **`pipeline/hr-hiring-compliance-review`** — HR hiring compliance review (EEOC / Title VII / ADA / ADEA)  
+  _hr, hr.hiring, compliance_ • Twelfth vertical.
 - **`pipeline/insurance-claim-review`** — Insurance claim review (NAIC fraud-aware)  
   _insurance, insurance.claims, insurance.fraud, finance_ • Eighth vertical proving the architecture's industry-agnosticism. Same 6-step chain — only persona/rule-pack/knowledge-pack/rubric change.
 - **`pipeline/knowledge-graph-from-corpus`** — GraphRAG: knowledge-graph from corpus + global/local query  
@@ -150,6 +154,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _ai_ • Use a teacher LLM to generate (input, output) training pairs for a downstream student fine-tune. Includes filtering for diversity + difficulty + safety. The pattern that won the pr…
 - **`pipeline/threat-intel-ioc-review`** — Threat-intel IOC + TTP review (MITRE ATT&CK aligned)  
   _security, threat_intelligence_ • Ingest a CTI report or incident write-up, extract IOCs + TTPs, validate against MITRE ATT&CK, rate confidence, surface attribution risk. Seventh vertical proving industry-agnostici…
+- **`pipeline/trade-compliance-review`** — Trade compliance review (HTS / EAR / ITAR / OFAC)  
+  _trade, trade.eccn, trade.itar, trade.sanctions_ • Thirteenth vertical.
 - **`pipeline/twenty-questions-agent`** — 20-questions agent (Akinator-style)  
   _ai, education_ • An agent that plays 20 Questions — asks yes/no questions to narrow down a hidden concept. Uses a candidate set + binary-search-style question generation. The classic agent-game pat…
 - **`pipeline/two-time-retrieve-rerank`** — Two-time retrieval + cross-encoder rerank  
@@ -192,8 +198,12 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, supply_chain, compliance_ • Heuristic regex detectors for the 11 ILO forced-labor indicators + child labor + recruitment-fee abuse + tier-3/4 supply-chain transparency gaps + 12 high-risk corridors. Designed …
 - **`rule-pack/grep-esg-governance-red-flags`** — ESG governance red-flag detectors (the 'G' of ESG)  
   _esg, compliance, finance_ • GREP detectors for the governance dimension: beneficial-ownership opacity, anti-bribery / corruption signals, whistleblower-channel weaknesses, conflict-of-interest, board-independ…
+- **`rule-pack/grep-gdpr-dsar-red-flags`** — GDPR DSAR red-flag detectors  
+  _privacy, privacy.gdpr, privacy.dsar, compliance_ • GREP detectors for GDPR Data Subject Access Request handling red flags: missing identity verification, missing-lawful-basis, unlawful erasure refusal, missing transfer safeguards, …
 - **`rule-pack/grep-gxp-data-integrity-red-flags`** — GxP data-integrity red-flag detectors (21-CFR-11 / ALCOA+)  
   _pharma, pharma.gxp, compliance_ • GREP detectors for the highest-leverage 21-CFR-11 + ALCOA+ data- integrity violations: missing audit trails, shared accounts, post- hoc record alteration, validation gaps, missing …
+- **`rule-pack/grep-hr-hiring-bias-flags`** — HR hiring bias detectors (Title VII / ADA / ADEA / EEOC)  
+  _hr, hr.hiring, compliance_ • GREP detectors for biased language in job postings + screening questions. Each rule cites the protected-class statute. TRIGGER review — never autoreject; recommend neutral language…
 - **`rule-pack/grep-insurance-fraud-red-flags`** — Insurance claim fraud red-flag detectors (NAIC + CAIF)  
   _insurance, insurance.claims, insurance.fraud, finance_ • GREP detectors for the highest-leverage insurance-claim fraud red flags drawn from NAIC fraud-fighter handbook + Coalition Against Insurance Fraud indicators. Pair with `pipeline/i…
 - **`rule-pack/grep-ioc-extraction`** — IOC extraction GREP pack (file hashes / domains / IPs / URLs)  
@@ -210,6 +220,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _security, ai, cross_industry_ • Heuristic regex patterns that flag likely prompt-injection attempts in input, retrieved documents, or tool results. Inspired by garak probe families (`promptinject`, `latentinjecti…
 - **`rule-pack/grep-radiology-report-red-flags`** — Radiology report quality + incidental-findings red flags  
   _healthcare, healthcare.radiology_ • GREP detectors for radiology-report quality and incidental-finding follow-up gaps. Designed to be run AFTER `rule-pack/privacy-phi- hipaa-en` redaction. Pair with `pipeline/radiolo…
+- **`rule-pack/grep-trade-compliance-flags`** — Trade compliance red-flag detectors (HTS / ECCN / ITAR / OFAC)  
+  _trade, trade.eccn, trade.itar, trade.sanctions_ • GREP detectors for export-control red flags: dual-use technology to embargoed destinations, missing end-user diligence, ITAR technical data outside licensed scope, deemed-export si…
 - **`rule-pack/grep-vcs-platform-pats`** — VCS platform PATs (GitHub, GitLab, Bitbucket, Atlassian)  
   _security, software_ • Detection patterns for Personal Access Tokens issued by code-hosting platforms. Each vendor uses a stable prefix (`ghp_`, `gho_`, `ghu_`, `ghs_`, `ghr_` for GitHub; `glpat-` for Gi…
 - **`rule-pack/hybrid-retrieval-policy`** — Hybrid retrieval policy (BM25 + dense + RRF)  
@@ -243,8 +255,12 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, supply_chain, compliance, cross_industry_ • Reference pack of (composite, educational) extracts from 12 jurisdictions + 4 international frameworks:
 - **`knowledge-pack/drug-interactions-sample`** — Drug-drug interactions (sample, educational)  
   _healthcare, healthcare.pharmacy, healthcare.clinical_ • Composite paraphrases of well-known drug-drug interaction patterns for educational reference. NOT a substitute for an authoritative database (e.g. RxNorm + Lexicomp + Micromedex). …
+- **`knowledge-pack/eeoc-hiring-statutes`** — EEOC hiring statutes pack (Title VII / ADA / ADEA / GINA / PWFA)  
+  _hr, hr.hiring, compliance_ • Composite educational reference of the federal anti-discrimination hiring statutes administered by the EEOC + OFCCP.
 - **`knowledge-pack/fatf-typologies-sample`** — FATF typologies (sample chunks)  
   _finance, finance.aml_ • Sample paraphrased typology chunks for catalog-demo purposes. Real deployments should ingest the latest FATF and FinCEN typology reports; this pack anchors the data shape and citat…
+- **`knowledge-pack/gdpr-articles-and-ccpa`** — GDPR articles + CCPA/CPRA + e-Privacy  
+  _privacy, privacy.gdpr, privacy.ccpa, privacy.dsar_ • Composite educational extracts of:  - EU GDPR (Regulation 2016/679) — Articles 5 / 6 / 7 / 9 /    12-22 (data subject rights) / 25 (privacy by design) / 30    (records of processin…
 - **`knowledge-pack/gov-benefits-rules`** — Government benefits program rules (SNAP / Medicaid / UI / SSI)  
   _government, government.benefits, compliance_ • Composite educational reference of the major US federal benefits programs' eligibility rules: SNAP (7 CFR 273), Medicaid (42 CFR + state plan), Unemployment Insurance (state UI man…
 - **`knowledge-pack/gxp-21-cfr-11-guidelines`** — 21-CFR-11 + EU GMP Annex 11 + ICH + ALCOA+ regulatory pack  
@@ -275,6 +291,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry, legal, software_ • Sampled summary of common SPDX licenses — permissive, copyleft, non-commercial, public-domain. For each: license_id, category, one-paragraph summary, redistribution-compatible flag…
 - **`knowledge-pack/style-references-cinematic`** — Cinematic style references  
   _creative_ • Curated style descriptors for cinematic product / scene photography. Each entry is a textual descriptor of a style — lighting, color palette, composition, atmosphere — with attribu…
+- **`knowledge-pack/trade-export-control-frameworks`** — Trade & export control frameworks (HTS / EAR / ITAR / OFAC)  
+  _trade, trade.hts, trade.eccn, trade.itar_ • Composite educational reference: HTSUS chapters/headings, EAR Commerce Control List (Cat 0-9), ITAR USML (Categories I-XXI), OFAC sanctions programs, BIS Entity List + Unverified L…
 - **`knowledge-pack/user-preference-schema`** — User preference schema (canonical shape for personal assistants)  
   _personal_productivity, cross_industry_ • Canonical schema for storing user preferences that personal- assistant harnesses load before taking action. Covers:  - Communication tone preferences (formal / casual / terse / war…
 
@@ -327,6 +345,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _software, software.codereview_ • Senior-engineer persona for code review and architecture discussion. Converged from the Anthropic prompt library "Code Consultant", awesome-chatgpt-prompts "Cyber Security Speciali…
 - **`persona/contract-reviewer-cite-first`** — Contract Reviewer (citation-first, senior in-house counsel)  
   _legal, legal.contract, legal.compliance_ • Senior in-house counsel persona for reviewing commercial contracts: NDAs, MSAs, SOWs, vendor agreements, employment contracts, license agreements. Citation-first: every red-flag re…
+- **`persona/eeoc-hiring-officer`** — EEOC Hiring Officer (Title VII / ADA / ADEA / OFCCP)  
+  _hr, hr.hiring, compliance_ • Hiring-compliance persona reviewing job postings, screening questions, interview rubrics, and hiring decisions for protected-class bias and disparate impact. Aligned to: Title VII …
 - **`persona/esg-auditor`** — ESG / Supply Chain Due Diligence Auditor (E + S + G)  
   _esg, esg.csddd, esg.modern_slavery, esg.csrd_ • ESG auditor persona covering the full E + S + G dimensions of supply-chain due diligence. Aligned to:
 - **`persona/fact-checker`** — Fact Checker  
@@ -343,6 +363,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _education, education.tutoring_ • Patient math-tutor persona that uses Socratic prompts and step-by-step reasoning. Diagnoses what the student understands before introducing new material. Useful baseline for `pipel…
 - **`persona/personal-assistant`** — Personal Assistant (preference-aware, privacy-first)  
   _personal_productivity, cross_industry_ • Personal AI assistant persona that reads user preferences BEFORE taking action, never reveals private info to wrong audiences, cites the user's stated rule when declining a request…
+- **`persona/privacy-officer-gdpr`** — Privacy Officer (GDPR / CCPA / DSAR fulfillment)  
+  _privacy, privacy.gdpr, privacy.dsar, compliance_ • Privacy officer / DPO persona reviewing Data Subject Access Requests (Art. 15), Right-to-Erasure (Art. 17), Right-to- Rectification (Art. 16), Right-to-Portability (Art. 20), Right…
 - **`persona/radiologist-cite-first`** — Radiologist (citation-first, specialty radiology)  
   _healthcare, healthcare.radiology_ • Specialization of `persona/clinical-reasoner` for radiology report generation and review. Citation-first: every BI-RADS / Fleischner / ACR Appropriateness Criteria assertion is gro…
 - **`persona/research-analyst`** — Research Analyst  
@@ -353,6 +375,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _retail, retail.support, cross_industry_ • Customer-support agent persona. Acknowledges the user's situation, confirms the goal, proposes the next concrete step. Escalates to a human if the issue cannot be solved in two mes…
 - **`persona/threat-intel-analyst`** — Threat Intelligence Analyst (MITRE ATT&CK + STIX/TAXII + IOC)  
   _security, threat_intelligence, threat_intelligence.ioc, threat_intelligence.ttp_ • CTI analyst persona for IOC verification, TTP mapping to MITRE ATT&CK techniques, and threat-actor attribution analysis. Citation-first: every assertion cites the ATT&CK technique …
+- **`persona/trade-compliance-officer`** — Trade Compliance Officer (HTS / ECCN / ITAR / OFAC)  
+  _trade, trade.hts, trade.eccn, trade.itar_ • International-trade compliance persona reviewing product / technology exports for: HTS classification (Harmonized Tariff Schedule), ECCN classification (Export Control Classificati…
 - **`persona/translator-improver`** — Translator + improver  
   _cross_industry, creative_ • The second-most-cloned community persona. Translates input into fluent English (or any target language) AND improves the original for clarity, idiom, and register. Pairs naturally …
 
@@ -403,8 +427,12 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, supply_chain, compliance, humanitarian_ • Six-dimension rubric for grading ONLY the social dimension of a supplier disclosure. Aligned to ILO 11 forced-labor indicators, CSRD ESRS S1 (own workforce) + S2 (value-chain worke…
 - **`rubric/esg-supplier-compliance-v1`** — ESG supplier compliance v1 (full E + S + G)  
   _esg, supply_chain, compliance_ • Twelve-dimension rubric for grading supplier-submitted policy texts, self-assessments, and grievance transcripts against the CSDDD, the ILO forced-labor indicators, the major natio…
+- **`rubric/gdpr-dsar-quality-v1`** — GDPR DSAR fulfillment quality v1  
+  _privacy, privacy.gdpr, privacy.dsar, compliance_ • Eight-dimension rubric for grading a GDPR DSAR fulfillment.
 - **`rubric/gxp-validation-quality-v1`** — GxP validation review quality v1  
   _pharma, pharma.gxp, compliance_ • Eight-dimension rubric for grading a GxP system validation review. Used by `pipeline/gxp-validation-review`.
+- **`rubric/hr-hiring-compliance-v1`** — HR hiring compliance review quality v1  
+  _hr, hr.hiring, compliance_ • Seven-dimension rubric for grading a hiring-compliance review.
 - **`rubric/insurance-claim-quality-v1`** — Insurance claim review quality v1  
   _insurance, insurance.claims, insurance.fraud, finance_ • Seven-dimension rubric for grading an insurance claim review.
 - **`rubric/radiology-report-quality-v1`** — Radiology report quality v1  
@@ -413,6 +441,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _cross_industry_ • Six-dimension rubric for entity research outputs. Used by `pipeline/research-entity` as its success criterion.
 - **`rubric/threat-intel-quality-v1`** — Threat intelligence report quality v1  
   _security, threat_intelligence_ • Six-dimension rubric for grading a CTI report against the diamond-model + ATT&CK navigator + Admiralty-confidence scheme.
+- **`rubric/trade-compliance-quality-v1`** — Trade compliance review quality v1  
+  _trade, trade.eccn, trade.itar, trade.sanctions_ • 8-dim rubric for grading export-control reviews.
 - **`rubric/verification-v1`** — Verification v1  
   _cross_industry, media_ • Four-dimension rubric for fact-verification outputs. Used by `pipeline/verify-claim-against-corpus`.
 
@@ -426,10 +456,14 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _security, security.appsec, software_ • Three synthetic code bundles for testing `pipeline/code-security-review`. Fully synthetic — values that look like AWS keys / JWT / Slack tokens follow the format documented in AWS …
 - **`dataset/contract-samples`** — Synthetic commercial contract samples (3 cases)  
   _legal, legal.contract, legal.compliance_ • Three synthetic commercial contracts for testing `pipeline/contract-clause-review`. Fully synthetic — no real contract data.
+- **`dataset/gdpr-dsar-samples`** — Synthetic GDPR DSAR samples  
+  _privacy, privacy.gdpr, privacy.dsar, compliance_ • Two synthetic DSARs:  - clean: identity verified, 14-day response, all Art. 15 fields,    no-transfer, free of charge. Expected 0 hits.  - flagged: 2.5 months past deadline, no ide…
 - **`dataset/gov-benefits-samples`** — Synthetic SNAP application samples  
   _government, government.benefits_ • Two synthetic SNAP applications:  - sample-snap-app-clean.json — 3-person household with minor    children, $1850 gross income (below 130% poverty for HH of 3),    ID + paystub + r…
 - **`dataset/gxp-validation-samples`** — Synthetic GxP validation samples (3 cases)  
   _pharma, pharma.gxp, healthcare.pharmacy, compliance_ • Three synthetic GxP-validated-system packets for testing `pipeline/gxp-validation-review`. Fully synthetic.
+- **`dataset/hr-posting-samples`** — Synthetic HR job-posting samples  
+  _hr, hr.hiring, compliance_ • Two synthetic job postings:  - clean: senior backend engineer, EEO statement, ADA contact,    fluency or equivalent. Expected 0 hits.  - flagged: 'rockstar' / 'ninja' / 'young dyna…
 - **`dataset/insurance-claim-samples`** — Synthetic insurance claim samples  
   _insurance, insurance.claims, insurance.fraud, finance_ • Two synthetic insurance claims:  - sample-claim-clean.json — straightforward rear-end auto claim    with police report, witness, repair estimate. Expected ~0 hits.  - sample-claim-…
 - **`dataset/radiology-report-samples`** — Synthetic radiology report samples (3 cases, fully synthetic)  
@@ -438,6 +472,8 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
   _esg, supply_chain, compliance_ • Canonical input shape that `pipeline/supplier-policy-grading` and `pipeline/deep-tier-supplier-audit` accept as the supplier disclosure pack. Records the JSON Schema of the supplie…
 - **`dataset/threat-intel-samples`** — Synthetic threat-intelligence report samples  
   _security, threat_intelligence_ • Synthetic CTI report samples for testing `pipeline/threat-intel-ioc-review`. Includes IOCs (file hashes, IPs, domains, URLs, mutexes, CVEs, ATT&CK technique IDs, BTC addresses) dra…
+- **`dataset/trade-export-samples`** — Synthetic trade-export transaction samples  
+  _trade, trade.eccn, trade.itar, trade.sanctions_ • Two synthetic exports:  - clean: standard laptops to Singapore, EAR99, B-list destination,    no Entity-list hits, no license required. Expected 0 hits.  - flagged: Iran destinatio…
 
 ## processor
 
@@ -696,22 +732,31 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 - `benchmark/esg-supplier-grading-bench` — ESG supplier-grading benchmark v1
 - `dataset/academic-essay-samples` — Synthetic academic essay samples (integrity-review test set)
+- `dataset/gdpr-dsar-samples` — Synthetic GDPR DSAR samples
 - `dataset/gxp-validation-samples` — Synthetic GxP validation samples (3 cases)
+- `dataset/hr-posting-samples` — Synthetic HR job-posting samples
 - `dataset/supplier-disclosure-pack-schema` — Supplier disclosure pack schema (canonical input shape)
+- `dataset/trade-export-samples` — Synthetic trade-export transaction samples
 - `harness/esg-disclosure-grading` — ESG Disclosure Grading harness
 - `knowledge-pack/academic-honor-codes` — Academic honor codes + AI-policy frameworks
 - `knowledge-pack/csddd-and-forced-labor-indicators` — Global supply-chain due-diligence regulatory pack
+- `knowledge-pack/eeoc-hiring-statutes` — EEOC hiring statutes pack (Title VII / ADA / ADEA / GINA / PWFA)
+- `knowledge-pack/gdpr-articles-and-ccpa` — GDPR articles + CCPA/CPRA + e-Privacy
 - `knowledge-pack/gov-benefits-rules` — Government benefits program rules (SNAP / Medicaid / UI / SSI)
 - `knowledge-pack/gxp-21-cfr-11-guidelines` — 21-CFR-11 + EU GMP Annex 11 + ICH + ALCOA+ regulatory pack
 - `knowledge-pack/high-risk-corridors-and-sectors` — High-risk corridors & sector-specific labor / environmental risks
 - `knowledge-pack/lead-company-code-stub` — Lead-company code-of-conduct stub (placeholder)
+- `knowledge-pack/trade-export-control-frameworks` — Trade & export control frameworks (HTS / EAR / ITAR / OFAC)
 - `pattern/composable-success-criteria` — Composable success criteria (regex + semantic + LLM-judge + deterministic + tool + composite)
 - `pattern/k-anonymity-aggregation` — K-anonymity + HMACed-key cross-organization aggregation
 - `persona/academic-integrity-officer` — Academic Integrity Officer (plagiarism / AI-generated / citation fabrication)
 - `persona/benefits-adjudicator` — Government Benefits Adjudicator (SNAP / Medicaid / UI / SSI)
 - `persona/climate-risk-analyst` — Climate Risk Analyst (TCFD / ISSB IFRS S2 / CDP)
+- `persona/eeoc-hiring-officer` — EEOC Hiring Officer (Title VII / ADA / ADEA / OFCCP)
 - `persona/esg-auditor` — ESG / Supply Chain Due Diligence Auditor (E + S + G)
 - `persona/gxp-auditor` — GxP Auditor (21-CFR-11 / EU GMP Annex 11 / ICH / ALCOA+)
+- `persona/privacy-officer-gdpr` — Privacy Officer (GDPR / CCPA / DSAR fulfillment)
+- `persona/trade-compliance-officer` — Trade Compliance Officer (HTS / ECCN / ITAR / OFAC)
 - `pipeline/academic-integrity-review` — Academic integrity review (plagiarism / AI / citation fabrication)
 - `pipeline/anonymized-illicit-recruitment-pattern-sharing` — Anonymized cross-org pattern sharing for illicit recruitment corridors
 - `pipeline/benefits-adjudication-review` — Government benefits adjudication review (SNAP / Medicaid / UI / SSI)
@@ -719,10 +764,13 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pipeline/customer-record-enrichment` — Customer record enrichment (deterministic, cross-vertical)
 - `pipeline/deep-tier-supplier-audit` — Deep-tier (T1→T4+) supplier audit with traceability
 - `pipeline/full-vendor-due-diligence` — Full vendor due-diligence (ESG + AppSec + Legal — kitchen-sink)
+- `pipeline/gdpr-dsar-review` — GDPR DSAR fulfillment review (CCPA-compatible)
 - `pipeline/gxp-validation-review` — GxP validation review (21-CFR-11 + Annex 11 + ALCOA+)
+- `pipeline/hr-hiring-compliance-review` — HR hiring compliance review (EEOC / Title VII / ADA / ADEA)
 - `pipeline/mixed-criteria-demo` — Mixed success-criteria demo (regex + semantic + deterministic + LLM + composite)
 - `pipeline/supplier-policy-grading` — Supplier policy & disclosure grading (CSDDD-aligned)
 - `pipeline/sustainability-report-full-review` — Sustainability report full review (Climate + ESG-S + ESG-G chained)
+- `pipeline/trade-compliance-review` — Trade compliance review (HTS / EAR / ITAR / OFAC)
 - `processor/entity-resolution-link` — Entity resolution: cluster records into entities
 - `processor/structured-to-prose` — Structured JSON → prose normalizer (for GREP-style rule packs)
 - `rubric/academic-integrity-quality-v1` — Academic integrity review quality v1
@@ -732,14 +780,20 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rubric/esg-gov-v1` — ESG governance (G) sub-rubric v1
 - `rubric/esg-social-v1` — ESG social (S) sub-rubric v1
 - `rubric/esg-supplier-compliance-v1` — ESG supplier compliance v1 (full E + S + G)
+- `rubric/gdpr-dsar-quality-v1` — GDPR DSAR fulfillment quality v1
 - `rubric/gxp-validation-quality-v1` — GxP validation review quality v1
+- `rubric/hr-hiring-compliance-v1` — HR hiring compliance review quality v1
+- `rubric/trade-compliance-quality-v1` — Trade compliance review quality v1
 - `rule-pack/grep-academic-integrity-flags` — Academic integrity red-flag detectors (plagiarism / AI / fabricated citations)
 - `rule-pack/grep-benefits-eligibility-flags` — Benefits-eligibility red-flag detectors (SNAP / Medicaid / UI)
 - `rule-pack/grep-climate-disclosure-gaps` — Climate disclosure gap detectors (TCFD / ISSB / ESRS E1)
 - `rule-pack/grep-esg-environmental-red-flags` — ESG environmental red-flag detectors (the 'E' of ESG)
 - `rule-pack/grep-esg-forced-labor-red-flags` — ESG / forced-labor red-flag detectors (the 'S' of ESG)
 - `rule-pack/grep-esg-governance-red-flags` — ESG governance red-flag detectors (the 'G' of ESG)
+- `rule-pack/grep-gdpr-dsar-red-flags` — GDPR DSAR red-flag detectors
 - `rule-pack/grep-gxp-data-integrity-red-flags` — GxP data-integrity red-flag detectors (21-CFR-11 / ALCOA+)
+- `rule-pack/grep-hr-hiring-bias-flags` — HR hiring bias detectors (Title VII / ADA / ADEA / EEOC)
+- `rule-pack/grep-trade-compliance-flags` — Trade compliance red-flag detectors (HTS / ECCN / ITAR / OFAC)
 - `tool/cbp-wro-lookup` — US CBP Withhold Release Order + UFLPA Entity List lookup
 - `tool/opencorporates-lookup` — OpenCorporates company lookup
 
@@ -1110,6 +1164,24 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `rubric/radiology-report-quality-v1` — Radiology report quality v1
 - `rule-pack/grep-radiology-report-red-flags` — Radiology report quality + incidental-findings red flags
 
+### hr
+
+- `dataset/hr-posting-samples` — Synthetic HR job-posting samples
+- `knowledge-pack/eeoc-hiring-statutes` — EEOC hiring statutes pack (Title VII / ADA / ADEA / GINA / PWFA)
+- `persona/eeoc-hiring-officer` — EEOC Hiring Officer (Title VII / ADA / ADEA / OFCCP)
+- `pipeline/hr-hiring-compliance-review` — HR hiring compliance review (EEOC / Title VII / ADA / ADEA)
+- `rubric/hr-hiring-compliance-v1` — HR hiring compliance review quality v1
+- `rule-pack/grep-hr-hiring-bias-flags` — HR hiring bias detectors (Title VII / ADA / ADEA / EEOC)
+
+### hr.hiring
+
+- `dataset/hr-posting-samples` — Synthetic HR job-posting samples
+- `knowledge-pack/eeoc-hiring-statutes` — EEOC hiring statutes pack (Title VII / ADA / ADEA / GINA / PWFA)
+- `persona/eeoc-hiring-officer` — EEOC Hiring Officer (Title VII / ADA / ADEA / OFCCP)
+- `pipeline/hr-hiring-compliance-review` — HR hiring compliance review (EEOC / Title VII / ADA / ADEA)
+- `rubric/hr-hiring-compliance-v1` — HR hiring compliance review quality v1
+- `rule-pack/grep-hr-hiring-bias-flags` — HR hiring bias detectors (Title VII / ADA / ADEA / EEOC)
+
 ### humanitarian
 
 - `knowledge-pack/high-risk-corridors-and-sectors` — High-risk corridors & sector-specific labor / environmental risks
@@ -1228,6 +1300,37 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 - `pipeline/gxp-validation-review` — GxP validation review (21-CFR-11 + Annex 11 + ALCOA+)
 - `rubric/gxp-validation-quality-v1` — GxP validation review quality v1
 - `rule-pack/grep-gxp-data-integrity-red-flags` — GxP data-integrity red-flag detectors (21-CFR-11 / ALCOA+)
+
+### privacy
+
+- `dataset/gdpr-dsar-samples` — Synthetic GDPR DSAR samples
+- `knowledge-pack/gdpr-articles-and-ccpa` — GDPR articles + CCPA/CPRA + e-Privacy
+- `persona/privacy-officer-gdpr` — Privacy Officer (GDPR / CCPA / DSAR fulfillment)
+- `pipeline/gdpr-dsar-review` — GDPR DSAR fulfillment review (CCPA-compatible)
+- `rubric/gdpr-dsar-quality-v1` — GDPR DSAR fulfillment quality v1
+- `rule-pack/grep-gdpr-dsar-red-flags` — GDPR DSAR red-flag detectors
+
+### privacy.ccpa
+
+- `knowledge-pack/gdpr-articles-and-ccpa` — GDPR articles + CCPA/CPRA + e-Privacy
+
+### privacy.dsar
+
+- `dataset/gdpr-dsar-samples` — Synthetic GDPR DSAR samples
+- `knowledge-pack/gdpr-articles-and-ccpa` — GDPR articles + CCPA/CPRA + e-Privacy
+- `persona/privacy-officer-gdpr` — Privacy Officer (GDPR / CCPA / DSAR fulfillment)
+- `pipeline/gdpr-dsar-review` — GDPR DSAR fulfillment review (CCPA-compatible)
+- `rubric/gdpr-dsar-quality-v1` — GDPR DSAR fulfillment quality v1
+- `rule-pack/grep-gdpr-dsar-red-flags` — GDPR DSAR red-flag detectors
+
+### privacy.gdpr
+
+- `dataset/gdpr-dsar-samples` — Synthetic GDPR DSAR samples
+- `knowledge-pack/gdpr-articles-and-ccpa` — GDPR articles + CCPA/CPRA + e-Privacy
+- `persona/privacy-officer-gdpr` — Privacy Officer (GDPR / CCPA / DSAR fulfillment)
+- `pipeline/gdpr-dsar-review` — GDPR DSAR fulfillment review (CCPA-compatible)
+- `rubric/gdpr-dsar-quality-v1` — GDPR DSAR fulfillment quality v1
+- `rule-pack/grep-gdpr-dsar-red-flags` — GDPR DSAR red-flag detectors
 
 ### real_estate
 
@@ -1370,6 +1473,47 @@ Use `python scripts/oh_hub.py describe <id>` for the full manifest + dependency 
 
 - `persona/threat-intel-analyst` — Threat Intelligence Analyst (MITRE ATT&CK + STIX/TAXII + IOC)
 - `tool/mitre-attack-mapper` — MITRE ATT&CK technique mapper
+
+### trade
+
+- `dataset/trade-export-samples` — Synthetic trade-export transaction samples
+- `knowledge-pack/trade-export-control-frameworks` — Trade & export control frameworks (HTS / EAR / ITAR / OFAC)
+- `persona/trade-compliance-officer` — Trade Compliance Officer (HTS / ECCN / ITAR / OFAC)
+- `pipeline/trade-compliance-review` — Trade compliance review (HTS / EAR / ITAR / OFAC)
+- `rubric/trade-compliance-quality-v1` — Trade compliance review quality v1
+- `rule-pack/grep-trade-compliance-flags` — Trade compliance red-flag detectors (HTS / ECCN / ITAR / OFAC)
+
+### trade.eccn
+
+- `dataset/trade-export-samples` — Synthetic trade-export transaction samples
+- `knowledge-pack/trade-export-control-frameworks` — Trade & export control frameworks (HTS / EAR / ITAR / OFAC)
+- `persona/trade-compliance-officer` — Trade Compliance Officer (HTS / ECCN / ITAR / OFAC)
+- `pipeline/trade-compliance-review` — Trade compliance review (HTS / EAR / ITAR / OFAC)
+- `rubric/trade-compliance-quality-v1` — Trade compliance review quality v1
+- `rule-pack/grep-trade-compliance-flags` — Trade compliance red-flag detectors (HTS / ECCN / ITAR / OFAC)
+
+### trade.hts
+
+- `knowledge-pack/trade-export-control-frameworks` — Trade & export control frameworks (HTS / EAR / ITAR / OFAC)
+- `persona/trade-compliance-officer` — Trade Compliance Officer (HTS / ECCN / ITAR / OFAC)
+
+### trade.itar
+
+- `dataset/trade-export-samples` — Synthetic trade-export transaction samples
+- `knowledge-pack/trade-export-control-frameworks` — Trade & export control frameworks (HTS / EAR / ITAR / OFAC)
+- `persona/trade-compliance-officer` — Trade Compliance Officer (HTS / ECCN / ITAR / OFAC)
+- `pipeline/trade-compliance-review` — Trade compliance review (HTS / EAR / ITAR / OFAC)
+- `rubric/trade-compliance-quality-v1` — Trade compliance review quality v1
+- `rule-pack/grep-trade-compliance-flags` — Trade compliance red-flag detectors (HTS / ECCN / ITAR / OFAC)
+
+### trade.sanctions
+
+- `dataset/trade-export-samples` — Synthetic trade-export transaction samples
+- `knowledge-pack/trade-export-control-frameworks` — Trade & export control frameworks (HTS / EAR / ITAR / OFAC)
+- `persona/trade-compliance-officer` — Trade Compliance Officer (HTS / ECCN / ITAR / OFAC)
+- `pipeline/trade-compliance-review` — Trade compliance review (HTS / EAR / ITAR / OFAC)
+- `rubric/trade-compliance-quality-v1` — Trade compliance review quality v1
+- `rule-pack/grep-trade-compliance-flags` — Trade compliance red-flag detectors (HTS / ECCN / ITAR / OFAC)
 
 ### transportation
 
