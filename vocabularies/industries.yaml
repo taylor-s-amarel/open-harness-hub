@@ -212,6 +212,135 @@ industries:
         label: Maritime safety (IMO / SOLAS / MARPOL / ISM)
       - id: maritime.port_security
         label: Port security (ISPS Code)
+  - id: food
+    label: Food production + retail (HACCP, FDA Food Code)
+    sub:
+      - id: food.safety
+        label: Food safety (HACCP / Codex)
+      - id: food.retail
+        label: Food retail (FDA Food Code)
+  - id: mining
+    label: Mining (surface + underground)
+    sub:
+      - id: mining.underground
+        label: Underground mining (MSHA 30 CFR 75)
+      - id: mining.surface
+        label: Surface mining
+  - id: infrastructure
+    label: Infrastructure (bridges, tunnels, elevators, boilers, HVAC, roofing)
+    sub:
+      - id: infrastructure.bridge
+        label: Bridge inspection (NBIS / FHWA)
+      - id: infrastructure.tunnel
+        label: Tunnel safety (NFPA 502)
+      - id: infrastructure.elevator
+        label: Elevator (ASME A17.1)
+      - id: infrastructure.boiler
+        label: Boiler (NBIC NB-23)
+      - id: infrastructure.hvac
+        label: HVAC commissioning (ASHRAE)
+      - id: infrastructure.roofing
+        label: Roofing (FM 4471)
+  - id: cyber
+    label: Cybersecurity (SOC, pentest, IR)
+    sub:
+      - id: cyber.soc
+        label: Security Operations Center (NIST 800-61)
+      - id: cyber.pentest
+        label: Penetration testing (PTES + OWASP)
+  - id: aviation
+    label: Aviation (flight crew + maintenance)
+    sub:
+      - id: aviation.flight_crew
+        label: Flight crew (FAA Part 91/121)
+      - id: aviation.maintenance
+        label: Maintenance (FAA Part 43/145)
+  - id: transportation
+    label: Transportation (trucking + rail + maritime ops)
+    sub:
+      - id: transportation.trucking
+        label: Trucking (FMCSA + CVSA)
+      - id: transportation.rail
+        label: Rail (FRA 49 CFR 215/232)
+      - id: transportation.maritime
+        label: Maritime ops (IMO STCW)
+  - id: environmental
+    label: Environmental (water + wastewater)
+    sub:
+      - id: environmental.water
+        label: Drinking water (SDWA)
+      - id: environmental.wastewater
+        label: Wastewater (NPDES)
+  - id: it
+    label: IT operations (data center, ITIL)
+    sub:
+      - id: it.datacenter
+        label: Data center operations (ITIL + Uptime Tier)
+  - id: sre
+    label: Site Reliability Engineering
+    sub:
+      - id: sre.oncall
+        label: On-call + incident response
+  - id: research
+    label: Research (animal welfare, human subjects)
+    sub:
+      - id: research.animal_welfare
+        label: Animal welfare (IACUC)
+  - id: ehs
+    label: Environmental Health + Safety
+    sub:
+      - id: ehs.audit
+        label: EHS audit (OSHA JHA)
+  - id: telecom
+    label: Telecom field (alias for telecommunications)
+    sub:
+      - id: telecom.field
+        label: Tower climb (ANSI A10.48)
+  - id: space
+    label: Space launch + spacecraft operations
+    sub:
+      - id: space.launch
+        label: Commercial space launch (FAA Part 450)
+      - id: space.export_control
+        label: Space ITAR / EAR export control
+      - id: space.orbital
+        label: Orbital debris + conjunction
+  - id: cannabis
+    label: Cannabis (US state + federal regulatory)
+    sub:
+      - id: cannabis.cultivation
+        label: Cultivation + manufacturing license
+      - id: cannabis.retail
+        label: Dispensary + delivery retail
+      - id: cannabis.testing
+        label: Testing lab + COA + METRC
+  - id: biosecurity
+    label: Biosecurity / select agents / biosafety
+    sub:
+      - id: biosecurity.select_agent
+        label: HHS/CDC select agent (42 CFR 73)
+      - id: biosecurity.bsl
+        label: BSL-3/BSL-4 containment (BMBL)
+      - id: biosecurity.durc
+        label: Dual-use research of concern + P3CO
+  - id: ai_governance
+    label: AI governance + conformity (EU AI Act, NIST AI RMF, ISO 42001)
+    sub:
+      - id: ai_governance.eu_act
+        label: EU AI Act high-risk + GPAI
+      - id: ai_governance.nist_rmf
+        label: NIST AI RMF Govern/Map/Measure/Manage
+      - id: ai_governance.iso_42001
+        label: ISO/IEC 42001 AIMS
+  - id: waste
+    label: Waste management (RCRA Subtitle C + Universal)
+    sub:
+      - id: waste.rcra_tsdf
+        label: RCRA TSDF (40 CFR 264/265)
+      - id: waste.generator
+        label: Hazardous waste generator (40 CFR 262)
+      - id: waste.universal
+        label: Universal waste + used oil (40 CFR 273/279)
   - id: tax
     label: Tax compliance
     sub:
@@ -221,6 +350,57 @@ industries:
         label: Indirect tax (VAT / GST / sales+use)
       - id: tax.crypto
         label: Crypto asset tax reporting
+  - id: telecommunications
+    label: Telecommunications
+    sub:
+      - id: telecommunications.fcc
+        label: FCC Part 47 compliance
+      - id: telecommunications.cpni
+        label: CPNI (Customer Proprietary Network Information)
+      - id: telecommunications.cybersec
+        label: Telco cyber (CALEA / TRAI)
+  - id: gaming
+    label: Gaming / gambling integrity
+    sub:
+      - id: gaming.aml
+        label: Gaming AML / suspicious activity
+      - id: gaming.responsible_gambling
+        label: Responsible gambling / self-exclusion
+      - id: gaming.responsible
+        label: Responsible gambling (alias)
+      - id: gaming.licensing
+        label: Gaming licensing compliance
+  - id: nuclear
+    label: Nuclear safety
+    sub:
+      - id: nuclear.nrc
+        label: US NRC 10 CFR
+      - id: nuclear.power
+        label: Nuclear power reactor operations
+      - id: nuclear.iaea
+        label: IAEA safeguards
+      - id: nuclear.security
+        label: Nuclear security + critical-infrastructure cyber
+  - id: agriculture_compliance
+    label: Agriculture & food production compliance
+    sub:
+      - id: agriculture_compliance.gap
+        label: Good Agricultural Practices (USDA + GlobalGAP)
+      - id: agriculture_compliance.usda
+        label: USDA inspection / labeling
+      - id: agriculture_compliance.fsma
+        label: FSMA Produce Safety Rule (21 CFR 112)
+      - id: agriculture_compliance.organic
+        label: Organic certification (NOP / EU 2018/848)
+  - id: customs
+    label: Customs brokerage & import compliance
+    sub:
+      - id: customs.entry
+        label: Customs entry filing
+      - id: customs.tariff
+        label: HTS classification (customs side)
+      - id: customs.fta
+        label: Free Trade Agreement utilisation
   - id: transportation
     label: Transportation & logistics
   - id: real_estate

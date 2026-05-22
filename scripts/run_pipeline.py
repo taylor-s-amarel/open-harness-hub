@@ -139,7 +139,136 @@ def _run_processor(ref_id: str, inputs: dict, artifact: dict | None) -> dict:
     if ref_id == "processor/llm-judge":
         return _llm_judge(inputs)
 
+    if ref_id == "processor/checklist-evaluator":
+        return _checklist_evaluator(inputs)
+
     return {"_simulated": True, "echo": inputs, "processor": ref_id}
+
+
+def _checklist_evaluator(inputs: dict) -> dict:
+    """Apply named procedural checklist as deterministic GO/NO-GO gate."""
+    candidate = inputs.get("candidate", "")
+    if not isinstance(candidate, str):
+        candidate = json.dumps(candidate) if candidate else ""
+    candidate_lc = candidate.lower()
+    checklist_id = inputs.get("checklist_id", "")
+
+    checklists_path = Path(__file__).resolve().parent.parent / "data" / "technician-checklists" / "checklists.jsonl"
+    checklist = None
+    if checklists_path.exists():
+        for line in checklists_path.read_text().splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rec = json.loads(line)
+            except Exception:
+                continue
+            if rec.get("id") == checklist_id:
+                checklist = rec
+                break
+    if not checklist:
+        return {"verdict": "nogo", "items": [], "nogo_triggers": [f"checklist_not_found:{checklist_id}"], "checklist_version": "n/a"}
+
+    def _kw_tokens(text: str) -> list[str]:
+        toks = []
+        stop = {"with", "from", "this", "that", "have", "been", "will", "must", "shall", "into", "than", "then", "each", "such", "their", "would", "could", "should", "above", "below", "over", "more", "less", "very", "many", "some", "what", "when", "where", "which", "while", "until", "after", "before", "every", "etc"}
+        for raw in text.lower().split():
+            t = "".join(c for c in raw if c.isalnum())
+            if len(t) >= 4 and t not in stop:
+                toks.append(t)
+        return toks
+
+    def _bigrams(tokens: list[str]) -> list[str]:
+        return [f"{tokens[i]} {tokens[i+1]}" for i in range(len(tokens) - 1)]
+
+    items = []
+    for step_text in checklist.get("steps", []):
+        toks = _kw_tokens(step_text)
+        if not toks:
+            items.append({"step": step_text, "status": "unverified", "evidence": ""})
+            continue
+        matched = sum(1 for t in toks if t in candidate_lc)
+        ratio = matched / max(1, len(toks))
+        status = "verified" if ratio >= 0.35 else "unverified"
+        items.append({"step": step_text, "status": status, "matched_tokens": matched, "total_tokens": len(toks)})
+
+    NEGATION_WORDS = {"not", "no", "missing", "fail", "failed", "failure", "exceed", "exceeds", "exceeded", "exceedance", "overdue", "past", "unable", "absent", "loss", "lost", "unverified", "uncorrected", "open", "below", "exposed", "expired", "violation", "violated", "wrong", "incorrect", "delayed", "unreported", "unresolved", "incomplete", "noncompliant", "noncompliance", "unauthorized", "danger", "dangered", "hazardous", "discrepancy", "lapsed", "leak", "leakage", "outage", "abort", "stop", "halt", "withdraw", "trip", "block", "omitted", "illuminated", "without"}
+
+    cand_tokens = _kw_tokens(candidate)
+    cand_text_lc = candidate_lc
+
+    COMPLIANCE_PHRASES = ["within limits", "within limit", "within window", "within tolerance", "within spec", "within range", "within plan", "within 3", "within ±", "within +/-", "well above", "well below", "all closed", "no split", "no findings", "no defect", "no defects", "no exceedance", "no violation", "no violations", "no breach", "no breaches", "no tolerance violation", "all completed", "all verified", "all current", "fully compliant", "verified compliant", "compliant per", "no concerns", "no issues", "no anomaly", "no anomalies", "compliant", "fully resolved", "all resolved", "unchanged", "tolerances applied", "delivered ≥", "received before", "screening clear", "no changed circumstance", "meets the 3 business", "verified within"]
+
+    WINDOW_SIZE = 28
+
+    nogo_triggers: list[str] = []
+    for trigger in checklist.get("go_nogo", []):
+        trig_content = [t for t in _kw_tokens(trigger) if t not in NEGATION_WORDS]
+        if len(trig_content) < 2:
+            continue
+        trig_content_set = set(trig_content)
+        # Require ≥70% of distinct content tokens to appear within a single sliding window
+        required = max(2, int(round(0.70 * len(trig_content_set))))
+
+        best_idx = -1
+        best_hit = 0
+        for i in range(len(cand_tokens)):
+            window = cand_tokens[i:i + WINDOW_SIZE]
+            hit = len(trig_content_set & set(window))
+            if hit > best_hit:
+                best_hit = hit
+                best_idx = i
+                if best_hit == len(trig_content_set):
+                    break
+        if best_hit < required:
+            continue
+
+        window_tokens = cand_tokens[best_idx:best_idx + WINDOW_SIZE]
+        first_tok = window_tokens[0]
+        last_tok = window_tokens[-1] if window_tokens else first_tok
+        first_pos = candidate_lc.find(first_tok)
+        last_pos = candidate_lc.rfind(last_tok, first_pos)
+        if first_pos < 0:
+            continue
+        lo_pos = max(0, first_pos - 60)
+        hi_pos = (last_pos + len(last_tok) + 120) if last_pos >= 0 else min(len(candidate_lc), first_pos + 400)
+        local_context = candidate_lc[lo_pos:hi_pos]
+
+        compliance_assert = any(p in local_context for p in COMPLIANCE_PHRASES)
+        if compliance_assert:
+            continue
+
+        import re as _re_local
+        def _word_in(text: str, word: str) -> bool:
+            return bool(_re_local.search(r"\b" + _re_local.escape(word) + r"\b", text))
+
+        trigger_lc = trigger.lower()
+        trig_negation_anchors = [
+            "".join(c for c in w if c.isalpha())
+            for w in trigger_lc.replace("/", " ").split()
+            if "".join(c for c in w if c.isalpha()) in NEGATION_WORDS
+        ]
+        if trig_negation_anchors:
+            has_specific_neg = any(_word_in(local_context, w) for w in trig_negation_anchors)
+            generic_neg_present = any(_word_in(local_context, w) for w in NEGATION_WORDS)
+            if not (has_specific_neg or generic_neg_present):
+                continue
+        nogo_triggers.append(trigger)
+
+    unverified_count = sum(1 for it in items if it["status"] == "unverified")
+    total = max(1, len(items))
+    verdict = "nogo" if (nogo_triggers or unverified_count >= (total + 1) // 2) else "go"
+    return {
+        "verdict":              verdict,
+        "items":                items,
+        "nogo_triggers":        nogo_triggers,
+        "checklist_id":         checklist_id,
+        "checklist_artifact":   checklist.get("artifact", ""),
+        "checklist_source":     checklist.get("source", ""),
+        "unverified_count":     unverified_count,
+        "step_count":           total,
+    }
 
 
 # ------------------------------------------------------------------

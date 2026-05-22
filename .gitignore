@@ -2,7 +2,7 @@
 _reference/
 
 # Per-user Claude Code state.
-.claude/settings.local.json
+.claude/
 
 # Build artifacts
 site/

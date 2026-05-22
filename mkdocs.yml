@@ -1,8 +1,8 @@
 site_name: Open Harness Hub
-site_description: Host-agnostic catalog of harnesses, knowledge objects, logic & rule packs, tools, pipelines, and benchmarks for any industry.
-site_url: https://open-harness-hub.dev/
-repo_url: https://github.com/TaylorAmarelTech/open-harness-hub
-repo_name: TaylorAmarelTech/open-harness-hub
+site_description: Host-agnostic catalog of harnesses, knowledge objects, logic & rule packs, tools, pipelines, and benchmarks. 383 manifests across 24 industry-grading verticals.
+site_url: https://taylor-s-amarel.github.io/open-harness-hub/
+repo_url: https://github.com/taylor-s-amarel/open-harness-hub
+repo_name: taylor-s-amarel/open-harness-hub
 edit_uri: edit/main/docs/
 
 theme:
@@ -107,6 +107,21 @@ nav:
     - GitHub hosting plan: research/github-hosting.md
     - Antigravity 2.0 ingest plan: research/antigravity-ingest.md
     - Real mining findings: research/real-mining-findings.md
+    - Kernel mining findings (34): research/kernel-mining-findings.md
+    - Kaggle mining 96-kernel report: research/kaggle-mining-96-kernels-report.md
+  - Architecture:
+    - Industry-agnostic pattern: architecture/industry-agnostic-pattern.md
+  - Use cases (additional):
+    - ESG supply-chain DD: use-cases/esg-supply-chain-due-diligence.md
+    - Refugee bureaucracy translation: use-cases/refugee-bureaucracy-translation.md
+  - Spec:
+    - Harness Hub spec: spec/HARNESS_HUB_SPEC.md
+  - Comparison:
+    - Peer registries: comparison/peer-registries.md
+  - Contributing:
+    - Integrating hackathon submissions: contributing/integrating-hackathon-submissions.md
+  - Outreach:
+    - Svityk Bill_info AI integration: outreach/svityk-bill-info-integration.md
   - About:
     - Project: about/project.md
     - License: about/license.md

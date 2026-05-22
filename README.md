@@ -156,12 +156,43 @@ python scripts/oh_hub.py run pipeline/X --inputs input.json
 python scripts/oh_hub.py emit persona/esg-auditor mcp  # emit to MCP / Croissant / etc.
 ```
 
-The 2 demo scripts are pre-baked end-to-end runs:
+11 demo scripts are pre-baked end-to-end runs (every vertical):
 
 ```bash
-python3 scripts/demo_esg_pipeline.py        # ESG grading on 3 supplier samples
-python3 scripts/demo_radiology_pipeline.py  # radiology grading on 3 reports
+python3 scripts/demo_esg_pipeline.py          # ESG / CSDDD supplier grading
+python3 scripts/demo_radiology_pipeline.py    # RADS / Fleischner report grading
+python3 scripts/demo_contract_pipeline.py     # contract clause review
+python3 scripts/demo_appsec_pipeline.py       # CWE secret + vuln detection
+python3 scripts/demo_new_verticals.py         # GxP + climate + threat-intel
+python3 scripts/demo_v3_verticals.py          # GDPR + HR + trade
+python3 scripts/demo_v4_verticals.py          # real estate + M&A + aviation + food safety
+python3 scripts/demo_v5_verticals.py          # construction + NERC CIP + maritime + tax
+python3 scripts/demo_v6_verticals.py          # defense + election integrity + water utility
+python3 scripts/demo_more_verticals.py        # insurance + academic + gov benefits
+python3 scripts/demo_vendor_onboarding.py     # kitchen-sink: ESG + AppSec + Legal
 ```
+
+## Notable integrations
+
+- **Bill_info AI** (Sviatoslav Grabovsky, Gemma 4 Good Hackathon —
+  Impact Track: Digital Equity & Inclusivity) — refugee bureaucracy
+  translation with Verbraucherzentrale-grounded fraud detection.
+  Three reusable design patterns extracted: `two-stage-extract-then-judge`,
+  `critical-tier-output-override`, `refuse-on-redacted`. Live demo:
+  [Svityk/bill-info-ai](https://huggingface.co/spaces/Svityk/bill-info-ai).
+- **MedLabel** (Gemma 4 Good Hackathon 2026) — offline-first
+  multilingual medicine-safety AI. Reference shape integrated;
+  author confirmation pending.
+- **27 verified-evidence pipelines** mined from 107 top-voted Kaggle
+  kernels across 33 competition families. Each pipeline manifest
+  references its source kernel(s) + author(s) + vote counts. See
+  [`docs/research/kaggle-mining-96-kernels-report.md`](docs/research/kaggle-mining-96-kernels-report.md).
+- **Hassan Gasim's "Docker-Hub-for-harnesses" framing** seeded the
+  portable spec at [`docs/spec/HARNESS_HUB_SPEC.md`](docs/spec/HARNESS_HUB_SPEC.md)
+  and the peer-registry comparison at
+  [`docs/comparison/peer-registries.md`](docs/comparison/peer-registries.md).
+
+Full attribution log: [`ATTRIBUTION.md`](ATTRIBUTION.md).
 
 ## Run the site locally
 
