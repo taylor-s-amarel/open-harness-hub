@@ -168,7 +168,22 @@ def render_pipeline_skill(manifest: dict) -> str:
         body_lines.append("## Success criteria")
         body_lines.append("")
         for c in manifest["success_criteria"]:
-            body_lines.append(f"- rubric `{c['rubric']}` threshold {c['threshold']}")
+            if "rubric" in c and "threshold" in c:
+                body_lines.append(f"- rubric `{c['rubric']}` threshold {c['threshold']}")
+            elif c.get("kind") == "deterministic":
+                body_lines.append(f"- deterministic `{c.get('target','?')}` {c.get('op','?')} `{c.get('value','?')}`")
+            elif c.get("kind") == "regex":
+                body_lines.append(f"- regex `{c.get('pattern','?')}` against `{c.get('target','?')}`")
+            elif c.get("kind") == "semantic":
+                body_lines.append(f"- semantic must_cover {c.get('must_cover',[])} against `{c.get('target','?')}`")
+            elif c.get("kind") == "llm_judge":
+                body_lines.append(f"- llm_judge rubric `{c.get('rubric','?')}` threshold {c.get('threshold','?')}")
+            elif c.get("kind") == "tool_validate":
+                body_lines.append(f"- tool_validate `{c.get('tool','?')}` against `{c.get('target','?')}`")
+            elif c.get("kind") == "composite":
+                body_lines.append(f"- composite `{c.get('op','?')}` over {len(c.get('children',[]))} child criteria")
+            else:
+                body_lines.append(f"- criterion: {c}")
         body_lines.append("")
 
     body_lines.append("## Provenance")
