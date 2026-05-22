@@ -1,4 +1,4 @@
-# Use case 1 — Internal Q&A on documents
+# Use case 1 - Internal Q&A on documents
 
 > Upload PDFs, ask questions, get cited answers.
 

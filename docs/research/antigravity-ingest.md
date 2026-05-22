@@ -20,12 +20,12 @@ Google I/O 2026 release). The product surface:
 Key blog-index headlines (May 19, 2026 wave): "Subagents, Hooks,
 Scheduled Tasks, Agent Management, Voice, and Much More". So
 Antigravity has explicit first-class concepts for **subagents**,
-**hooks**, **scheduled tasks**, and **agent management** —
+**hooks**, **scheduled tasks**, and **agent management** -
 near-1:1 with the hub's existing primitives.
 
 ## Why this matters for the hub
 
-Antigravity uses the word "harness" in its product copy — same word
+Antigravity uses the word "harness" in its product copy - same word
 the hub's catalog uses for the wrapping-workflow primitive. This is
 not coincidence; the field is converging on the term. Whatever
 "Antigravity's harness" exposes as Python entry points, the hub's
@@ -36,18 +36,18 @@ not coincidence; the field is converging on the term. Whatever
 | Hub primitive | Antigravity surface (inferred) |
 |---|---|
 | `harness/*` | Antigravity SDK custom agent (Python class) |
-| `tool/*` | Antigravity tool registry (likely MCP-compatible — Anthropic's MCP is the cross-vendor standard everyone is adopting) |
+| `tool/*` | Antigravity tool registry (likely MCP-compatible - Anthropic's MCP is the cross-vendor standard everyone is adopting) |
 | `pipeline/*` | Antigravity sub-agent orchestration ("multiple local agents in parallel") |
 | `processor/*` (audit / verify / iterate) | Antigravity **hooks** (lifecycle event handlers) |
 | Scheduled-task pipelines | Antigravity **scheduled messages** |
 | `persona/*` | Antigravity agent custom-instructions |
 | `rule-pack/*` (privacy / safety gates) | Antigravity hooks again (pre/post lifecycle) |
 | `pattern/*` (Self-RAG, ReAct, ToT) | Reference architectures for SDK users |
-| Hub plugin marketplace (Claude Code-format) | Antigravity will probably ship its own — if it does, add `scripts/emit/antigravity_pack.py` |
+| Hub plugin marketplace (Claude Code-format) | Antigravity will probably ship its own - if it does, add `scripts/emit/antigravity_pack.py` |
 
 ## Ingestion plan (do these in order)
 
-### Phase 1 — when Antigravity SDK ships public
+### Phase 1 - when Antigravity SDK ships public
 
 1. **Read the SDK docs**: at the time of writing, `docs.antigravity.google` is gated (`ECONNREFUSED` from the WebFetch test). Once public, find:
    - The Python class / function the SDK exposes as a "custom agent".
@@ -61,18 +61,18 @@ not coincidence; the field is converging on the term. Whatever
 3. **Reuse `dist/mcp/server.py`** unchanged if Antigravity supports
    MCP (highly likely given the rest of the ecosystem).
 
-### Phase 2 — Antigravity IDE plugin / extension format
+### Phase 2 - Antigravity IDE plugin / extension format
 
 If Antigravity ships a plugin / extension manifest format
 (equivalent to Claude Code's `.claude-plugin/plugin.json`):
 
 1. Add `scripts/emit/antigravity_plugin.py` that produces the manifest
    per harness + pipeline.
-2. Mirror the agentskills.io shape — Antigravity has clear motivation
+2. Mirror the agentskills.io shape - Antigravity has clear motivation
    to support that open standard, since Google's own Gemini CLI already
    does.
 
-### Phase 3 — Scheduled-message integration
+### Phase 3 - Scheduled-message integration
 
 Antigravity's "scheduled messages" map to **cron-style pipeline
 runs**. The hub already has `pipeline/*` manifests; add a top-level
@@ -83,13 +83,13 @@ runs**. The hub already has `pipeline/*` manifests; add a top-level
 Until Antigravity's SDK docs are public, the hub's existing emit
 targets cover the most likely interop paths:
 
-- **MCP server** (`dist/mcp/server.py`) — almost certainly works as-is in Antigravity CLI / IDE the moment MCP support lands. Anthropic, OpenAI, Google's own Gemini CLI, Cursor, OpenHands, Roo Code, Goose etc. all support MCP; Antigravity will too.
-- **Agent Skills bundle** (`dist/agent-skills/`) — 40+ tools already implement the agentskills.io standard; Antigravity is the most likely 41st.
-- **Croissant datasets** (`dist/croissant/`) — Google Dataset Search already indexes Croissant; the same emit drops into Antigravity's data layer if it has one.
+- **MCP server** (`dist/mcp/server.py`) - almost certainly works as-is in Antigravity CLI / IDE the moment MCP support lands. Anthropic, OpenAI, Google's own Gemini CLI, Cursor, OpenHands, Roo Code, Goose etc. all support MCP; Antigravity will too.
+- **Agent Skills bundle** (`dist/agent-skills/`) - 40+ tools already implement the agentskills.io standard; Antigravity is the most likely 41st.
+- **Croissant datasets** (`dist/croissant/`) - Google Dataset Search already indexes Croissant; the same emit drops into Antigravity's data layer if it has one.
 
 So the hub is **already 80 % ingestion-ready** for Antigravity 2.0
 through existing emit targets. The remaining 20 % is the Antigravity-
-specific SDK shim — add when their docs are public.
+specific SDK shim - add when their docs are public.
 
 ## What's UNCLEAR until Antigravity docs are public
 

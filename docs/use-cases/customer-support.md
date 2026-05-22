@@ -1,4 +1,4 @@
-# Use case 4 — Customer-support email triage + draft
+# Use case 4 - Customer-support email triage + draft
 
 > Classify intent, retrieve account context, draft a reply, escalate sensitive issues.
 
@@ -51,7 +51,7 @@ inputs = {
 # → draft_reply:
 #   "Thanks for writing in. I see you're asking about a charge from
 #    last month. I've forwarded this to our billing team for a refund
-#    review — they'll reply within one business day. Reference:
+#    review - they'll reply within one business day. Reference:
 #    ACCT-12345."
 # → human_review_required: true
 ```

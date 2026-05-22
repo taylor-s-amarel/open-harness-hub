@@ -1,4 +1,4 @@
-# Use case 3 — Deep research with citations
+# Use case 3 - Deep research with citations
 
 > The "Perplexity / OpenAI deep research" pattern. Multi-source web search with verified citations.
 
@@ -75,7 +75,7 @@ inputs = {
 
 ### MCP host (Cursor / cline / Claude Desktop)
 
-Add `dist/mcp/server.py` as an MCP server — `tool/web-search` becomes available as a model-callable tool, and you can compose the pipeline yourself.
+Add `dist/mcp/server.py` as an MCP server - `tool/web-search` becomes available as a model-callable tool, and you can compose the pipeline yourself.
 
 ## Customization knobs
 

@@ -3,16 +3,16 @@
 ## What this answers
 
 > "We need to audit our deep-tier supplier networks (tier 3 and tier
-> 4+) for forced labor, environmental harm, AND governance gaps —
+> 4+) for forced labor, environmental harm, AND governance gaps -
 > across the EU CSDDD, CSRD ESRS E1-E5 / S1-S2, the UK MSA, German
 > LkSG, France Loi Vigilance, Norway Åpenhetsloven, Swiss CO Art.
 > 964j, California SB 657, US UFLPA + Tariff Act §307, Canada Bill
-> S-211, Australia MSA, and Japan METI Guidelines — without hiring
+> S-211, Australia MSA, and Japan METI Guidelines - without hiring
 > 100 more ESG analysts. AND we need to share rogue-broker / rogue-
 > corridor signals with peer orgs without leaking confidential
 > supply-chain data."
 
-## Catalog ingredients (v0.2.0 — full E + S + G coverage)
+## Catalog ingredients (v0.2.0 - full E + S + G coverage)
 
 | Layer | Artifact | Role |
 |---|---|---|
@@ -70,7 +70,7 @@ as the outer agent:
 1. **Iter 1**: Resolve T1 supplier → grade T1 → expand T1's known T2 set.
 2. **Iter 2**: For each T2, grade → expand T3 set.
 3. **Iter N**: Grade T(N-1) → expand T(N) set. **Surface audit_gaps**
-   when a tier cannot be resolved (typical at T ≥ 3 — most factories
+   when a tier cannot be resolved (typical at T ≥ 3 - most factories
    in Asia subcontract through informal labor agencies whose books
    don't surface in the lead supplier registry).
 4. **Termination**: max_depth reached OR every leaf resolved.
@@ -90,7 +90,7 @@ k-anonymity + HMAC scheme:
    produces same hash everywhere, but the hash is not invertible).
 3. Bucketed by `(broker_hash, corridor, indicator_category,
    90-day-window)`.
-4. Buckets with `count < k` (default k = 5) are dropped — small
+4. Buckets with `count < k` (default k = 5) are dropped - small
    buckets could be re-identified back to the source org.
 5. Surviving buckets are signed and published.
 6. Member orgs query: "have these indicators been seen against this
@@ -105,7 +105,7 @@ faster pattern surfacing, more re-identification risk.
 ## Evidence the GREP rules work (live test, 2026-05-19)
 
 Run `python3 scripts/run_esg_grep.py` against the 3 synthetic samples
-in `data/supplier-disclosure-samples/` — output:
+in `data/supplier-disclosure-samples/` - output:
 
 ```
 === sample-T1-tech-supplier-good.json ===
@@ -146,7 +146,7 @@ correctly:
 
 The `processor/structured-to-prose` step (added 2026-05-19 after the
 first test exposed false negatives on structured JSON) flattens the
-supplier disclosure into prose lines before GREP — this is what
+supplier disclosure into prose lines before GREP - this is what
 makes structured red-flag detection work.
 
 ## What this is NOT
@@ -157,7 +157,7 @@ makes structured red-flag detection work.
 - A determination of forced labor. The pipeline produces RISK FLAGS
   with citations. The lead company's compliance officer makes the
   determination after the supplier's right of reply (CSDDD Art. 10).
-- A substitute for on-the-ground audits at high-risk tiers — those
+- A substitute for on-the-ground audits at high-risk tiers - those
   remain mandatory under CSDDD risk-based due diligence.
 
 ## Reference for proposers of this use case
@@ -168,6 +168,6 @@ formats (Croissant, MCP, Agent Skills, HF cards, lm-eval-harness,
 promptfoo, CycloneDX-ML, OpenLineage, C2PA, EU AI Act, SPDX 3.0,
 JSON-LD, DPV).
 
-The CSDDD-aligned pack is `lifecycle: experimental` — feedback
+The CSDDD-aligned pack is `lifecycle: experimental` - feedback
 welcome on indicator coverage, multi-lingual GREP patterns, and the
 k-anonymity threshold default.

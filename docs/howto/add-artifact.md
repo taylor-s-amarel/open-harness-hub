@@ -38,5 +38,5 @@ A manifest enters at `experimental`. To promote:
 - **Volatile facts** (hotline numbers, fee caps, current advisories) go
   in tools or knowledge packs, never in personas.
 - **Trust boundaries travel with the artifact**, not the deployment.
-- **Reproducibility is a first-class field** — every benchmark
+- **Reproducibility is a first-class field** - every benchmark
   declares `(commit_sha, dataset_version, run_date)`.

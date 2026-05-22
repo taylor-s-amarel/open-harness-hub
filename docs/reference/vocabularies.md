@@ -1,6 +1,6 @@
 # Vocabularies
 
-Controlled lists live in `vocabularies/`. Each is YAML — new entries
+Controlled lists live in `vocabularies/`. Each is YAML - new entries
 are added by PR.
 
 | File | What |

@@ -27,7 +27,7 @@ things:
    compliance officer, or downstream consumer can ingest hub manifests
    without writing a parser.
 
-The hub does NOT need to BE these standards — it should **emit** them
+The hub does NOT need to BE these standards - it should **emit** them
 where they fit and **consume** them where authoritative sources publish
 them. The hub's own taxonomy stays purpose-built for composition; the
 emitted standards are the lingua franca for the outside world.
@@ -44,25 +44,25 @@ emitted standards are the lingua franca for the outside world.
 
 ## 3. Schema.org / W3C / JSON-LD
 
-_research stream 1 — to be populated_
+_research stream 1 - to be populated_
 
 ---
 
 ## 4. AI-specific standards
 
-_research stream 2 — to be populated_
+_research stream 2 - to be populated_
 
 ---
 
 ## 5. Tool & eval standards
 
-_research stream 3 — to be populated_
+_research stream 3 - to be populated_
 
 ---
 
 ## 6. Provenance, lineage, privacy & license standards
 
-_research stream 4 — to be populated_
+_research stream 4 - to be populated_
 
 ---
 
@@ -101,7 +101,7 @@ shift:
 1. **Open vocabularies** for `industry`, `capability`, `process_kind`,
    `pipeline_kind`, `leaf-types`. New values land via PR with no schema
    migration.
-2. **`body` JSONB / opaque manifest** in the database mapping — even
+2. **`body` JSONB / opaque manifest** in the database mapping - even
    relational stores can absorb new fields without DDL changes.
 3. **`attribution` envelope** present on every artifact lets the hub
    ingest from external sources (Kaggle, HF, arXiv) without losing

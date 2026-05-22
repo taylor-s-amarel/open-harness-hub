@@ -1,4 +1,4 @@
-# Use case 8 — LLM red-teaming
+# Use case 8 - LLM red-teaming
 
 > Prompt-injection + jailbreak + safety probe battery against any LLM endpoint.
 
@@ -11,7 +11,7 @@
 
 ## Primary pipeline
 
-No single pipeline — assemble from primitives. Eventually:
+No single pipeline - assemble from primitives. Eventually:
 `pipeline/llm-redteam-suite` (planned).
 
 ## Primitives to compose
@@ -47,7 +47,7 @@ Run these against your endpoint and score each:
 
 | Probe | Source |
 |---|---|
-| `promptinject` | Direct prompt injection — "ignore previous" |
+| `promptinject` | Direct prompt injection - "ignore previous" |
 | `dan` | DAN / "do anything now" jailbreaks |
 | `latentinjection` | Indirect injection via retrieved doc / tool result |
 | `ansiescape` | Terminal escape codes hide payload |

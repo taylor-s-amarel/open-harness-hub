@@ -8,7 +8,7 @@ This page summarizes it.
 | Type | Layer | Purpose |
 |---|---|---|
 | `knowledge-pack` | 1 | Typed bundle of facts. |
-| `logic-pack`     | 1 | Typed bundle of behavior — prompts, schemas, policies. |
+| `logic-pack`     | 1 | Typed bundle of behavior - prompts, schemas, policies. |
 | `rule-pack`      | 1 | Bundle of one rule family (GREP / RAG / classifier / heuristic / online-search / …). |
 | `tool`           | 1 | Function-call definition. |
 | `persona`        | 1 | Role / system-prompt frame. |
@@ -37,15 +37,15 @@ This page summarizes it.
 
 ## Cross-cutting vocabularies
 
-- **Industry** — open list. Sub-industries are dot-separated
+- **Industry** - open list. Sub-industries are dot-separated
   (`healthcare.radiology`, `finance.aml`).
-- **Capability** — what the artifact does
+- **Capability** - what the artifact does
   (classification / extraction / retrieval / safety_gating / …).
-- **Modality** — text / image / audio / video / code / structured / tabular.
-- **Trust boundary** — local / hub / external / mixed.
-- **Lifecycle** — experimental / beta / stable / deprecated.
-- **Freshness** — stable / volatile / dated.
-- **License** — SPDX identifiers.
+- **Modality** - text / image / audio / video / code / structured / tabular.
+- **Trust boundary** - local / hub / external / mixed.
+- **Lifecycle** - experimental / beta / stable / deprecated.
+- **Freshness** - stable / volatile / dated.
+- **License** - SPDX identifiers.
 
 See [vocabularies](../reference/vocabularies.md) for the controlled
 lists.

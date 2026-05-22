@@ -1,4 +1,4 @@
-# Real mining findings — Meta Kaggle + GitHub
+# Real mining findings - Meta Kaggle + GitHub
 
 > This time the mining ACTUALLY ran. Meta Kaggle parsed, 9 top-voted
 > LLM-competition kernels pulled, 10 production agentic-AI repos
@@ -36,10 +36,10 @@
 
 ## Concrete findings
 
-### Kaggle — WSDM Chatbot Arena harness pattern (CONFIRMED with real code)
+### Kaggle - WSDM Chatbot Arena harness pattern (CONFIRMED with real code)
 
-Three of nine pulled kernels — all from WSDM Cup Multilingual Chatbot
-Arena — confirmed the same harness shape:
+Three of nine pulled kernels - all from WSDM Cup Multilingual Chatbot
+Arena - confirmed the same harness shape:
 
 | Kernel | Pattern hit | Libraries |
 |---|---|---|
@@ -58,7 +58,7 @@ Arena — confirmed the same harness shape:
 This is now a confirmed `pipeline/*` shape for the hub:
 `pipeline/judge-pairwise-lora-qlora`. Adding to the next batch.
 
-### Kaggle — kernels NOT matching the harness detector
+### Kaggle - kernels NOT matching the harness detector
 
 The other six kernels (top-voted in detect-ai-generated-text,
 llm-classification-finetuning, h2oai-predict-the-llm,
@@ -70,21 +70,21 @@ those competitions.
 This is itself a useful finding: **for closed-vocabulary
 classification competitions, the winning shape is small-model
 fine-tuning, not LLM-harness orchestration.** The hub should reflect
-this — `pipeline/classify-with-tfidf-lightgbm` and
+this - `pipeline/classify-with-tfidf-lightgbm` and
 `pipeline/classify-with-deberta-finetune` are real-world-validated
 shapes that should join the catalog.
 
-### GitHub — pattern markers found
+### GitHub - pattern markers found
 
 | Pattern marker | Repos that contain it |
 |---|---|
-| ReAct (`Thought:` / `Observation:` / `Action:`) | crewAI (extensive — both code + tests) |
+| ReAct (`Thought:` / `Observation:` / `Action:`) | crewAI (extensive - both code + tests) |
 | MCP tool definitions | crewAI (`lib/crewai/src/crewai/tools/mcp_tool_wrapper.py`, `mcp/config.py`, `mcp/tool_resolver.py`, `mcp/filters.py`) |
 | Reflexion / self-critique | langgraph (errors, pregel/_algo, stream/_mux, graph/state, retry) |
 | Plan-and-execute / state-graph | semantic-router (encoders), langgraph (checkpoint, store, state machine) |
 | Subagent / multi-agent / supervisor | langgraph (sdk-py async client, prebuilt/tool_node, CLI), crewAI (flow tests) |
 
-Tree-of-Thoughts (`tree.of.thought` / `BFS`) — **no direct hits in
+Tree-of-Thoughts (`tree.of.thought` / `BFS`) - **no direct hits in
 the cloned set**. ToT is more academic than production today; the
 production frameworks use Self-Refine + Reflexion + Plan-Execute
 instead. The hub's `pattern/tree-of-thoughts` should stay
@@ -117,12 +117,12 @@ Files worth porting code/shape from into hub `processor/*` or
 
 Concrete artifacts to add (next push):
 
-- `pipeline/judge-pairwise-lora-qlora` — verified WSDM Cup shape
-- `pipeline/classify-with-tfidf-lightgbm` — verified classical-ML shape
-- `pipeline/classify-with-deberta-finetune` — verified classical-NLP shape
-- `tool/mcp-crewai-resolver` — port shape from crewAI's tool_resolver
+- `pipeline/judge-pairwise-lora-qlora` - verified WSDM Cup shape
+- `pipeline/classify-with-tfidf-lightgbm` - verified classical-ML shape
+- `pipeline/classify-with-deberta-finetune` - verified classical-NLP shape
+- `tool/mcp-crewai-resolver` - port shape from crewAI's tool_resolver
 - Update `processor/iterative-revise-loop` impl notes with langgraph's pregel scheduling pattern
-- Add `pattern/langgraph-state-machine` — formalize the StateGraph shape as a named pattern
+- Add `pattern/langgraph-state-machine` - formalize the StateGraph shape as a named pattern
 
 ## Honest limitations
 

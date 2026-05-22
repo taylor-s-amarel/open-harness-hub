@@ -58,5 +58,5 @@ python hf-space/app.py
 # open http://127.0.0.1:7860
 ```
 
-The playground reads the catalog directly — no preprocessing, no
+The playground reads the catalog directly - no preprocessing, no
 generation step. Edit a manifest, save, refresh.

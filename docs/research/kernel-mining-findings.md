@@ -137,7 +137,7 @@
 ## Next steps
 
 - Run `scripts/mine_meta_kaggle.py` against the full Meta Kaggle Code
-  corpus once download completes — that will give 100x-1000x coverage.
+  corpus once download completes - that will give 100x-1000x coverage.
 - Add `logits-processor-zoo` as a first-class processor (currently
   bundled into `processor/vllm-batched-sampling`).
 - Add a benchmark that compares AWQ vs bitsandbytes on perplexity +

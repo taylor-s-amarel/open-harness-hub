@@ -1,4 +1,4 @@
-# Use case 2 — Code review with security
+# Use case 2 - Code review with security
 
 > Review a diff. Get file:line comments, OWASP/CWE/MITRE citations, and a numeric risk score.
 
@@ -17,11 +17,11 @@
 
 | Layer | Artifact | What it does |
 |---|---|---|
-| GREP — cloud | `rule-pack/grep-cloud-secrets` | AWS/GCP/Azure/DO/OCI/Cloudflare keys in the diff |
-| GREP — AI vendor | `rule-pack/grep-ai-vendor-keys` | Anthropic/OpenAI/HF/Cohere/Replicate/Groq/Together/etc. |
-| GREP — VCS | `rule-pack/grep-vcs-platform-pats` | GitHub/GitLab/Atlassian/Bitbucket PATs |
-| GREP — keys | `rule-pack/grep-private-key-blocks` | RSA/EC/OpenSSH/PGP/Age private-key blocks |
-| GREP — prompt injection | `rule-pack/grep-prompt-injection-heuristics` | If the diff contains LLM-prompt strings |
+| GREP - cloud | `rule-pack/grep-cloud-secrets` | AWS/GCP/Azure/DO/OCI/Cloudflare keys in the diff |
+| GREP - AI vendor | `rule-pack/grep-ai-vendor-keys` | Anthropic/OpenAI/HF/Cohere/Replicate/Groq/Together/etc. |
+| GREP - VCS | `rule-pack/grep-vcs-platform-pats` | GitHub/GitLab/Atlassian/Bitbucket PATs |
+| GREP - keys | `rule-pack/grep-private-key-blocks` | RSA/EC/OpenSSH/PGP/Age private-key blocks |
+| GREP - prompt injection | `rule-pack/grep-prompt-injection-heuristics` | If the diff contains LLM-prompt strings |
 | RAG | `knowledge-pack/owasp-top-10-llm` | OWASP Top 10 for LLM Apps citations |
 | RAG | `knowledge-pack/mitre-attack-sample` | MITRE ATT&CK technique references |
 | Persona | `persona/code-consultant` | Senior-engineer voice; specific fixes |

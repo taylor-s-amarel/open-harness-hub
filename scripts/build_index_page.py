@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate docs/INDEX.md — single-page browsable catalog.
+"""Generate docs/INDEX.md - single-page browsable catalog.
 
 Groups all artifacts by type, then by industry vertical, with a
 short description per artifact. Solves Taylor's 'single place to
@@ -19,7 +19,7 @@ def main() -> int:
     catalog = load_catalog()
     out = []
 
-    out.append("# Open Harness Hub — single-page catalog index")
+    out.append("# Open Harness Hub - single-page catalog index")
     out.append("")
     out.append(f"Auto-generated from `scripts/build_index_page.py` against {len(catalog)} live artifacts. Run that script to refresh after any catalog change.")
     out.append("")
@@ -61,7 +61,7 @@ def main() -> int:
             desc = (art.get("description") or "").strip().split("\n\n")[0].strip().replace("\n", " ")
             desc_short = desc[:180] + ("…" if len(desc) > 180 else "")
             industries = ", ".join((art.get("industry") or [])[:4])
-            out.append(f"- **`{art['id']}`** — {name}  ")
+            out.append(f"- **`{art['id']}`** - {name}  ")
             out.append(f"  _{industries}_ • {desc_short}")
         out.append("")
 
@@ -72,7 +72,7 @@ def main() -> int:
         out.append(f"### {ind}")
         out.append("")
         for art in sorted(by_industry[ind], key=lambda a: (a.get("type",""), a["id"])):
-            out.append(f"- `{art['id']}` — {art.get('name', '')}")
+            out.append(f"- `{art['id']}` - {art.get('name', '')}")
         out.append("")
 
     target = Path(__file__).resolve().parent.parent / "docs" / "INDEX.md"

@@ -1,4 +1,4 @@
-# Use case 6 — AML transaction review
+# Use case 6 - AML transaction review
 
 > Sanctions-first transaction review with FATF typology matches and SAR-style narrative drafts.
 
@@ -59,7 +59,7 @@ inputs = {
 #        fatf_section: "fatf-structuring-§2.1",
 #        supports: [...],
 #        evidence_edges: [...] }]
-# → narrative_draft: "## DRAFT — Suspicious Activity Narrative\n\n..."
+# → narrative_draft: "## DRAFT - Suspicious Activity Narrative\n\n..."
 # → risk_score: 0.74
 # → escalation: "enhanced_due_diligence"
 ```
@@ -85,7 +85,7 @@ inputs = {
 
 - **Crypto-specific add-ons**: write `knowledge-pack/crypto-mixers` (Tornado Cash, etc.) + `rule-pack/grep-crypto-wallets` for blockchain analytics.
 - **Sector-specific typologies**: e.g. correspondent banking has different red flags than retail. Layer a sector pack.
-- **Frontier judge for QA**: add a `processor/llm-judge` step with the `frontier_judge` target — but only after PII redaction.
+- **Frontier judge for QA**: add a `processor/llm-judge` step with the `frontier_judge` target - but only after PII redaction.
 
 ## Important disclaimer
 

@@ -3,7 +3,7 @@
 The Open Harness Hub claim is that **a small set of primitives covers
 any cite-first, risk-tiered grading task across any industry**. This
 doc shows three verticals running on the IDENTICAL pipeline runner
-with the SAME 6-step chain — only the persona / rule pack /
+with the SAME 6-step chain - only the persona / rule pack /
 knowledge pack / rubric / sample data change.
 
 ## The six-step chain

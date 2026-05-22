@@ -1,4 +1,4 @@
-# More use cases — ideation roundup
+# More use cases - ideation roundup
 
 > Grounded in what the Meta Kaggle + production-repo mining has surfaced,
 > plus brainstorm from the broader landscape. Each row is a future
@@ -15,9 +15,9 @@ and evidence from real-world sources.
 
 | # | Slug | What | Evidence |
 |---|---|---|---|
-| 1 | `lora-qlora-pairwise-pref-finetune` | Fine-tune Gemma-2-9b-4bit with QLoRA on pairwise-preference triples. Outputs a LoRA adapter. | **Verified Kaggle pattern** — 3 of 9 top WSDM-Cup Multilingual Chatbot Arena kernels |
-| 2 | `tfidf-lightgbm-text-classification` | Char-ngram TF-IDF → SGD+LightGBM stack → calibrated probability. The non-LLM baseline that wins many Kaggle text comps. | **Verified** — top kernels of LLM-Detect-AI-Generated-Text |
-| 3 | `deberta-finetune-classification` | DeBERTa-v3-large fine-tune for closed-set classification. Often layered on TF-IDF baseline. | **Verified** — top kernels across LLM classification comps |
+| 1 | `lora-qlora-pairwise-pref-finetune` | Fine-tune Gemma-2-9b-4bit with QLoRA on pairwise-preference triples. Outputs a LoRA adapter. | **Verified Kaggle pattern** - 3 of 9 top WSDM-Cup Multilingual Chatbot Arena kernels |
+| 2 | `tfidf-lightgbm-text-classification` | Char-ngram TF-IDF → SGD+LightGBM stack → calibrated probability. The non-LLM baseline that wins many Kaggle text comps. | **Verified** - top kernels of LLM-Detect-AI-Generated-Text |
+| 3 | `deberta-finetune-classification` | DeBERTa-v3-large fine-tune for closed-set classification. Often layered on TF-IDF baseline. | **Verified** - top kernels across LLM classification comps |
 | 4 | `model-arm-benchmark` | Run baseline / harnessed / fine-tuned / fine-tuned+harnessed arms; combined rule+LLM grading; comparison report. | _reference/gemma4_comp A-00 |
 | 5 | `synthetic-sft-dpo-gen` | Use a teacher LLM to synthesize (input, output) training rows; rubric-polish for the response contract. | DSPy + DueCare A-00 + RLAIF |
 | 6 | `rubric-driven-llm-judge` | Score outputs against a multi-dimension rubric with a frontier judge model. | Anthropic + DeepEval + Ragas |
@@ -93,7 +93,7 @@ and evidence from real-world sources.
 7. `pipeline/code-act-jupyter-loop` (verified clone)
 8. `pipeline/storm-persona-curation-article` (verified)
 9. `pipeline/deep-research-supervisor-workers` (verified clone)
-10. `pipeline/knowledge-graph-from-corpus` (verified clone — graphrag)
+10. `pipeline/knowledge-graph-from-corpus` (verified clone - graphrag)
 
 **Strong-signal (in progress with Meta Kaggle Code)**:
 11. `pipeline/long-doc-map-reduce-summary`
@@ -104,7 +104,7 @@ and evidence from real-world sources.
 
 **Verticalize after the 15 above** (radiology, contract-clause, etc.).
 
-## Going broader — methodology
+## Going broader - methodology
 
 For each future use case, the recipe should answer:
 

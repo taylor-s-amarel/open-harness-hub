@@ -19,10 +19,10 @@ to `main` deploys.
 
 Two flavors:
 
-- **Static** — push the `site/` build to a Hugging Face Space with
+- **Static** - push the `site/` build to a Hugging Face Space with
   `sdk: static`. The catalog is read-only. Set up via
   `hf-space/README.md` (already has the HF frontmatter).
-- **Gradio** — the same Space directory holds `app.py` which exposes
+- **Gradio** - the same Space directory holds `app.py` which exposes
   the live playground. Set `sdk: gradio` in the README frontmatter.
 
 ## Vercel

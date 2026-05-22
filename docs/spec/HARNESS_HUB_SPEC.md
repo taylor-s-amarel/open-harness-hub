@@ -1,16 +1,16 @@
-# Harness Hub Spec — foundational open-source standard for declarative LLM-pipeline registries
+# Harness Hub Spec - foundational open-source standard for declarative LLM-pipeline registries
 
 > _"We have hubs for models (Hugging Face) and vector DBs, but we lack
-> a unified Harness Hub — a centralized registry for deterministic,
+> a unified Harness Hub - a centralized registry for deterministic,
 > step-by-step operational workflows (Persona injection, RegEx/Grep
 > pre-filtering, hybrid RAG, and post-generation evaluation). If we
 > look at how DevOps evolved, this is exactly akin to the rise of
 > Docker Hub for container environments."_
-> — Hassan Gasim, May 2026
+> - Hassan Gasim, May 2026
 
 This document distills the [Open Harness Hub](https://github.com/taylor-s-amarel/open-harness-hub)
 implementation into a portable, vendor-neutral specification for any
-team that wants to publish or consume **harnesses** — host-agnostic,
+team that wants to publish or consume **harnesses** - host-agnostic,
 industry-agnostic descriptions of repeatable LLM-pipeline workflows.
 
 The full implementation lives in this repo at v0.4.0+ (200 artifacts,
@@ -28,17 +28,17 @@ type. There are **14 artifact types**:
 | **harness** | A named, repeatable workflow around a model or trust boundary. Declares applied layers, packs consumed/emitted, model targets, I/O verification, privacy boundaries. |
 | **pipeline** | A DAG of harness + rule-pack + tool + processor + sub-pipeline steps that completes a specific task. |
 | **persona** | A character / role frame the model adopts at the start of a workflow, with hard rules + refusal style. |
-| **rule-pack** | A bundle of one rule family — GREP regex, glob, classifier, heuristic, retrieval policy. |
-| **knowledge-pack** | A typed bundle of facts — RAG corpus, fact tables, citation graphs. |
-| **logic-pack** | A typed bundle of behavior — prompt templates, response policies, tool registries. |
+| **rule-pack** | A bundle of one rule family - GREP regex, glob, classifier, heuristic, retrieval policy. |
+| **knowledge-pack** | A typed bundle of facts - RAG corpus, fact tables, citation graphs. |
+| **logic-pack** | A typed bundle of behavior - prompt templates, response policies, tool registries. |
 | **tool** | A function-call definition with example payloads and a backing implementation contract. |
 | **adapter** | A provider-neutral transport (Ollama / vLLM / Anthropic / OpenAI / Gemini / HF endpoint / callable / local). |
-| **processor** | A small deterministic transform — redaction, format conversion, scoring, audit emission. |
-| **rubric** | An evaluation contract — dimensions, weights, evidence required per grade. |
+| **processor** | A small deterministic transform - redaction, format conversion, scoring, audit emission. |
+| **rubric** | An evaluation contract - dimensions, weights, evidence required per grade. |
 | **dataset** | A typed collection of inputs/outputs/labels with provenance. |
 | **schema** | A typed I/O contract (JSON Schema 2020-12). |
 | **benchmark** | A pipeline + dataset + rubric + judge + model arms → comparable score. |
-| **pattern** | A named, citable design pattern (Self-RAG / ReAct / ToT / k-anonymity-aggregation / etc.) — like a Wikipedia entry for the technique. |
+| **pattern** | A named, citable design pattern (Self-RAG / ReAct / ToT / k-anonymity-aggregation / etc.) - like a Wikipedia entry for the technique. |
 
 ## 2. The envelope
 
@@ -108,7 +108,7 @@ steps:
 Step kinds (open vocabulary, current set):
 `harness · rule_pack · tool · adapter · branch · loop · knowledge_pack · processor · embedder · chunker · format_convert · format_coerce · cache · memory · judge · escalate · dispatch · parallel · report · deliver · pipeline`
 
-The `pipeline` step kind invokes a sub-pipeline — this is how the
+The `pipeline` step kind invokes a sub-pipeline - this is how the
 kitchen-sink `pipeline/full-vendor-due-diligence` chains ESG +
 AppSec + Legal grading into one workflow.
 
@@ -212,19 +212,19 @@ via `scripts/emit/`:
 | `eu_ai_act_annex_iv` | EU AI Act Annex IV technical documentation |
 | `spdx_3` | SPDX 3.0 software bill of materials |
 
-This is the answer to "how do we publish?" — write **one** manifest;
+This is the answer to "how do we publish?" - write **one** manifest;
 get **thirteen** standards-format publications for free.
 
 ## 7. Vocabularies
 
 Controlled lists live in `vocabularies/`:
 
-- `industries.yaml` — 30+ industries with sub-industries (healthcare.radiology, finance.aml, esg.csddd, legal.contract, security.appsec, ...)
-- `capabilities.yaml` — what the artifact DOES (retrieval, classification, generation, anonymization, code-execution, ...)
-- `modalities.yaml` — text / image / audio / video / structured
-- `lifecycle-position.yaml` — pre_api.* / api.* / post_api.* / cross_cutting
-- `applied-layers.yaml` — persona / grep / rag / tools / official_sources / online / classifier / heuristic / privacy
-- `leaf-types.yaml` — typed knowledge/logic/trace leaves consumed and emitted
+- `industries.yaml` - 30+ industries with sub-industries (healthcare.radiology, finance.aml, esg.csddd, legal.contract, security.appsec, ...)
+- `capabilities.yaml` - what the artifact DOES (retrieval, classification, generation, anonymization, code-execution, ...)
+- `modalities.yaml` - text / image / audio / video / structured
+- `lifecycle-position.yaml` - pre_api.* / api.* / post_api.* / cross_cutting
+- `applied-layers.yaml` - persona / grep / rag / tools / official_sources / online / classifier / heuristic / privacy
+- `leaf-types.yaml` - typed knowledge/logic/trace leaves consumed and emitted
 
 New entries land via PR. Sub-industries are dot-separated. Open vocabulary
 where it makes sense (capabilities, process_kind, tags); closed enum
@@ -283,7 +283,7 @@ inspectable workflow that I can publish, version, and grade."
 - **Co-authors**: open a discussion or PR. The spec lives in this
   repo; the implementation does too.
 - **Forks for verticals**: a domain-specific hub (pharma compliance,
-  defense acquisitions, climate finance) is a healthy fork — same
+  defense acquisitions, climate finance) is a healthy fork - same
   schemas, different catalog content.
 - **Bridge to upstream registries**: emitters to LangChain Hub /
   Semantic Kernel / Hayhooks / others are welcome. The 13 current
@@ -291,5 +291,5 @@ inspectable workflow that I can publish, version, and grade."
 
 ## License
 
-MIT — same as the reference implementation. Compatible with
+MIT - same as the reference implementation. Compatible with
 permissive forks, vendor publication, and registry hosting.

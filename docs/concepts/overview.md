@@ -8,13 +8,13 @@ benchmarks, and tools across any industry.
 ## Four layers
 
 ```
-Layer 4 — Benchmarks & Evaluations
+Layer 4 - Benchmarks & Evaluations
               ▲
-Layer 3 — Pipelines (compositions of harnesses + rules + tools)
+Layer 3 - Pipelines (compositions of harnesses + rules + tools)
               ▲
-Layer 2 — Harnesses (named workflows around a model or trust boundary)
+Layer 2 - Harnesses (named workflows around a model or trust boundary)
               ▲
-Layer 1 — Knowledge packs · Logic packs · Rule packs · Tools · Personas · Adapters · Schemas
+Layer 1 - Knowledge packs · Logic packs · Rule packs · Tools · Personas · Adapters · Schemas
 ```
 
 ## What you get
@@ -35,7 +35,7 @@ Layer 1 — Knowledge packs · Logic packs · Rule packs · Tools · Personas ·
 
 - It is not a hosted inference provider. Bring your own model adapter.
 - It is not a fork of any existing eval framework. It plays well with
-  them — a benchmark in this catalog can drive a run in any framework.
+  them - a benchmark in this catalog can drive a run in any framework.
 - It is not industry-specific. Industry tags are first-class but
   optional.
 

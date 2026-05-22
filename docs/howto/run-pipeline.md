@@ -39,5 +39,5 @@ python hf-space/app.py
 # open http://127.0.0.1:7860
 ```
 
-The same app deploys unchanged to Hugging Face Spaces — see
+The same app deploys unchanged to Hugging Face Spaces - see
 [Deploy the hub](deploy.md).

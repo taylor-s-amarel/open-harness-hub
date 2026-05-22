@@ -5,11 +5,11 @@
 > "A Ukrainian refugee in Germany photographs a German payment letter
 > demanding €299 in 48 hours. They have ≈10 seconds of attention
 > before they decide to pay, ignore, or panic. They don't need a
-> translation — they need to know whether this is real and what to
+> translation - they need to know whether this is real and what to
 > do."
 
 This use case is anchored in Sviatoslav Grabovsky's **Bill_info AI**
-(Gemma 4 Good Hackathon — Impact Track: Digital Equity & Inclusivity)
+(Gemma 4 Good Hackathon - Impact Track: Digital Equity & Inclusivity)
 running live at https://huggingface.co/spaces/Svityk/bill-info-ai.
 
 ## Why this matters
@@ -26,7 +26,7 @@ letter:
 
 Google Translate translates *words*. A general chatbot mixes
 "pay if the amount is correct" with "this might be a scam" in the
-same response — and a stressed reader picks the more action-oriented
+same response - and a stressed reader picks the more action-oriented
 advice.
 
 Bill_info AI's architectural answer is **two-stage extract-then-judge
@@ -43,7 +43,7 @@ Bill_info AI's architectural answer is **two-stage extract-then-judge
 | Rubric | `rubric/bureaucracy-translation-quality-v1` | 9-dim grading (next-24h action present, field accuracy ≥ 95%, redacted refusal, fraud-tier classification, critical override enforced, authority cited, ...) |
 | Pipeline | `pipeline/bill-info-extract-fraud-detect-recommend` | Two-stage Gemma 4 vision: extract → validate deterministically → GREP fraud-pass → focused fraud-detect LLM → RAG against Verbraucherzentrale → assemble with critical override |
 | Dataset | `dataset/bill-info-test-documents` | 28-doc eval set (real redacted + synthetic clear + adversarial); reproducible via `python -m eval.run_eval` |
-| Pattern (new) | `pattern/two-stage-extract-then-judge` | Separate extraction + judgment calls — focused criteria don't compete with extraction for model attention |
+| Pattern (new) | `pattern/two-stage-extract-then-judge` | Separate extraction + judgment calls - focused criteria don't compete with extraction for model attention |
 | Pattern (new) | `pattern/critical-tier-output-override` | Critical finding forces every UI component into ONE consistent message; prevents mixed "pay if correct + might be a scam" |
 | Pattern (new) | `pattern/refuse-on-redacted` | Null over hallucination on missing/redacted fields; UI renders as user-language "unknown" |
 
@@ -56,16 +56,16 @@ Bill_info AI's architectural answer is **two-stage extract-then-judge
 | Overall field accuracy | **95.8%** |
 | Refusal accuracy on redacted documents | **100%** (7/7) |
 | Average latency (local) | 8.5s |
-| Concrete fraud true-positive (synthetic Polish-IBAN scam) | 3 indicators detected with quoted German evidence — `likely_scam` classification |
-| Concrete fraud true-negative (real r/germany Inkasso) | `legitimate` classification — **zero false-positive indicators** |
+| Concrete fraud true-positive (synthetic Polish-IBAN scam) | 3 indicators detected with quoted German evidence - `likely_scam` classification |
+| Concrete fraud true-negative (real r/germany Inkasso) | `legitimate` classification - **zero false-positive indicators** |
 
 The single eval failure was a synthetic info-letter that triggered a
 schema validation error rather than producing a wrong result. The
-validation layer rejected malformed output — the safe failure mode.
+validation layer rejected malformed output - the safe failure mode.
 
 ## How the 3 new patterns generalize
 
-These design patterns are NOT specific to Bill_info AI — they're
+These design patterns are NOT specific to Bill_info AI - they're
 reusable across the catalog:
 
 ### `pattern/two-stage-extract-then-judge`
@@ -93,14 +93,14 @@ Generalizes to:
 Bill_info AI's roadmap explicitly targets Caritas, Diakonie, and
 Verbraucherzentrale for self-hosted deployments using the Apache 2.0
 Gemma 4 weights. Self-hosting keeps refugee financial documents on
-the organisation's own infrastructure — something closed APIs cannot
+the organisation's own infrastructure - something closed APIs cannot
 do.
 
 The Open Harness Hub catalog complements this with:
 - Standards-format publication (Croissant / MCP / Agent Skills emitters
   for the pipeline manifest)
 - Vocabulary fork point for additional consumer-protection authorities
-  (CFPB US, FCA UK, ACCC AU, ASIC NZ) — same pipeline shape, different
+  (CFPB US, FCA UK, ACCC AU, ASIC NZ) - same pipeline shape, different
   knowledge pack
 - Composable success criteria so individual NGOs can add their own
   acceptance bars (e.g. "must include hotline number for that
@@ -114,7 +114,7 @@ The Open Harness Hub catalog complements this with:
   contributors' wishes)
 - Production-scale fraud benchmark (Bill_info AI explicitly notes
   fraud detection has qualitative evidence on tested cases, not
-  statistical evaluation against gold fraud labels — that's the
+  statistical evaluation against gold fraud labels - that's the
   next-step work)
 
 The catalog reference is the **shape** of the pipeline + the

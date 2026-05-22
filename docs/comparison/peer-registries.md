@@ -1,4 +1,4 @@
-# Peer registries — what already exists, what this hub adds
+# Peer registries - what already exists, what this hub adds
 
 A side-by-side of the LLM-ecosystem registries Hassan mentioned
 ("Hugging Face, vector DBs") plus the others Taylor references, and
@@ -12,11 +12,11 @@ which gaps Open Harness Hub fills.
 | **LangChain Hub** | prompt templates | rule packs, GREP heuristics, post-LLM verification, multi-vertical reuse | prompts only; the rest of the harness is left to the developer |
 | **OpenAI Evals registry** | evaluation suites for OpenAI models | non-evaluation primitives (personas, rule packs, knowledge packs) | only the right-hand side of the chain |
 | **EleutherAI lm-eval-harness** | evaluation tasks for any HF-compatible LLM | persona libraries, GREP rule packs, RAG content, redaction processors | only the right-hand side, deeper than OpenAI Evals but still eval-only |
-| **promptfoo** | configs for comparing prompts/models | not a registry — config files travel with each project; no central catalog | per-project tool, not a public registry |
+| **promptfoo** | configs for comparing prompts/models | not a registry - config files travel with each project; no central catalog | per-project tool, not a public registry |
 | **MCP server marketplace** | MCP server definitions (tools the model can call) | personas, rule packs, eval rubrics, full pipelines | tools-only |
 | **Anthropic Agent Skills** | self-contained agentic skills | atomic primitives below the skill level (a persona, a GREP pack) | top-level skill bundles only |
 | **Pinecone / Weaviate / Chroma** | vector DBs | the rules + personas + rubrics around the retrieval | infrastructure layer, no semantic content |
-| **Docker Hub** | container images | not the operational workflows — just the binaries inside the container | infrastructure layer, no logic |
+| **Docker Hub** | container images | not the operational workflows - just the binaries inside the container | infrastructure layer, no logic |
 
 ## What Open Harness Hub adds
 
@@ -50,7 +50,7 @@ No other peer indexes ALL of:
 Reflexion / Self-Refine / Plan-Execute / Orchestrator-Workers /
 Evaluator-Optimizer / Multi-Agent-Debate / Routing / Prompt-Chaining
 / Naive/Corrective/Fusion RAG / HyDE / Step-Back / Two-Stage-Retrieve
-/ K-Anonymity-Aggregation / Composable-Success-Criteria) — each with
+/ K-Anonymity-Aggregation / Composable-Success-Criteria) - each with
 paper citation, reference implementations, when-to-use, tradeoffs,
 counter-patterns, and implementing pipelines.
 
@@ -69,7 +69,7 @@ They could each absorb part of this scope. But:
 - **MCP marketplace** is tool-centric. A tool is _one_ kind of
   primitive in the harness; this hub indexes all 14.
 - The emitters in `scripts/emit/` actually publish to all of these
-  peer registries from one source — the hub becomes a fan-out point,
+  peer registries from one source - the hub becomes a fan-out point,
   not a competitor.
 
 ## Layered architecture
@@ -95,12 +95,12 @@ native format from one source. No double-bookkeeping; no drift.
 ## What forks should look like
 
 Hassan's CSDDD example fits naturally as a **vertical fork** of this
-hub — same schemas, same vocabularies, different catalog content
+hub - same schemas, same vocabularies, different catalog content
 focused on compliance. The hub publishes the spec; vendors and
 domain consortiums publish their own catalogs against the same spec.
 
 A pharmaceutical-compliance hub, a defense-acquisition hub, a
-climate-finance hub — all are healthy forks that consume the same
+climate-finance hub - all are healthy forks that consume the same
 schemas/vocabularies/emitters and share interoperable artifacts.
 
 ## Status (May 2026)
@@ -111,7 +111,7 @@ schemas/vocabularies/emitters and share interoperable artifacts.
 - **CLI** with 9 subcommands
 - **Real LLM integration** (Ollama / Anthropic / OpenAI / Gemini)
 - **MIT license**
-- **No platform lock-in** — plain YAML in git
+- **No platform lock-in** - plain YAML in git
 
 The reference implementation is the existence proof. The spec
 (`docs/spec/HARNESS_HUB_SPEC.md`) is the portable layer. Forks and

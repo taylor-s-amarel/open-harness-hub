@@ -1,4 +1,4 @@
-# Kaggle Mining — 96-kernel final report
+# Kaggle Mining - 96-kernel final report
 
 **Date**: 2026-05-21
 **Corpus**: 96 top-voted Kaggle kernels across **~33 competition families**
@@ -15,7 +15,7 @@
 5. Aggregated by pattern → confirmed verified-evidence pipelines.
 6. Each catalog pipeline references the specific kernels + vote counts.
 
-## Mining program — 8 rounds
+## Mining program - 8 rounds
 
 | Round | Kernels added | Cumulative | Competition families |
 |---|---|---|---|
@@ -64,49 +64,49 @@
 ## 25 verified-evidence pipelines harvested
 
 ### LLM training + serving
-1. **`lora-qlora-pairwise-pref-finetune`** — LMSYS + WSDM (emiz6413 1351v, mbmmurad 453v, takaito 428v, ...)
-2. **`quantized-llm-inference`** — 5 kernels
-3. **`vllm-batch-llm-inference`** — 7 kernels
-4. **`awq-quantized-inference`** — 7 kernels
-5. **`deepseek-r1-code-interpreter-math`** — 5 AIMO-2 kernels (itahiro 1399v + lewtun 1173v + mbmmurad 1097v + yekenot 1087v + abdurrafae 1001v)
-6. **`qwen-vllm-rerank-eedi`** — 4 EEDI kernels with constrained logits
-7. **`synthetic-data-gen-with-teacher-llm`** — wlifferth 1820v
+1. **`lora-qlora-pairwise-pref-finetune`** - LMSYS + WSDM (emiz6413 1351v, mbmmurad 453v, takaito 428v, ...)
+2. **`quantized-llm-inference`** - 5 kernels
+3. **`vllm-batch-llm-inference`** - 7 kernels
+4. **`awq-quantized-inference`** - 7 kernels
+5. **`deepseek-r1-code-interpreter-math`** - 5 AIMO-2 kernels (itahiro 1399v + lewtun 1173v + mbmmurad 1097v + yekenot 1087v + abdurrafae 1001v)
+6. **`qwen-vllm-rerank-eedi`** - 4 EEDI kernels with constrained logits
+7. **`synthetic-data-gen-with-teacher-llm`** - wlifferth 1820v
 
 ### Retrieval + ranking
-8. **`perplexity-baseline-scoring`** — itahiro 1005v
-9. **`large-model-faiss-rag`** — simjeg Platypus2-70B 1248v
-10. **`two-time-retrieve-rerank`** — takanashihumbert 650v
-11. **`sentence-transformer-finetune-retrieval`** — LECR + image-to-prompts (yuiwai 420v+401v, karakasatarik 375v, leonidkulyk 732v)
+8. **`perplexity-baseline-scoring`** - itahiro 1005v
+9. **`large-model-faiss-rag`** - simjeg Platypus2-70B 1248v
+10. **`two-time-retrieve-rerank`** - takanashihumbert 650v
+11. **`sentence-transformer-finetune-retrieval`** - LECR + image-to-prompts (yuiwai 420v+401v, karakasatarik 375v, leonidkulyk 732v)
 
 ### Long-document / NER
-12. **`longformer-bigbird-ner`** — Feedback-Prize-2021 (cdeotte 1350v LongFormer + abhishek 1323v two-LongFormers + cdeotte 977v BigBird)
+12. **`longformer-bigbird-ner`** - Feedback-Prize-2021 (cdeotte 1350v LongFormer + abhishek 1323v two-LongFormers + cdeotte 977v BigBird)
 
 ### Multi-model + judges
-13. **`multi-model-judging-ensemble`** — aatiffraz 640v
-14. **`llm-judge-essay-grading`** — richolson 561v+333v + jiprud 484v
-15. **`twenty-questions-agent`** — ryanholbrook 1420v + cdeotte 447v
+13. **`multi-model-judging-ensemble`** - aatiffraz 640v
+14. **`llm-judge-essay-grading`** - richolson 561v+333v + jiprud 484v
+15. **`twenty-questions-agent`** - ryanholbrook 1420v + cdeotte 447v
 
 ### Image generation / understanding
-16. **`blip-clip-image-to-prompt`** — leonidkulyk 732v + inversion 617v + burhanuddinlatsaheb 570v
-17. **`sd-prompt-embedding-cosine`** — inversion 617v
+16. **`blip-clip-image-to-prompt`** - leonidkulyk 732v + inversion 617v + burhanuddinlatsaheb 570v
+17. **`sd-prompt-embedding-cosine`** - inversion 617v
 
 ### Tabular ML (the Kaggle bread-and-butter)
-18. **`lgb-xgb-catboost-ensemble`** — jetakow 5098v (highest-vote in corpus!) + yuanzhezhou 1417v + greysky 1397v + suvroo 205v + rohanrao 222v + cdeotte 2110v Amex
-19. **`optuna-tabular-tuning`** — suvroo 205v + gusthema 1717v
+18. **`lgb-xgb-catboost-ensemble`** - jetakow 5098v (highest-vote in corpus!) + yuanzhezhou 1417v + greysky 1397v + suvroo 205v + rohanrao 222v + cdeotte 2110v Amex
+19. **`optuna-tabular-tuning`** - suvroo 205v + gusthema 1717v
 
 ### Medical / specialty CV
-20. **`efficientnet-medical-imaging`** — cdeotte 1564v + awsaf49 1733v + motono0223 794v + hidngnguyna 617v
-21. **`unet-segmentation-tta`** — awsaf49 1473v+1092v + hidngnguyna 617v + corochann 823v
-22. **`mask-rcnn-coco-transfer`** — hmendonca 1194v
-23. **`dicom-medical-image-preprocessing`** — allunia 1249v + piantic 1132v
+20. **`efficientnet-medical-imaging`** - cdeotte 1564v + awsaf49 1733v + motono0223 794v + hidngnguyna 617v
+21. **`unet-segmentation-tta`** - awsaf49 1473v+1092v + hidngnguyna 617v + corochann 823v
+22. **`mask-rcnn-coco-transfer`** - hmendonca 1194v
+23. **`dicom-medical-image-preprocessing`** - allunia 1249v + piantic 1132v
 
 ### Hybrid / sequence / sensor
-24. **`deberta-lgbm-hybrid-scorer`** — cody11null 803v + tsunotsuno 519v
-25. **`bidirectional-lstm-sequence-prediction`** — theoviel 1166v + tanulsingh077 6394v (highest single-kernel vote in mining!) + rhtsingh 1247v + tenffe 668v
+24. **`deberta-lgbm-hybrid-scorer`** - cody11null 803v + tsunotsuno 519v
+25. **`bidirectional-lstm-sequence-prediction`** - theoviel 1166v + tanulsingh077 6394v (highest single-kernel vote in mining!) + rhtsingh 1247v + tenffe 668v
 
 ### Audio + sensor
-26. **`audio-mel-spec-cnn-classifier`** — awsaf49 BirdCLEF 659v+364v
-27. **`sensor-fusion-imu-blending`** — hideyukizushi CMI25 625v + sohier 875v
+26. **`audio-mel-spec-cnn-classifier`** - awsaf49 BirdCLEF 659v+364v
+27. **`sensor-fusion-imu-blending`** - hideyukizushi CMI25 625v + sohier 875v
 
 ## Key cross-cutting insights
 
@@ -122,7 +122,7 @@
 
 6. **Bidirectional LSTM (often + 1D-CNN front-end) for sequences.** Still dominant on ventilator pressure (theoviel 1166v) + classic NLP (tanulsingh077 6394v) + sensor fusion (hideyukizushi 625v).
 
-7. **TFRecords / triple-stratified-KFold are Kaggle CV signatures.** cdeotte 1710v SIIM Melanoma — the "infrastructure" patterns for serious Kaggle CV competitions.
+7. **TFRecords / triple-stratified-KFold are Kaggle CV signatures.** cdeotte 1710v SIIM Melanoma - the "infrastructure" patterns for serious Kaggle CV competitions.
 
 8. **Image-to-prompt is BLIP + CLIP Interrogator + cosine validation.** 3 kernels with this exact stack.
 
@@ -137,11 +137,11 @@
 
 Looking at the patterns that haven't crystallized into verified pipelines:
 
-- **Triple-stratified KFold** (cdeotte 1710v) — could become a processor `processor/triple-stratified-kfold`
-- **TFRecords-based pipelines** (cdeotte 1710v + Aritrag KerasCV) — could become a processor for TFRecord-based training
-- **RAPIDS-accelerated tabular** (cdeotte 866v + 2110v) — could become a `pipeline/rapids-gpu-tabular`
-- **2.5D CNN for volumetric data** (royalacecat 578v + zzy990106 463v + awsaf49 1092v) — could become a `pipeline/2-5d-cnn-volumetric`
-- **Swin Transformer** (phalanx 1077v) — could become a `pipeline/swin-transformer-image-classification`
+- **Triple-stratified KFold** (cdeotte 1710v) - could become a processor `processor/triple-stratified-kfold`
+- **TFRecords-based pipelines** (cdeotte 1710v + Aritrag KerasCV) - could become a processor for TFRecord-based training
+- **RAPIDS-accelerated tabular** (cdeotte 866v + 2110v) - could become a `pipeline/rapids-gpu-tabular`
+- **2.5D CNN for volumetric data** (royalacecat 578v + zzy990106 463v + awsaf49 1092v) - could become a `pipeline/2-5d-cnn-volumetric`
+- **Swin Transformer** (phalanx 1077v) - could become a `pipeline/swin-transformer-image-classification`
 
 These are real high-vote patterns that COULD be added as verified pipelines if mining continues.
 

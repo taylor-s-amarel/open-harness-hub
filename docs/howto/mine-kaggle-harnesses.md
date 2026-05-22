@@ -86,7 +86,7 @@ Curators should:
    may be a `corridor_profile` only when applied to migrant safety;
    for a generic catalog entry, model it as a generic `entity_signal`.
 3. **Anonymize sample data.** Real worker chats, real patient records,
-   real customer messages are NEVER published — replace with
+   real customer messages are NEVER published - replace with
    synthetic composites.
 4. **Cite the source.** Every promoted manifest must retain its
    `attribution.source_url` and `attribution.author`.

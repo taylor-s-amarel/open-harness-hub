@@ -1,4 +1,4 @@
-# Use case 7 — Brand-safe image generation
+# Use case 7 - Brand-safe image generation
 
 > Style-RAG + lens-physics + guard rules + output-safety screened image generation.
 

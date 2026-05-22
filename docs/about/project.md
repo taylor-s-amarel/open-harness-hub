@@ -9,7 +9,7 @@ and the [LLM Safety Framework](https://github.com/TaylorAmarelTech/llm-safety-fr
 
 1. Help people **work out a benchmark** for any task.
 2. Help people **work out a tool** for any task.
-3. Make the substrate **portable** — any host, any database, any model.
+3. Make the substrate **portable** - any host, any database, any model.
 
 ## Non-goals
 

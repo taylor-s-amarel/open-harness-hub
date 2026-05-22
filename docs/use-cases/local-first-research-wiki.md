@@ -1,4 +1,4 @@
-# Use case — Local-first research wiki for PDFs (CiteMind shape)
+# Use case - Local-first research wiki for PDFs (CiteMind shape)
 
 ## What
 
@@ -21,27 +21,27 @@ This use case bundles the **CiteMind** hackathon submission (Gemma 4 Good) into 
 
 ## How it maps into the catalog
 
-- **Pipeline**: `pipeline/citemind-pdf-to-research-wiki` — 7-step chain: PDF extract w/ OCR fallback → page-aware chunk → local embed → hybrid retrieve → cited answer → wiki + concept graph → audit trace.
-- **Persona**: `persona/local-first-research-tutor` — answers only from the document; every claim carries (page, span); refuses to fabricate.
-- **Knowledge pack**: `knowledge-pack/citemind-architecture-reference` — the architectural shape itself, indexable + queryable.
-- **Rubric**: `rubric/citemind-citation-fidelity-v1` — 7 dims, with `local_only_traffic` + `persistence_across_sessions` + `refusal_on_missing` as load-bearing.
+- **Pipeline**: `pipeline/citemind-pdf-to-research-wiki` - 7-step chain: PDF extract w/ OCR fallback → page-aware chunk → local embed → hybrid retrieve → cited answer → wiki + concept graph → audit trace.
+- **Persona**: `persona/local-first-research-tutor` - answers only from the document; every claim carries (page, span); refuses to fabricate.
+- **Knowledge pack**: `knowledge-pack/citemind-architecture-reference` - the architectural shape itself, indexable + queryable.
+- **Rubric**: `rubric/citemind-citation-fidelity-v1` - 7 dims, with `local_only_traffic` + `persistence_across_sessions` + `refusal_on_missing` as load-bearing.
 - **Processors**: `processor/pdf-extract-with-ocr-fallback`, `processor/page-aware-chunker`, `processor/local-embedder`, `processor/hybrid-bm25-vector-retrieve`, `processor/concept-graph-extractor`.
 - **Dataset placeholder**: `dataset/citemind-pdf-samples`.
 
 ## Three patterns extracted
 
-1. **`pattern/local-first-with-cited-answers`** — generalizes to legal review, defense documentation study, BSL-4 SOP study, refugee Inkasso letter review.
-2. **`pattern/source-document-to-persistent-knowledge-layer`** — generalizes to compliance audit notes, regulatory framework cross-references, ESG disclosure review.
-3. **`pattern/concept-graph-from-text`** — generalizes to ESG materiality maps, supply-chain knowledge graphs, drug-interaction graphs, DFARS clause flow-down maps.
+1. **`pattern/local-first-with-cited-answers`** - generalizes to legal review, defense documentation study, BSL-4 SOP study, refugee Inkasso letter review.
+2. **`pattern/source-document-to-persistent-knowledge-layer`** - generalizes to compliance audit notes, regulatory framework cross-references, ESG disclosure review.
+3. **`pattern/concept-graph-from-text`** - generalizes to ESG materiality maps, supply-chain knowledge graphs, drug-interaction graphs, DFARS clause flow-down maps.
 
 ## Why this matters for the catalog
 
 CiteMind is the second hackathon submission integrated as a first-class catalog vertical (after [Bill_info AI](./refugee-bureaucracy-translation.md)). Both submissions share a structural lesson the catalog now encodes explicitly:
 
-> The right boundary for "local AI" is usually not "no cloud ever" — it is "the document stays local; every output cites a span; the user can verify."
+> The right boundary for "local AI" is usually not "no cloud ever" - it is "the document stays local; every output cites a span; the user can verify."
 
 The catalog promotes that boundary from a one-shot UX choice to a reusable pattern with attribution back to the upstream submission.
 
 ## Attribution
 
-The CiteMind port is licensed MIT; catalog port credits "Open Harness Hub contributors" as port author and the CiteMind team as primary upstream. Direct upstream repo URL + author handle pending — see [`docs/outreach/citemind-integration.md`](../outreach/citemind-integration.md) for the outreach draft.
+The CiteMind port is licensed MIT; catalog port credits "Open Harness Hub contributors" as port author and the CiteMind team as primary upstream. Direct upstream repo URL + author handle pending - see [`docs/outreach/citemind-integration.md`](../outreach/citemind-integration.md) for the outreach draft.

@@ -61,7 +61,7 @@ progressive-disclosure mechanic everywhere.
 | Distribution | Git repo + marketplace.json | Git repo | Git repo + multiple emit targets (Pages, HF Space, Vercel, Netlify, Cloudflare) |
 | Cross-tool reach | One tool (Claude Code) | 40+ tools | All of the above PLUS MCP, Croissant, HF model/dataset/Space cards, lm-eval-harness, promptfoo, CycloneDX-ML, OpenLineage, C2PA, EU AI Act dossiers |
 
-The hub is not a competitor to Agent Skills — it's a **higher-level
+The hub is not a competitor to Agent Skills - it's a **higher-level
 catalog** that emits down to Agent Skills (plus the other 13 targets in
 SPEC §18.2).
 
@@ -127,7 +127,7 @@ them):
   types beyond skills.
 
 What we'd gain: a smaller mental model and zero translation step. The
-hub keeps both — Agent Skills as the *emit target* for harnesses and
+hub keeps both - Agent Skills as the *emit target* for harnesses and
 pipelines, hub YAML as the *source of truth*.
 
 ## Bottom line
@@ -135,7 +135,7 @@ pipelines, hub YAML as the *source of truth*.
 | Question | Answer |
 |---|---|
 | Is there overlap with Claude Code skills directories? | Yes. The hub catalog IS a plugin marketplace once `dist/agent-skills/` is published. |
-| Should the hub abandon its own format and just be skills? | No — Agent Skills can't express composition, benchmarks, multi-target emit, or compliance metadata. |
+| Should the hub abandon its own format and just be skills? | No - Agent Skills can't express composition, benchmarks, multi-target emit, or compliance metadata. |
 | What's the right relationship? | Hub is the **upstream**; Agent Skills (+ MCP, Croissant, HF cards, …) are **leaf emit targets**. |
-| Effort to integrate? | Already done — `scripts/emit/agent_skill.py` produces 9 skills + a plugin marketplace manifest from the current catalog. |
+| Effort to integrate? | Already done - `scripts/emit/agent_skill.py` produces 9 skills + a plugin marketplace manifest from the current catalog. |
 | Cross-tool reach? | Agent Skills works in 40+ tools (Claude Code, Claude.ai, OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI, OpenHands, Roo Code, Goose, Letta, VS Code, Junie, Workshop, Tabnine, …). |

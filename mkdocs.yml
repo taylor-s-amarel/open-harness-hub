@@ -68,40 +68,51 @@ plugins:
 
 nav:
   - Home: index.md
-  - Concepts:
+
+  - Get started:
+    - Run a pipeline locally: howto/run-pipeline.md
+    - Assemble a pipeline from a task: howto/llm-assemble-pipeline-from-task.md
+    - Add an artifact: howto/add-artifact.md
+    - Deploy the hub: howto/deploy.md
+    - Integrate a hackathon submission: contributing/integrating-hackathon-submissions.md
+
+  - Use cases:
+    - Index: use-cases/index.md
+    - More ideas (30+): use-cases/more-ideas.md
+    - Personal LLM companion: use-cases/personal-llm-companion.md
+    - Illicit content + platform moderation: use-cases/illicit-content-detection.md
+    - Document to knowledge graph: use-cases/document-to-knowledge-graph.md
+    - Local-first research wiki: use-cases/local-first-research-wiki.md
+    - Q&A on documents: use-cases/qa-on-documents.md
+    - Deep research: use-cases/deep-research.md
+    - Code review with security: use-cases/code-review.md
+    - Customer support: use-cases/customer-support.md
+    - Clinical decision support: use-cases/clinical-decision-support.md
+    - AML screening: use-cases/aml-screening.md
+    - Image generation: use-cases/image-gen.md
+    - LLM red-teaming: use-cases/llm-red-team.md
+    - ESG supply-chain DD: use-cases/esg-supply-chain-due-diligence.md
+    - Refugee bureaucracy translation: use-cases/refugee-bureaucracy-translation.md
+
+  - Catalog:
+    - Index: catalog/index.md
+    - Browse (interactive): catalog/browser.html
+    - By capability: library/by-capability.md
+
+  - Reference:
+    - Harness Hub spec: spec/HARNESS_HUB_SPEC.md
+    - Vocabularies: reference/vocabularies.md
+    - Schemas: reference/schemas.md
     - Overview: concepts/overview.md
     - Taxonomy: concepts/taxonomy.md
     - Layers & primitives: concepts/layers.md
     - Pre/post-API processes: concepts/pre-post-api.md
     - Multimodal pipelines: concepts/multimodal.md
     - Database representations: concepts/databases.md
-    - Playground & sample runs: concepts/playground.md
-  - Browse catalog: catalog/browser.html
-  - Catalog:
-    - Index: catalog/index.md
-  - How to:
-    - Add an artifact: howto/add-artifact.md
-    - Run a pipeline locally: howto/run-pipeline.md
+    - Industry-agnostic pattern: architecture/industry-agnostic-pattern.md
+    - Peer registries: comparison/peer-registries.md
     - Mine Kaggle for harnesses: howto/mine-kaggle-harnesses.md
-    - Deploy the hub: howto/deploy.md
-  - Use cases:
-    - Index: use-cases/index.md
-    - Q&A on documents: use-cases/qa-on-documents.md
-    - Code review with security: use-cases/code-review.md
-    - Deep research: use-cases/deep-research.md
-    - Customer support: use-cases/customer-support.md
-    - Clinical decision support: use-cases/clinical-decision-support.md
-    - AML screening: use-cases/aml-screening.md
-    - Image generation: use-cases/image-gen.md
-    - LLM red-teaming: use-cases/llm-red-team.md
-    - More ideas (30+): use-cases/more-ideas.md
-  - Library:
-    - By capability: library/by-capability.md
-  - Reference:
-    - SPEC: reference/spec.md
-    - Vocabularies: reference/vocabularies.md
-    - Schemas: reference/schemas.md
-  - Research:
+    - Playground & sample runs: concepts/playground.md
     - Standards landscape: research/standards-landscape.md
     - Claude Code skills overlap: research/claude-code-skills.md
     - GitHub hosting plan: research/github-hosting.md
@@ -109,19 +120,8 @@ nav:
     - Real mining findings: research/real-mining-findings.md
     - Kernel mining findings (34): research/kernel-mining-findings.md
     - Kaggle mining 96-kernel report: research/kaggle-mining-96-kernels-report.md
-  - Architecture:
-    - Industry-agnostic pattern: architecture/industry-agnostic-pattern.md
-  - Use cases (additional):
-    - ESG supply-chain DD: use-cases/esg-supply-chain-due-diligence.md
-    - Refugee bureaucracy translation: use-cases/refugee-bureaucracy-translation.md
-  - Spec:
-    - Harness Hub spec: spec/HARNESS_HUB_SPEC.md
-  - Comparison:
-    - Peer registries: comparison/peer-registries.md
-  - Contributing:
-    - Integrating hackathon submissions: contributing/integrating-hackathon-submissions.md
-  - Outreach:
-    - Svityk Bill_info AI integration: outreach/svityk-bill-info-integration.md
+
   - About:
     - Project: about/project.md
     - License: about/license.md
+    - Svityk Bill_info AI integration: outreach/svityk-bill-info-integration.md

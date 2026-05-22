@@ -1,4 +1,4 @@
-# Use case 5 — Clinical decision support
+# Use case 5 - Clinical decision support
 
 > Differential diagnosis with red-flag escalation, cited guidelines, and ICD-10 lookups. PHI-safe.
 
@@ -48,7 +48,7 @@ inputs = {
   "history":      "HTN, dyslipidemia, FH premature CAD.",
   "exam":         "BP 162/98, HR 104, SpO2 96% RA. Diaphoretic."
 }
-# → red_flag: "Chest pain with radiation in adult with cardiovascular risk factors — possible ACS; recommend emergent ECG within 10 min and troponin per ACC/AHA ACS 2026 §3.1."
+# → red_flag: "Chest pain with radiation in adult with cardiovascular risk factors - possible ACS; recommend emergent ECG within 10 min and troponin per ACC/AHA ACS 2026 §3.1."
 # → differentials:
 #     [{ icd10: I21.9, prior: 0.55, supports: [...], argues_against: [...], citations: [acs-acc-aha-2026-§3.1, §3.2] },
 #      { icd10: I71.0, prior: 0.10, ... },
@@ -67,7 +67,7 @@ inputs = {
 
 ### On-prem clinical deployment (recommended)
 
-This pipeline's defaults use `adapter/ollama-default` — local model only. **No PHI leaves the host**. For production:
+This pipeline's defaults use `adapter/ollama-default` - local model only. **No PHI leaves the host**. For production:
 
 1. Configure your local Gemma / Llama / DeepSeek on the EHR-network host.
 2. Replace `knowledge-pack/clinical-guidelines-sample` with a licensed full corpus (ACC/AHA, NICE, RCP, WHO).
@@ -80,7 +80,7 @@ This pipeline's defaults use `adapter/ollama-default` — local model only. **No
 - **Add specialty packs**: write `knowledge-pack/cardiology-acc-aha`, `knowledge-pack/neurology-aha`, etc.
 - **Add medication checking**: chain `knowledge-pack/drug-interactions-sample` into the harness for med-list review.
 - **Stricter PHI gate**: enable `rule-pack/phi-hipaa-en` `severity: critical` rules to halt on any unredacted PHI.
-- **External judge for QA**: add a final `processor/llm-judge` step using a frontier model — but only on the redacted output, never on raw PHI.
+- **External judge for QA**: add a final `processor/llm-judge` step using a frontier model - but only on the redacted output, never on raw PHI.
 
 ## Important disclaimer
 

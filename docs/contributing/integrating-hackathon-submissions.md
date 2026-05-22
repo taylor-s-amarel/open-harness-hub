@@ -12,35 +12,35 @@ contributors and authors who want their work in the registry.
 - **Standards-format publication**: one YAML manifest emits to
   Croissant, MCP, Agent Skills, HF model+dataset cards, lm-eval-
   harness, promptfoo, CycloneDX-ML, OpenLineage, C2PA, EU AI Act
-  Annex IV, SPDX 3.0 — all 13 emitters work on the same manifest
+  Annex IV, SPDX 3.0 - all 13 emitters work on the same manifest
 - **Cross-vertical reuse**: design patterns extracted from one
   submission travel into other verticals (e.g. the
   Two-Stage-Extract-Then-Judge pattern from Bill_info AI now
   references ESG, radiology, contract review, AppSec, and the
   MedLabel medicine-safety pipeline)
 - **Citation graph**: every artifact carries an `attribution` block
-  with your name + URL + license — discovery and credit are linked
+  with your name + URL + license - discovery and credit are linked
 
 ## The 7-step integration recipe
 
 Use Sviatoslav Grabovsky's Bill_info AI integration as the canonical
 worked example. It became:
 
-1. `persona/bureaucracy-translator-cite-first` — the action-first,
+1. `persona/bureaucracy-translator-cite-first` - the action-first,
    cite-first persona with hard rules
-2. `knowledge-pack/verbraucherzentrale-fake-inkasso-indicators` —
+2. `knowledge-pack/verbraucherzentrale-fake-inkasso-indicators` -
    the 10-criterion fraud taxonomy that grounds the LLM judgment
-3. `rule-pack/grep-fake-inkasso-fraud-flags` — deterministic GREP
+3. `rule-pack/grep-fake-inkasso-fraud-flags` - deterministic GREP
    detectors for the 10 indicators (first-pass before LLM)
-4. `rubric/bureaucracy-translation-quality-v1` — 9-dim grading
+4. `rubric/bureaucracy-translation-quality-v1` - 9-dim grading
    anchored in the published eval (96% extraction / 100% redacted
    refusal)
-5. `pipeline/bill-info-extract-fraud-detect-recommend` — the full
+5. `pipeline/bill-info-extract-fraud-detect-recommend` - the full
    2-stage chain with deterministic validation + critical-tier
    override
-6. `dataset/bill-info-test-documents` — reference to the 28-doc
+6. `dataset/bill-info-test-documents` - reference to the 28-doc
    eval set
-7. `adapter/gemma-4-26b-vision` — the multimodal adapter
+7. `adapter/gemma-4-26b-vision` - the multimodal adapter
 
 Plus 3 reusable design patterns extracted from the work:
 `pattern/two-stage-extract-then-judge`,
@@ -52,7 +52,7 @@ Plus 3 reusable design patterns extracted from the work:
 ### 1. Persona (1 YAML, ~50 lines)
 
 The persona captures HOW the model should behave for your use case.
-Include hard rules — what it ALWAYS does, what it NEVER does, what
+Include hard rules - what it ALWAYS does, what it NEVER does, what
 it refuses on. Cite the authoritative source for each rule.
 
 ```yaml
@@ -74,14 +74,14 @@ domain: ["..."]
 
 The knowledge pack is the citation backbone. Whether it's
 Verbraucherzentrale fraud indicators, ACR Appropriateness Criteria,
-MITRE ATT&CK techniques, or drug-interaction references — the rule
+MITRE ATT&CK techniques, or drug-interaction references - the rule
 is **every authoritative claim cites a knowledge pack entry**.
 
 JSONL format: one line per entry with `id`, `tier` or `severity`, `text`.
 
 ### 3. Rule pack (1 YAML, ~12 GREP detectors)
 
-GREP rules are the FIRST PASS — deterministic, fast, transparent.
+GREP rules are the FIRST PASS - deterministic, fast, transparent.
 They fire BEFORE the LLM call. Each rule has:
 
 ```yaml
@@ -165,12 +165,12 @@ If your submission has an architectural insight that generalizes
 beyond the specific use case, ship it as a `pattern/` artifact. The
 3 patterns Bill_info AI shipped:
 
-- **Two-Stage Extract-Then-Judge** — separate extraction + judgment
+- **Two-Stage Extract-Then-Judge** - separate extraction + judgment
   calls because focused criteria don't compete with extraction for
   the model's attention
-- **Critical-Tier Output Override** — on critical-tier finding, every
+- **Critical-Tier Output Override** - on critical-tier finding, every
   UI component is FORCED into one consistent message
-- **Refuse-on-Redacted** — null over hallucination on missing /
+- **Refuse-on-Redacted** - null over hallucination on missing /
   redacted fields
 
 A good pattern manifest has:
@@ -202,19 +202,19 @@ author for the catalog port specifically.
 
 1. Fork [github.com/taylor-s-amarel/open-harness-hub](https://github.com/taylor-s-amarel/open-harness-hub)
 2. Create your artifacts in `catalog/personas/...`, `catalog/pipelines/...`, etc.
-3. Run `python scripts/validate.py` — must report `all manifests valid`
+3. Run `python scripts/validate.py` - must report `all manifests valid`
 4. Run `python scripts/build_index_page.py` to refresh `docs/INDEX.md`
-5. Open a PR — Taylor + the contributors review for: schema validity,
+5. Open a PR - Taylor + the contributors review for: schema validity,
    attribution correctness, design-pattern reusability, vocabulary
    additions
 
 ## Known integrations
 
-- **Bill_info AI** (Sviatoslav Grabovsky, Gemma 4 Good Hackathon —
-  Impact Track: Digital Equity & Inclusivity) — refugee bureaucracy
+- **Bill_info AI** (Sviatoslav Grabovsky, Gemma 4 Good Hackathon -
+  Impact Track: Digital Equity & Inclusivity) - refugee bureaucracy
   translation with Verbraucherzentrale-grounded fraud detection.
   Demo: https://huggingface.co/spaces/Svityk/bill-info-ai
-- **MedLabel** (Gemma 4 Good Hackathon 2026) — offline-first
+- **MedLabel** (Gemma 4 Good Hackathon 2026) - offline-first
   multilingual medicine-safety AI; reads medicine labels and detects
   dangerous drug interactions. The catalog port `pipeline/medlabel-
   photo-to-warning` is a reference shape; author attribution + repo

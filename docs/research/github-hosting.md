@@ -110,7 +110,7 @@ taxonomy/SPEC.md                  @core-maintainers @standards-wg
 
 ## CI pipelines
 
-### `.github/workflows/validate.yml` — every PR
+### `.github/workflows/validate.yml` - every PR
 
 ```yaml
 name: Validate
@@ -130,15 +130,15 @@ jobs:
       - run: python scripts/build_catalog_index.py
 ```
 
-Already shipped — see `.github/workflows/validate.yml`.
+Already shipped - see `.github/workflows/validate.yml`.
 
-### `.github/workflows/pages.yml` — Pages deploy on push to main
+### `.github/workflows/pages.yml` - Pages deploy on push to main
 
 Already shipped. Builds catalog pages + the index.json + the static
 catalog browser, then publishes `site/` to GitHub Pages via
 `actions/deploy-pages@v4`.
 
-### `.github/workflows/emit.yml` — rebuild emitter outputs
+### `.github/workflows/emit.yml` - rebuild emitter outputs
 
 Runs the standards emitters on push to `main`:
 
@@ -179,7 +179,7 @@ The `dist-published` branch is a stable URL for marketplace consumers:
 they `git clone --branch dist-published` and get just the emitter
 outputs.
 
-### `.github/workflows/release.yml` — Releases on tag
+### `.github/workflows/release.yml` - Releases on tag
 
 ```yaml
 name: Release
@@ -268,7 +268,7 @@ Enable Discussions; create categories:
    `claude-code`, `agent-skills`, `pipeline`, `benchmark`, `croissant`,
    `safety`.
 2. **GitHub Marketplace listing** (if the repo grows into an Actions
-   provider — not urgent).
+   provider - not urgent).
 3. **`opensearch.xml`** in `docs/` so browsers expose hub search.
 4. **`humans.txt`** with maintainer credit.
 5. **OpenGraph metadata** via MkDocs Material plugin.
@@ -288,7 +288,7 @@ Enable Discussions; create categories:
 ## Issue & PR templates
 
 `new-harness.yml`, `new-pipeline.yml`, `new-rule-pack.yml`,
-`new-knowledge-pack.yml`, `new-tool.yml` — each prompts for the
+`new-knowledge-pack.yml`, `new-tool.yml` - each prompts for the
 required envelope fields (id slug, industry, capability, modality,
 lifecycle, trust_boundary, license, EU AI Act risk). The PR template
 links to `scripts/validate.py` and asks contributors to confirm:

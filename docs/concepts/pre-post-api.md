@@ -135,7 +135,7 @@ retry backoff. These can appear at any stage.
 `processor.process_kind` is an **open vocabulary**. New process kinds
 are added by PR (no schema change needed). The schema only validates
 that the value is a string. The taxonomy in SPEC §16 is the suggested
-list — extend it freely when a new use case lands.
+list - extend it freely when a new use case lands.
 
 This keeps the schema flexible for future use cases (new safety
 classifiers, new format converters, new memory backends, new

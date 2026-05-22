@@ -41,7 +41,7 @@ def render_axes(manifest: dict) -> str:
         if v is None:
             continue
         if isinstance(v, list):
-            v = ", ".join(v) if v else "—"
+            v = ", ".join(v) if v else "-"
         rows.append(f"| {key} | {v} |")
     if not rows:
         return ""
@@ -63,7 +63,7 @@ def render_steps(manifest: dict) -> str:
         return ""
     out = ["| # | id | kind | ref | when |", "|---|---|---|---|---|"]
     for i, step in enumerate(steps, 1):
-        when = step.get("when", "—")
+        when = step.get("when", "-")
         out.append(f"| {i} | `{step['id']}` | {step['kind']} | `{step['ref']}` | {when} |")
     return "\n".join(out)
 
@@ -94,7 +94,7 @@ def render_model_targets(manifest: dict) -> str:
     out = ["| id | transport | trust | required | default |", "|---|---|---|---|---|"]
     for m in mts:
         out.append(
-            f"| `{m['id']}` | `{m['transport']}` | {m.get('trust_boundary', '—')} | "
+            f"| `{m['id']}` | `{m['transport']}` | {m.get('trust_boundary', '-')} | "
             f"{m.get('required', False)} | {m.get('default', False)} |"
         )
     return "\n".join(out)
@@ -109,7 +109,7 @@ def render_rules(manifest: dict) -> str:
         pat = r.get("pattern") or r.get("condition") or ""
         if len(pat) > 80:
             pat = pat[:77] + "..."
-        out.append(f"| `{r['id']}` | {r.get('severity','—')} | {r.get('category','—')} | `{pat}` |")
+        out.append(f"| `{r['id']}` | {r.get('severity','-')} | {r.get('category','-')} | `{pat}` |")
     return "\n".join(out)
 
 
@@ -155,7 +155,7 @@ def page_body(manifest: dict, path: Path) -> str:
 
     if manifest["type"] == "pipeline":
         parts.extend(["", "## Task", "", manifest["task"].strip()])
-        parts.extend(["", f"**pipeline_kind:** `{manifest.get('pipeline_kind','—')}`"])
+        parts.extend(["", f"**pipeline_kind:** `{manifest.get('pipeline_kind','-')}`"])
         if (steps := render_steps(manifest)):
             parts.extend(["", "## Steps", "", steps])
 
