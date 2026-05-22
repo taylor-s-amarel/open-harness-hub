@@ -61,15 +61,21 @@ jobs:
                                capture_output=True, text=True)
           stdout = out.stdout
           if 'sample-clean' in stdout:
-              # Find clean-sample line and assert C:0 H:0 (allow medium/low for legit signals)
+              # Find clean-sample line + assert C:0 H:0 (allow medium/low for legit signals).
+              # Skip lines that only contain the filename (no severity counts and no gate
+              # verdict) — different demos format their output differently.
               for line in stdout.split('\n'):
-                  if 'sample-clean' in line:
-                      # checklist-gate demos print GO/NOGO instead of C: counts
-                      if 'GO' in line or 'NOGO' in line:
-                          assert 'NOGO' not in line, f"Clean sample returned NOGO: {line}"
-                      else:
-                          assert 'C: 0' in line, f"Clean sample fired criticals: {line}"
-                          assert 'H: 0' in line, f"Clean sample fired highs: {line}"
+                  if 'sample-clean' not in line:
+                      continue
+                  has_sev = ('C:' in line) or ('H:' in line)
+                  has_gate = ('NOGO' in line) or (' GO ' in line) or line.rstrip().endswith(' GO')
+                  if not (has_sev or has_gate):
+                      continue
+                  if has_gate:
+                      assert 'NOGO' not in line, f"Clean sample returned NOGO: {line}"
+                  else:
+                      assert 'C: 0' in line, f"Clean sample fired criticals: {line}"
+                      assert 'H: 0' in line, f"Clean sample fired highs: {line}"
           # Don't fail on missing flagged-sample evidence — different demos
           # have different sample sets.
           print('demo critical/high regression check passed')
